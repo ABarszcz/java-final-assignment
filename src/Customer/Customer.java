@@ -9,15 +9,20 @@ import java.util.GregorianCalendar;
  */
 public class Customer {
     //<editor-fold desc="Class Variables">
-    private String firstName, lastName, sex, address, phoneNum, customerID;
+    private String firstName, lastName, sex, country, province, city, address,
+	    phoneNum, customerID;
     private GregorianCalendar dateOfBirth;
     //</editor-fold>
     
-    public Customer(String firstName, String lastName, String sex, String address,
-	    String phoneNum, int yearOfBirth, int monthOfBirth, int dayOfBirth) {
+    public Customer(String firstName, String lastName, String sex, String country,
+	    String province, String city, String address, String phoneNum,
+	    int yearOfBirth, int monthOfBirth, int dayOfBirth) {
         this.firstName = firstName;
 	this.lastName = lastName;
 	this.sex = sex;
+	this.country = country;
+	this.province = province;
+	this.city = city;
 	this.address = address;
 	this.phoneNum = phoneNum;
 	this.customerID = Utils.generateCustomerID();
@@ -29,6 +34,9 @@ public class Customer {
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName;  }
     public String getSex() { return sex; }
+    public String getCountry() { return country; }
+    public String getProvince() { return province; }
+    public String getCity() { return city; }
     public String getAddress() { return address; }
     public String getPhoneNum() { return phoneNum; }
     public String getCustomerID() { return customerID; }
@@ -56,7 +64,19 @@ public class Customer {
     public void setSex(String sex) {
 	this.sex = sex;
     }
+    
+    public void setCountry(String country) {
+	this.country = country;
+    }
 
+    public void setProvince(String province) {
+	this.province = province;
+    }
+
+    public void setCity(String city) {
+	this.city = city;
+    }
+    
     public void setAddress(String address) {
 	this.address = address;
     }

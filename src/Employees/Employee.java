@@ -10,18 +10,21 @@ import java.util.*;
  */
 public abstract class Employee {
     //<editor-fold desc="Class Variables">
-    private String firstName, lastName, sex, address, phoneNum, department,
-	    position, employeeID, socialSecurityNum;
+    private String firstName, lastName, sex, country, province, city, address,
+	    phoneNum, department, position, employeeID, socialSecurityNum;
     private GregorianCalendar dateOfBirth;
     //</editor-fold>
     
-    public Employee(String firstName, String lastName, String sex,
-	    String address, String phoneNum, String department, String position,
-	    String socialSecurityNum, int yearOfBirth,
+    public Employee(String firstName, String lastName, String sex, String country,
+	    String province, String city, String address, String phoneNum,
+	    String department, String position, String socialSecurityNum, int yearOfBirth,
 	    int monthOfBirth, int dayOfBirth) {
         this.firstName = firstName;
 	this.lastName = lastName;
 	this.sex = sex;
+	this.country = country;
+	this.province = province;
+	this.city = city;
 	this.address = address;
 	this.phoneNum = phoneNum;
 	this.department = department;
@@ -36,6 +39,9 @@ public abstract class Employee {
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public String getSex() { return sex; }
+    public String getCountry() { return country; }
+    public String getProvince() { return province; }
+    public String getCity() { return city; }
     public String getAddress() { return address; }
     public String getPhoneNum() { return phoneNum; }
     public String getDepartment() { return department; }
@@ -68,6 +74,18 @@ public abstract class Employee {
     
     public void setSex(String sex) {
 	this.sex = sex;
+    }
+    
+    public void setCountry(String country) {
+	this.country = country;
+    }
+
+    public void setProvince(String province) {
+	this.province = province;
+    }
+
+    public void setCity(String city) {
+	this.city = city;
     }
     
     public void setAddress(String address) {

@@ -1,7 +1,6 @@
 package Employees;
 
 import java.math.BigDecimal;
-import java.util.*;
 
 /**
  * Creates an instance of an hourly employee
@@ -9,19 +8,17 @@ import java.util.*;
  */
 public class HourlyEmployee extends Employee {
     //<editor-fold desc="Class Variables">
-    private String firstName, lastName, sex, address, phoneNum, department,
-	    position, employeeID, socialSecurityNum;
     private double hoursWorked = 0;
     private BigDecimal wage;
-    private GregorianCalendar dateOfBirth;
     //</editor-fold>
     
-    public HourlyEmployee(String firstName, String lastName, String sex,
-	    String address, String phoneNum, String department, String position,
-	    String socialSecurityNum, int yearOfBirth,
-	    int monthOfBirth, int dayOfBirth, BigDecimal wage) {
-        super(firstName, lastName, sex, address, phoneNum, department, position,
-		socialSecurityNum, yearOfBirth, monthOfBirth, dayOfBirth);
+    public HourlyEmployee(String firstName, String lastName, String sex, String country,
+	    String province, String city, String address, String phoneNum, String department,
+	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
+	    int dayOfBirth, BigDecimal wage) {
+        super(firstName, lastName, sex, country, province, city, address, phoneNum,
+		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
+		dayOfBirth);
 	this.wage = wage;
     } //end of Employee constructor
     

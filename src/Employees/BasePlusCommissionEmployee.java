@@ -1,7 +1,6 @@
 package Employees;
 
 import java.math.BigDecimal;
-import java.util.GregorianCalendar;
 
 /**
  * Creates an instance of a BasePlusCommissionEmployee
@@ -9,20 +8,16 @@ import java.util.GregorianCalendar;
  */
 public class BasePlusCommissionEmployee extends CommissionSalesEmployee {
     //<editor-fold desc="Class Variables">
-    private String firstName, lastName, address, sex, department, position,
-	    employeeID, socialSecurityNum;
-    private BigDecimal commissionRates, sales, baseSalary;
-    private GregorianCalendar dateOfBirth;
+    private BigDecimal baseSalary;
     //</editor-fold>
     
-    public BasePlusCommissionEmployee(String firstName, String lastName,
-	    String sex, String address, String phoneNum, String department,
-	    String position, String socialSecurityNum,
-	    int yearOfBirth, int monthOfBirth, int dayOfBirth,
-	    BigDecimal commissionRates, BigDecimal baseSalary) {
-	super(firstName, lastName, sex, address, phoneNum, department, position,
-		socialSecurityNum, yearOfBirth, monthOfBirth, dayOfBirth,
-		commissionRates);
+    public BasePlusCommissionEmployee(String firstName, String lastName, String sex, String country,
+	    String province, String city, String address, String phoneNum, String department,
+	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
+	    int dayOfBirth, BigDecimal wage, BigDecimal commissionRates, BigDecimal baseSalary) {
+	super(firstName, lastName, sex, country, province, city, address, phoneNum,
+		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
+		dayOfBirth, wage, commissionRates);
 	this.baseSalary = baseSalary;
     } //end of BasePlusCommissionEmployee constructor
     

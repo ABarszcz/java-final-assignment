@@ -9,19 +9,16 @@ import java.util.GregorianCalendar;
  */
 public class CommissionSalesEmployee extends Employee {
     //<editor-fold desc="Class Variables">
-    private String firstName, lastName, address, sex, department, position,
-	    employeeID, socialSecurityNum;
     private BigDecimal commissionRates, sales;
-    private GregorianCalendar dateOfBirth;
     //</editor-fold>
     
-    public CommissionSalesEmployee(String firstName, String lastName,
-	    String sex, String address, String phoneNum, String department,
-	    String position, String socialSecurityNum,
-	    int yearOfBirth, int monthOfBirth, int dayOfBirth,
-	    BigDecimal commissionRates) {
-	super(firstName, lastName, sex, address, phoneNum, department, position,
-		socialSecurityNum, yearOfBirth, monthOfBirth, dayOfBirth);
+    public CommissionSalesEmployee(String firstName, String lastName, String sex, String country,
+	    String province, String city, String address, String phoneNum, String department,
+	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
+	    int dayOfBirth, BigDecimal wage, BigDecimal commissionRates) {
+	super(firstName, lastName, sex, country, province, city, address, phoneNum,
+		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
+		dayOfBirth);
 	this.commissionRates = commissionRates;
     } //end of CommissionSalesEmployee constructor
     

@@ -1,5 +1,6 @@
 package Sale;
 
+import Common.Utils;
 import Customer.Customer;
 import Employees.Employee;
 import Products.Product;
@@ -11,6 +12,7 @@ import java.util.GregorianCalendar;
  */
 public class Sale {
     //<editor-fold desc="Class Variables">
+    private String salesID;
     private Product product;
     private Customer customer;
     private Employee employee;
@@ -18,6 +20,7 @@ public class Sale {
     //</editor-fold>
     
     public Sale(Product product, Customer customer, Employee employee) {
+	this.salesID = Utils.generateSaleID();
 	this.product = product;
 	this.customer = customer;
 	this.employee = employee;
@@ -26,6 +29,7 @@ public class Sale {
     
     //<editor-fold desc="Accessor Methods">
 
+    public String getSalesID() { return this.salesID; }
     public Product getProduct() { return product; }
     public Customer getCustomer() { return customer; }
     public Employee getEmployee() { return employee; }

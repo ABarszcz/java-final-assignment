@@ -9,19 +9,18 @@ import java.util.*;
  */
 public class SalaryEmployee extends Employee {
     //<editor-fold desc="Class Variables">
-    private String firstName, lastName, sex, address, phoneNum, department,
-	    position, employeeID, socialSecurityNum, salaryType;
-    //salaryType is weekly/monthly/yearly
+    private String salaryType; //salaryType is weekly/monthly/yearly
     private BigDecimal salaryAmount;
-    private GregorianCalendar dateOfBirth;
     //</editor-fold>
     
-    public SalaryEmployee(String firstName, String lastName, String sex,
-	    String address, String phoneNum, String department, String position,
-	    String socialSecurityNum, String salaryType, int yearOfBirth,
-	    int monthOfBirth, int dayOfBirth, BigDecimal salaryAmount) {
-        super(firstName, lastName, sex, address, phoneNum, department, position,
-		socialSecurityNum, yearOfBirth, monthOfBirth, dayOfBirth);
+    public SalaryEmployee(String firstName, String lastName, String sex, String country,
+	    String province, String city, String address, String phoneNum,
+	    String department, String position, String socialSecurityNum,
+	    String salaryType, int yearOfBirth, int monthOfBirth, int dayOfBirth,
+	    BigDecimal salaryAmount) {
+        super(firstName, lastName, sex, country, province, city, address, phoneNum,
+		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
+		dayOfBirth);
 	this.salaryType = salaryType;
 	this.salaryAmount = salaryAmount;
     } //end of Employee constructor
