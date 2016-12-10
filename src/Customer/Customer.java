@@ -34,13 +34,13 @@ public class Customer {
     public String getCustomerID() { return customerID; }
     public GregorianCalendar getDateOfBirth() { return dateOfBirth; }
     @Override public String toString() {
-	return "Employee First Name: " + getFirstName() + "\n"
-	    + "Employee Last Name: " + getLastName() + "\n"
-	    + "Employee Sex: " + getSex() + "\n"
-	    + "Employee Address: " + getAddress() + "\n"
-	    + "Employee Phone Number: " + getPhoneNum() + "\n"
-	    + "Employee EmployeeID: " + getCustomerID() + "\n"
-	    + "Employee Date Of Birth: " + getDateOfBirth() + "\n";
+	return "Customer First Name: " + getFirstName() + "\n"
+	    + "Customer Last Name: " + getLastName() + "\n"
+	    + "Customer Sex: " + getSex() + "\n"
+	    + "Customer Address: " + getAddress() + "\n"
+	    + "Customer Phone Number: " + getPhoneNum() + "\n"
+	    + "Customer EmployeeID: " + getCustomerID() + "\n"
+	    + "Customer Date Of Birth: " + getDateOfBirth().toString();
     }
     //</editor-fold>
 
