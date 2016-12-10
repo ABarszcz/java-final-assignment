@@ -30,14 +30,14 @@ public class Validation {
     /*
      * Validates an integer.
      */
-    public static void isValid(int i) {
+    public static void isValid(int i) throws IllegalArgumentException {
 	//nothing to do here
     }
     
     /*
      * Validates a double.
      */
-    public static void isValid(double dbl) {
+    public static void isValid(double dbl) throws IllegalArgumentException {
 	//nothing to do here
     }
     
