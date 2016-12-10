@@ -43,7 +43,6 @@ public class CommissionSalesEmployee extends Employee {
     public void addSales(BigDecimal sales) {
 	this.sales.add(sales);
     }
-    
     //</editor-fold>
 
     @Override public BigDecimal getPay() {

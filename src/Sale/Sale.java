@@ -28,7 +28,6 @@ public class Sale {
     } //end of sale constructor
     
     //<editor-fold desc="Accessor Methods">
-
     public String getSalesID() { return this.salesID; }
     public Product getProduct() { return product; }
     public Customer getCustomer() { return customer; }
@@ -40,11 +39,9 @@ public class Sale {
 	    + "Employee: " + getEmployee().toString() + "\n"
 	    + "Date of Sale: " + getDateOfSale().getTime();
     }
-    
     //</editor-fold>
     
     //<editor-fold desc="Mutator Methods">
-
     public void setProduct(Product product) {
 	this.product = product;
     }
@@ -56,10 +53,5 @@ public class Sale {
     public void setEmployee(Employee employee) {
 	this.employee = employee;
     }
-
-    public void setDateOfSale(GregorianCalendar dateOfSale) {
-	this.dateOfSale = dateOfSale;
-    }
-    
     //</editor-fold>
 }

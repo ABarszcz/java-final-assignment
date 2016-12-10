@@ -11,7 +11,7 @@ public class Customer {
     //<editor-fold desc="Class Variables">
     private String firstName, lastName, sex, province, city, address,
 	    phoneNum, customerID;
-    private GregorianCalendar dateOfBirth;
+    private GregorianCalendar dateOfBirth, customerSince;
     //</editor-fold>
     
     public Customer(String firstName, String lastName, String sex,
@@ -27,6 +27,7 @@ public class Customer {
 	this.customerID = Utils.generateCustomerID();
 	this.dateOfBirth = new GregorianCalendar();
 	this.dateOfBirth.set(yearOfBirth, monthOfBirth-1, dayOfBirth);
+	this.customerSince = new GregorianCalendar(); //initializes to today
     } //end of customer constructor
 
     //<editor-fold desc="Accessor Methods">
@@ -39,6 +40,7 @@ public class Customer {
     public String getPhoneNum() { return phoneNum; }
     public String getCustomerID() { return customerID; }
     public GregorianCalendar getDateOfBirth() { return dateOfBirth; }
+    public GregorianCalendar getCustomerSince() { return customerSince; }
     @Override public String toString() {
 	return "Customer First Name: " + getFirstName() + "\n"
 	    + "Customer Last Name: " + getLastName() + "\n"
