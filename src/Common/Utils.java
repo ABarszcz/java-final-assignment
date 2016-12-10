@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
 
 /**
  * This is a class with static utility methods for generic use
@@ -103,5 +104,13 @@ public class Utils {
 	out.append("=====================================================================================\n\n"); //bottom separator
 	
 	out.close();
+    }
+    
+    //show a confirmation dialog
+    public static boolean showConfirmDialog(String action) {
+	int reply = JOptionPane.showConfirmDialog(null, "Are you sure you wish to " + action + "?", "Confirmation",
+		JOptionPane.YES_NO_OPTION);
+	
+	return reply == JOptionPane.YES_OPTION;
     }
 }
