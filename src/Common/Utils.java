@@ -1,26 +1,10 @@
 package Common;
 
-import static Common.Validation.*;
-import Employees.BasePlusCommissionEmployee;
-import Employees.CommissionSalesEmployee;
-import Employees.HourlyEmployee;
-import Employees.SalaryEmployee;
-import Manufacturers.Manufacturer;
-import Products.Product;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 /**
  * This is a class with static utility methods for generic use
  * @author Anthony
  */
 public class Utils {
-    //create a generic calendar to hold current date
-    private static GregorianCalendar curDate = new GregorianCalendar();
     //create default ID numbers
     private static int empID = 0;
     private static int mfactID = 0;
@@ -59,7 +43,7 @@ public class Utils {
          return true;
       } catch (NumberFormatException ex) {  
          return false;  
-      }  
+      }
     }
     
     //</editor-fold>
