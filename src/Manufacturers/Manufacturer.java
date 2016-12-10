@@ -8,13 +8,12 @@ import Common.Utils;
  */
 public class Manufacturer {
     //<editor-fold desc="Class Variables">
-    String name, country, province, city, address, phoneNum, mfactID;
+    String name, province, city, address, phoneNum, mfactID;
     //</editor-fold>
     
     public Manufacturer (String name, String country, String province,
 	    String city, String address, String phoneNum) {
 	this.name = name;
-	this.country = country;
 	this.province = province;
 	this.city = city;
 	this.address = address;
@@ -23,8 +22,7 @@ public class Manufacturer {
     } //end of Manufacturer constructor
     
     //<editor-fold desc="Accessor Methods">
-    public String getName() { return this.name; };
-    public String getCountry() { return country; }
+    public String getName() { return this.name; }
     public String getProvince() { return province; }
     public String getCity() { return city; }
     public String getAddress() { return this.address; };
@@ -41,10 +39,6 @@ public class Manufacturer {
     //<editor-fold desc="Mutator Methods">
     public void setName(String name) {
 	this.name = name;
-    }
-
-    public void setCountry(String country) {
-	this.country = country;
     }
 
     public void setProvince(String province) {

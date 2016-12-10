@@ -12,11 +12,11 @@ public class HourlyEmployee extends Employee {
     private BigDecimal wage;
     //</editor-fold>
     
-    public HourlyEmployee(String firstName, String lastName, String sex, String country,
+    public HourlyEmployee(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum, String department,
 	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
 	    int dayOfBirth, BigDecimal wage) {
-        super(firstName, lastName, sex, country, province, city, address, phoneNum,
+        super(firstName, lastName, sex, province, city, address, phoneNum,
 		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
 		dayOfBirth);
 	this.wage = wage;

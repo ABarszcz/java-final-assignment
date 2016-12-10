@@ -11,11 +11,11 @@ public class BasePlusCommissionEmployee extends CommissionSalesEmployee {
     private BigDecimal baseSalary;
     //</editor-fold>
     
-    public BasePlusCommissionEmployee(String firstName, String lastName, String sex, String country,
+    public BasePlusCommissionEmployee(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum, String department,
 	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
 	    int dayOfBirth, BigDecimal wage, BigDecimal commissionRates, BigDecimal baseSalary) {
-	super(firstName, lastName, sex, country, province, city, address, phoneNum,
+	super(firstName, lastName, sex, province, city, address, phoneNum,
 		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
 		dayOfBirth, wage, commissionRates);
 	this.baseSalary = baseSalary;

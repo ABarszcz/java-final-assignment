@@ -1,7 +1,6 @@
 package Employees;
 
 import java.math.BigDecimal;
-import java.util.*;
 
 /**
  * Creates an instance of a salaried employee
@@ -13,12 +12,12 @@ public class SalaryEmployee extends Employee {
     private BigDecimal salaryAmount;
     //</editor-fold>
     
-    public SalaryEmployee(String firstName, String lastName, String sex, String country,
+    public SalaryEmployee(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum,
 	    String department, String position, String socialSecurityNum,
 	    String salaryType, int yearOfBirth, int monthOfBirth, int dayOfBirth,
 	    BigDecimal salaryAmount) {
-        super(firstName, lastName, sex, country, province, city, address, phoneNum,
+        super(firstName, lastName, sex, province, city, address, phoneNum,
 		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
 		dayOfBirth);
 	this.salaryType = salaryType;
