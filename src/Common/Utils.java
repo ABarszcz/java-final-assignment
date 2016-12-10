@@ -9,6 +9,8 @@ public class Utils {
     private static int empID = 0;
     private static int mfactID = 0;
     private static int productID = 0;
+    private static int customerID = 0;
+    private static int saleID = 0;
     
     /*
      * Generate Employee ID number
@@ -32,6 +34,22 @@ public class Utils {
     public static String generateProductID() {
 	productID++;
 	return String.valueOf(productID);
+    }
+    
+    /*
+     * Generate customer ID number
+     */
+    public static String generateCustomerID() {
+	customerID++;
+	return String.valueOf(customerID);
+    }
+    
+    /*
+     * Generate sale ID number
+     */
+    public static String generateSaleID() {
+	saleID++;
+	return String.valueOf(saleID);
     }
     
     //<editor-fold desc="Other">
