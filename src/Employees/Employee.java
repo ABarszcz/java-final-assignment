@@ -59,7 +59,7 @@ public abstract class Employee {
 	    + "Employee Position: " + getPosition() + "\n"
 	    + "Employee EmployeeID: " + getEmployeeID() + "\n"
 	    + "Employee Social Security Number: " + getSocialSecurityNum() + "\n"
-	    + "Employee Date Of Birth: " + getDateOfBirth().toString() + "\n";
+	    + "Employee Date Of Birth: " + getDateOfBirth().getTime() + "\n";
     }
     //</editor-fold>
     

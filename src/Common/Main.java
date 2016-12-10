@@ -3,11 +3,8 @@ package Common;
 import Employees.Employee;
 import GUI.MainGUI;
 import Products.Product;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 /**
@@ -20,9 +17,18 @@ public class Main {
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
-	MainGUI gui = new MainGUI();
+	//MainGUI gui = new MainGUI();
 	
-	//commented out the menu-driven application
+	Exception ex = new Exception();
+	Utils.logError(ex);
+	Utils.logError(ex);
+	Utils.logError(ex);
+	Utils.logError(ex);
+	Utils.logError(ex);
+	Utils.logError(ex);
+	Utils.logError(ex);
+	
+	//<editor-fold desc="Menu Driven Application">
 	
 	/*
 	//create a buffered reader to get user inputs
@@ -116,5 +122,6 @@ public class Main {
 	    }
 	} //end of while
 	*/
+	//</editor-fold>
     } //end of main
 } //end of class

@@ -1,6 +1,7 @@
 package Common;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,25 +76,32 @@ public class Utils {
     
     //log an error
     public static void logError(Exception ex) throws IOException {
-	//create a StringWriter to hold the stack trace
-	StringWriter sw = new StringWriter();
-	//print the stack trace to the string writer
-	ex.printStackTrace(new PrintWriter(sw));
-	//get the exception from the string writer
-	String error = sw.toString();
-	sw.close();
-	
-	//create BufferedWriter for writing to text files
-	BufferedWriter bw = new BufferedWriter(new FileWriter("C:/Errors/Errors.txt"));
 	//create a GregorianCalendar to get the current time
 	GregorianCalendar now = new GregorianCalendar();
 	
-	bw.append("============================================"); //top separator
-	bw.append("\n" + now.toString()); //current date/time
-	bw.append("\n" + error); //error
-	bw.append("\n" + "============================================"); //bottom separator
-	bw.newLine(); //new line
+	StringWriter sw = new StringWriter();
+	ex.printStackTrace(new PrintWriter(sw)); //get the stack trace
+	String error = sw.toString(); //save the stack trace in a string
+	sw.close();
 	
-	bw.close();
+	//create the directory
+	File errorDir = new File("F:/Errors/");
+	File errorFile = new File(errorDir, "errors.txt");
+	
+	//if the file doesn't exist
+	if(!errorFile.exists()) {
+	    errorDir.mkdirs(); //make the directories
+	    errorFile.createNewFile();//create the file in the directory
+	}
+	
+	//create BufferedWriter for writing to the text file
+	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(errorFile, true)));
+	
+	//append the info
+	out.append(now.getTime() + "\n"); //current date/time
+	out.append(error + "\n"); //error
+	out.append("=====================================================================================\n\n"); //bottom separator
+	
+	out.close();
     }
 }

@@ -48,7 +48,7 @@ public class Customer {
 	    + "Customer Address: " + getAddress() + "\n"
 	    + "Customer Phone Number: " + getPhoneNum() + "\n"
 	    + "Customer EmployeeID: " + getCustomerID() + "\n"
-	    + "Customer Date Of Birth: " + getDateOfBirth().toString();
+	    + "Customer Date Of Birth: " + getDateOfBirth().getTime();
     }
     //</editor-fold>
 

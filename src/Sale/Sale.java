@@ -38,7 +38,7 @@ public class Sale {
 	return "Product Sold: " + getProduct().toString() + "\n"
 	    + "Customer: " + getCustomer().toString() + "\n"
 	    + "Employee: " + getEmployee().toString() + "\n"
-	    + "Date of Sale: " + getDateOfSale().toString();
+	    + "Date of Sale: " + getDateOfSale().getTime();
     }
     
     //</editor-fold>
