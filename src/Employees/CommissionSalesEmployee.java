@@ -38,18 +38,15 @@ public class CommissionSalesEmployee extends Employee {
     
     //<editor-fold desc="Mutator Methods">
     public void setCommissionRates(BigDecimal commissionRates) {
-	if(isValid(commissionRates))
-	    this.commissionRates = commissionRates;
+	this.commissionRates = commissionRates;
     }
     
     public void setSales(BigDecimal sales) {
-	if(isValid(sales))
-	    this.sales = sales;
+	this.sales = sales;
     }
     
     public void addSales(BigDecimal sales) {
-	if(isValid(sales))
-	    this.sales.add(sales);
+	this.sales.add(sales);
     }
     
     //</editor-fold>

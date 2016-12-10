@@ -37,8 +37,7 @@ public class BasePlusCommissionEmployee extends CommissionSalesEmployee {
     
     //<editor-fold desc="Mutator Methods">
     public void setBaseSalary(BigDecimal baseSalary) {
-	if(isValid(baseSalary))
-	    this.baseSalary = baseSalary;
+	this.baseSalary = baseSalary;
     }
     //</editor-fold>
     

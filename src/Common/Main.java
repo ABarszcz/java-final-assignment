@@ -22,6 +22,9 @@ public class Main {
 	
 	MainGUI gui = new MainGUI();
 	
+	//commented out the menu-driven application
+	
+	/*
 	//create a buffered reader to get user inputs
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
@@ -112,5 +115,6 @@ public class Main {
 		    break;
 	    }
 	} //end of while
+	*/
     } //end of main
 } //end of class

@@ -60,48 +60,39 @@ public abstract class Employee {
     
     //<editor-fold desc="Mutator Methods">
     public void setFirstName(String firstName) {
-	if(isValid(firstName))
-	    this.firstName = firstName;
+	this.firstName = firstName;
     }
     
     public void setLastName(String lastName) {
-	if(isValid(lastName))
-	    this.lastName = lastName;
+	this.lastName = lastName;
     }
     
     public void setSex(String sex) {
-	if(isValid(sex))
-	    this.sex = sex;
+	this.sex = sex;
     }
     
     public void setAddress(String address) {
-	if(isValid(address))
-	    this.address = address;
+	this.address = address;
     }
     
     public void setPhoneNum(String phoneNum) {
-	if(isValid(phoneNum))
-	    this.phoneNum = phoneNum;
+	this.phoneNum = phoneNum;
     }
     
     public void setDepartment(String department) {
-	if(isValid(department))
-	    this.department = department;
+	this.department = department;
     }
     
     public void setPosition(String position) {
-	if(isValid(position))
-	    this.position = position;
+	this.position = position;
     }
     
     public void setSocialSecurityNum(String socialSecurityNum) {
-	if(isValid(employeeID))
-	    this.socialSecurityNum = socialSecurityNum;
+	this.socialSecurityNum = socialSecurityNum;
     }
     
     public void setDateOfBirth(GregorianCalendar dateOfBirth) {
-	if(isValid(dateOfBirth, true, false))
-	    this.dateOfBirth = dateOfBirth;
+	this.dateOfBirth = dateOfBirth;
     }
     //</editor-fold>
     

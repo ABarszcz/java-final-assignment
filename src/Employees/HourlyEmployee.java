@@ -44,13 +44,11 @@ public class HourlyEmployee extends Employee {
     
     //add additional hours worked instead of overwriting old value
     public void addHoursWorked(double hours) {
-	if(isValid(hours))
-	    this.hoursWorked += hours;
+	this.hoursWorked += hours;
     }
 
     public void setWage(BigDecimal wage) {
-	if(isValid(wage))
-	    this.wage = wage;
+	this.wage = wage;
     }
     //</editor-fold>
 

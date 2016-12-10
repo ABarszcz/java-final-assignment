@@ -39,12 +39,10 @@ public class SalaryEmployee extends Employee {
     
     //<editor-fold desc="Mutator Methods">
     public void setSalaryType(String salaryType) {
-	if(isValid(salaryType))
-	    this.salaryType = salaryType;
+	this.salaryType = salaryType;
     }
     public void setSalaryAmount(BigDecimal salaryAmount) {
-	if(isValid(salaryAmount))
-	    this.salaryAmount = salaryAmount;
+	this.salaryAmount = salaryAmount;
     }
     //</editor-fold>
 

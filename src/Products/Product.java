@@ -46,18 +46,15 @@ public class Product {
     
     //<editor-fold desc="Mutator Methods">
     public void setName(String name) {
-	if(isValid(name))
-	    this.name = name;
+	this.name = name;
     }
     
     public void setPrice(BigDecimal price) {
-	if(isValid(price))
-	    this.price = price;
+	this.price = price;
     }
     
     public void setDiscount(BigDecimal discount) {
-	if(isValid(discount, MAX_DISCOUNT))
-	    this.discount = discount;
+	this.discount = discount;
     }
     
     public void setMfact(Manufacturer mfact) {

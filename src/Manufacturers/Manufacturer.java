@@ -34,18 +34,15 @@ public class Manufacturer {
     
     //<editor-fold desc="Mutator Methods">
     public void setName(String name) {
-	if(isValid(name))
-	    this.name = name;
+	this.name = name;
     }
     
     public void setAddress(String address) {
-	if(isValid(address))
-	    this.address = address;
+	this.address = address;
     }
     
     public void setPhoneNum(String phoneNum) {
-	if(isValid(phoneNum))
-	    this.phoneNum = phoneNum;
+	this.phoneNum = phoneNum;
     }
     //</editor-fold>
     
