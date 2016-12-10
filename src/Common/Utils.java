@@ -85,7 +85,7 @@ public class Utils {
 	sw.close();
 	
 	//create the directory
-	File errorDir = new File("F:/Errors/");
+	File errorDir = new File("C:/Errors/");
 	File errorFile = new File(errorDir, "errors.txt");
 	
 	//if the file doesn't exist

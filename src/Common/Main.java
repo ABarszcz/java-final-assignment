@@ -17,16 +17,7 @@ public class Main {
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
-	//MainGUI gui = new MainGUI();
-	
-	Exception ex = new Exception();
-	Utils.logError(ex);
-	Utils.logError(ex);
-	Utils.logError(ex);
-	Utils.logError(ex);
-	Utils.logError(ex);
-	Utils.logError(ex);
-	Utils.logError(ex);
+	MainGUI gui = new MainGUI();
 	
 	//<editor-fold desc="Menu Driven Application">
 	
