@@ -1,7 +1,6 @@
 package Products;
 
 import Common.Utils;
-import static Common.Validation.*;
 import Manufacturers.Manufacturer;
 import java.math.BigDecimal;
 

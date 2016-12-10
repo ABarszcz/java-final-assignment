@@ -1,7 +1,6 @@
 package Manufacturers;
 
 import Common.Utils;
-import static Common.Validation.*;
 
 /**
  * Creates an instance of a Manufacturer
