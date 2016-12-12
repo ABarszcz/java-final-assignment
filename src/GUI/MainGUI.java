@@ -11,6 +11,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -20,7 +21,7 @@ import javax.swing.JTextField;
 
 /**
  * Creates the Graphical User Interface for the application.
- * @author Anthony Barszcz
+ * @author Noah Michael
  */
 public class MainGUI extends JFrame {
     private final JPanel pnlFullScreen;
@@ -34,20 +35,20 @@ public class MainGUI extends JFrame {
     //<editor-fold desc="Exit Button">
     private final JPanel pnlExit;
     private final JButton btnExit;
-    //</editor-fold>
-    
+    //</editor-fold> 
+     
     //<editor-fold desc="Employee GUI Components">
     private final JTabbedPane pnlEmp; //holds all employee content
     
     //S = Salary, H = Hourly, CS = Commission-Sales, BPC = Base Plus Commission
     private final JPanel pnlEmpS, pnlEmpH, pnlEmpCS, pnlEmpBPC, pnlEmpSCenter,
-	    pnlEmpHCenter, pnlEmpCSCenter, pnlEmpBPCCenter, pnlEmpSSouth, pnlEmpHSouth,
+	    pnlEmpHCenter, pnlEmpCSCenter, pnlEmpBPCCenter, pnlEmpSSouth, pnlEmpSouth, pnlEmpHSouth,
 	    pnlEmpCSSouth, pnlEmpBPCSouth, pnlEmpSLabelGrid, pnlEmpHLabelGrid,
 	    pnlEmpCSLabelGrid, pnlEmpBPCLabelGrid, pnlEmpSFieldGrid, pnlEmpHFieldGrid,
 	    pnlEmpCSFieldGrid, pnlEmpBPCFieldGrid, pnlEmpSSex, pnlEmpHSex, pnlEmpCSSex,
 	    pnlEmpBPCSex, pnlEmpSearch, pnlEmpSearchNorth, pnlEmpSearchCenter;
-    private final JLabel lblEmpSearch;
-    private final JTextField txtEmpSearch;
+    private final JLabel lblEmpSearchLastName, lblEmpSearchDepartment;
+    private final JTextField txtEmpSearchLastName, txtEmpSearchDepartment;
     private final JTextArea txaEmpResults;
     private final JScrollPane spEmpResults;
     
@@ -96,7 +97,7 @@ public class MainGUI extends JFrame {
     ButtonGroup grpEmpBPCSex;
     
     //create "create new" buttons
-    private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew;
+    private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew,btnEmployeeEdit, btnEmployeeDelete;
     
     //</editor-fold>
     
@@ -104,7 +105,7 @@ public class MainGUI extends JFrame {
     private final JTabbedPane pnlMfact;
     private final JPanel pnlMfactNew, pnlMfactNorth, pnlMfactCenter, pnlMfactSouth,
 	    pnlMfactLabelGrid, pnlMfactFieldGrid, pnlMfactSearch, pnlMfactSearchNorth,
-	    pnlMfactSearchCenter;
+	    pnlMfactSearchCenter, pnlManufacturerSouth;
     private final JTextField txtMfactSearch, txtMfactName, txtMfactAddress,
 	    txtMfactPhoneNum;
     private final JButton btnMfactNew;
@@ -112,20 +113,64 @@ public class MainGUI extends JFrame {
     private final JTextArea txaMfactResults;
     private final JScrollPane spMfactResults;
     
+    private final JButton btnManufacturerEdit, btnManufacturerDelete;
+    
     //</editor-fold>
     
     //<editor-fold desc="Product GUI Components">
+    // pnlProductSouthED; E = Edit, D = Delete
     private final JTabbedPane pnlProduct;
     private final JPanel pnlProductNew, pnlProductNorth, pnlProductCenter,
 	    pnlProductSouth, pnlProductLabelGrid, pnlProductFieldGrid, pnlProductSearch,
-	    pnlProductSearchNorth, pnlProductSearchCenter;
+	    pnlProductSearchNorth, pnlProductSearchCenter, pnlProductSouthED;
     private final JTextField txtProductSearch, txtProductName, txtProductPrice,
-	    txtProductDiscount;
+	    txtProductDiscount, txtProductManuSearch;
     private final JComboBox cboProductManufacturer;
     private final JButton btnProductNew;
-    private final JLabel lblProductSearch;
+    private final JLabel lblProductSearch, lblProductManuSearch;
     private final JTextArea txaProductResults;
     private final JScrollPane spProductResults;
+    
+    private final JButton btnProductEdit, btnProductDelete;
+    
+    //</editor-fold>
+    
+    //<editor-fold desc="Sales GUI Components">
+    // pnlSalesSouthED; E = Edit, D = Delete
+    private final JTabbedPane pnlSales;
+    private final JPanel pnlSalesNew, pnlSalesNorth, pnlSalesCenter,
+	    pnlSalesSouth, pnlSalesLabelGrid, pnlSalesFieldGrid, pnlSalesSearch,
+	    pnlSalesSearchNorth, pnlSalesSearchCenter, pnlSalesSouthED;
+    private final JTextField txtSalesSearchLastName, txtSalesProductName, txtSalesCustomer, txtSalesEmployee,
+	    txtSalesCommission, txtSalesSearchProductName, txtSalesDate;
+    private final JButton btnSalesNew;
+    private final JLabel lblSalesSearchLastName, lblSalesSearchProductName;
+    private final JTextArea txaSalesResults;
+    private final JScrollPane spSalesResults;
+    
+    private final JButton btnSalesEdit, btnSalesDelete;
+    
+    //</editor-fold>
+    
+    //</editor-fold desc="Customer GUI components">
+    // pnlCustomerSouthED; E = Edit, D = Delete
+    private final JTabbedPane pnlCustomer;
+    private final JPanel pnlCustomerNew, pnlCustomerNorth, pnlCustomerCenter,
+            pnlCustomerSouth, pnlCustomerLabelGrid, pnlCustomerFieldGrid, pnlCustomerSearch,
+            pnlCustomerSearchNorth, pnlCustomerSearchCenter, pnlCustomerSex, pnlCustomerSouthED;
+    private final JTextField txtCustomerSearchLastName, txtCustomerSearchPhoneNumber, txtCustomerFirstName, 
+            txtCustomerLastName, txtCustomerPhone, txtCustomerSex, txtCustomerProvince, txtCustomerCity, 
+            txtCustomerAddress, txtCustomerYearOfBirth, txtCustomerMonthOfBirth, txtCustomerDayOfBirth;
+    private final JButton btnCustomerNew;
+    private final JLabel lblCustomerSearchLastName, lblCustomerSearchPhoneNumber;
+    private final JTextArea txaCustomerResults;
+    private final JScrollPane spCustomerResults;
+    
+    //radio buttons and the radio button group for Salary employee
+    JRadioButton rdoCustomerSexMale, rdoCustomerSexFemale;
+    ButtonGroup grpCustomerSex;
+    
+    private final JButton btnCustomerEdit, btnCustomerDelete;
     
     //</editor-fold>
     
@@ -154,6 +199,7 @@ public class MainGUI extends JFrame {
 	this.pnlEmpCSCenter = new JPanel();
 	this.pnlEmpBPCCenter = new JPanel();
 	this.pnlEmpSSouth = new JPanel();
+        this.pnlEmpSouth = new JPanel();
 	this.pnlEmpHSouth = new JPanel();
 	this.pnlEmpCSSouth = new JPanel();
 	this.pnlEmpBPCSouth = new JPanel();
@@ -286,8 +332,10 @@ public class MainGUI extends JFrame {
 	this.pnlEmpBPCSex.add(rdoEmpBPCSexFemale);
 	
 	//initialize search components
-	this.lblEmpSearch = new JLabel("Search");
-	this.txtEmpSearch = new JTextField(15);
+	this.lblEmpSearchLastName = new JLabel("Search by Employee's Last Name");
+	this.txtEmpSearchLastName = new JTextField(15);
+        this.lblEmpSearchDepartment = new JLabel("Search by Department");
+	this.txtEmpSearchDepartment = new JTextField(15);
 	this.txaEmpResults = new JTextArea(15, 30);
 	this.spEmpResults = new JScrollPane(txaEmpResults);
 	
@@ -296,6 +344,8 @@ public class MainGUI extends JFrame {
 	this.btnEmpHNew = new JButton("Create Hourly Employee");
 	this.btnEmpCSNew = new JButton("Create Commission-Sales Employee");
 	this.btnEmpBPCNew = new JButton("Create Base Plus Commission Employee");
+        this.btnEmployeeEdit = new JButton("Edit");
+        this.btnEmployeeDelete = new JButton("Delete");
 	//</editor-fold>
 	
 	//<editor-fold desc="Initialize Manufacturer Components">
@@ -311,6 +361,7 @@ public class MainGUI extends JFrame {
 	this.pnlMfactSearch = new JPanel();
 	this.pnlMfactSearchNorth = new JPanel();
 	this.pnlMfactSearchCenter = new JPanel();
+        this.pnlManufacturerSouth = new JPanel();
 	
 	//initialize JTextFields
 	this.txtMfactAddress = new JTextField(15);
@@ -319,9 +370,11 @@ public class MainGUI extends JFrame {
 	
 	//initialize JButton
 	this.btnMfactNew = new JButton("Create Manufacturer");
-	
+	this.btnManufacturerEdit = new JButton("Edit");
+        this.btnManufacturerDelete = new JButton("Delete");
+        
 	//initialize search components
-	this.lblMfactSearch = new JLabel("Search Manufacturers");
+	this.lblMfactSearch = new JLabel("Search by Manufacturer's Name");
 	this.txtMfactSearch = new JTextField(15);
 	this.txaMfactResults = new JTextArea(15, 30);
 	this.spMfactResults = new JScrollPane(txaMfactResults);
@@ -340,6 +393,7 @@ public class MainGUI extends JFrame {
 	this.pnlProductSearch = new JPanel();
 	this.pnlProductSearchNorth = new JPanel();
 	this.pnlProductSearchCenter = new JPanel();
+        this.pnlProductSouthED = new JPanel();
 	
 	//initialize JTextFields
 	this.txtProductName = new JTextField(15);
@@ -348,16 +402,108 @@ public class MainGUI extends JFrame {
 	
 	//initialize JButton
 	this.btnProductNew = new JButton("Create Product");
+	this.btnProductEdit = new JButton("Edit");
+	this.btnProductDelete = new JButton("Delete");
 	
 	//initialize JComboBox
 	this.cboProductManufacturer = new JComboBox();
 	
 	//initialize Search components
-	this.lblProductSearch = new JLabel("Search Products");
+	this.lblProductSearch = new JLabel("Search Product by Name");
 	this.txtProductSearch = new JTextField(15);
+        this.lblProductManuSearch = new JLabel("Search Product by Manufacturer's Name");
+	this.txtProductManuSearch = new JTextField(15);
 	this.txaProductResults = new JTextArea(15, 30);
 	this.spProductResults = new JScrollPane(txaProductResults);
-	//</editor-fold>
+        
+        //<editor-fold desc="Initialize Sales Components">
+	
+	//initialize JPanels
+	this.pnlSales = new JTabbedPane();
+	this.pnlSalesNew = new JPanel();
+	this.pnlSalesNorth = new JPanel();
+	this.pnlSalesCenter = new JPanel();
+	this.pnlSalesSouth = new JPanel();
+	this.pnlSalesLabelGrid = new JPanel();
+	this.pnlSalesFieldGrid = new JPanel();
+	this.pnlSalesSearch = new JPanel();
+	this.pnlSalesSearchNorth = new JPanel();
+	this.pnlSalesSearchCenter = new JPanel();
+        this.pnlSalesSouthED = new JPanel();
+	        
+	//initialize JTextFields
+	this.txtSalesProductName = new JTextField(15);
+        this.txtSalesCustomer = new JTextField(15);
+	this.txtSalesEmployee = new JTextField(15);
+	this.txtSalesCommission = new JTextField(15);
+        this.txtSalesDate = new JTextField(15);
+	
+	//initialize JButton
+	this.btnSalesNew = new JButton("Create Sales");
+        this.btnSalesEdit = new JButton("Edit");
+        this.btnSalesDelete = new JButton("Delete");
+		
+	//initialize Search components
+	this.lblSalesSearchLastName = new JLabel("Search Sales by Employee's Last Name");
+	this.txtSalesSearchLastName = new JTextField(15);
+        this.lblSalesSearchProductName = new JLabel("Search Sales by Product Name");
+	this.txtSalesSearchProductName = new JTextField(15);
+	this.txaSalesResults = new JTextArea(15, 30);
+	this.spSalesResults = new JScrollPane(txaSalesResults);       
+        //</editor-fold>
+        
+        //<editor-fold desc="Initialize Customer Components">
+	
+	//initialize JPanels
+	this.pnlCustomer = new JTabbedPane();
+	this.pnlCustomerNew = new JPanel();
+	this.pnlCustomerNorth = new JPanel();
+	this.pnlCustomerCenter = new JPanel();
+	this.pnlCustomerSouth = new JPanel();
+	this.pnlCustomerLabelGrid = new JPanel();
+	this.pnlCustomerFieldGrid = new JPanel();
+	this.pnlCustomerSearch = new JPanel();
+	this.pnlCustomerSearchNorth = new JPanel();
+	this.pnlCustomerSearchCenter = new JPanel();
+        this.pnlCustomerSouthED = new JPanel();
+	        
+	//initialize JTextFields
+	this.txtCustomerFirstName = new JTextField(15);
+	this.txtCustomerLastName = new JTextField(15);
+        this.txtCustomerSex = new JTextField(15);
+        this.txtCustomerProvince = new JTextField(15);
+        this.txtCustomerCity = new JTextField(15);
+        this.txtCustomerAddress = new JTextField(15);
+	this.txtCustomerPhone = new JTextField(15);
+        this.txtCustomerYearOfBirth = new JTextField(15);
+        this.txtCustomerMonthOfBirth = new JTextField(15);
+        this.txtCustomerDayOfBirth = new JTextField(15);
+	
+	//initialize JButton
+	this.btnCustomerNew = new JButton("Create Customer");
+        this.btnCustomerEdit = new JButton("Edit");
+        this.btnCustomerDelete = new JButton("Delete");
+		
+	//initialize Search components
+	this.lblCustomerSearchLastName = new JLabel("Search by Customer's Last Name");
+	this.txtCustomerSearchLastName = new JTextField(15);
+        this.lblCustomerSearchPhoneNumber = new JLabel("Search Customer's by Phone Number");
+	this.txtCustomerSearchPhoneNumber = new JTextField(15);
+	this.txaCustomerResults = new JTextArea(15, 30);
+	this.spCustomerResults = new JScrollPane(txaCustomerResults);
+        
+        //create radio buttons and the radio button group for Customer
+	this.rdoCustomerSexMale = new JRadioButton("Male");
+	this.rdoCustomerSexFemale = new JRadioButton("Female");
+	this.grpCustomerSex = new ButtonGroup();
+	this.grpCustomerSex.add(rdoCustomerSexMale);
+	this.grpCustomerSex.add(rdoCustomerSexFemale);
+	
+	//create panel for sex radio buttons
+	this.pnlCustomerSex = new JPanel();
+	this.pnlCustomerSex.add(rdoCustomerSexMale);
+	this.pnlCustomerSex.add(rdoCustomerSexFemale);       
+        //</editor-fold>
 	
 	//initialize exit components
 	this.pnlExit = new JPanel();
@@ -370,7 +516,7 @@ public class MainGUI extends JFrame {
     
     private void setupGUI() {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setSize(365,545);
+	this.setSize(685,545);
 	//create the vew
 	this.setContentPane(this.createContentPane());
 	this.setVisible(true);
@@ -390,6 +536,12 @@ public class MainGUI extends JFrame {
 	//design and populate the product tabbed pane
 	createProductTabbedPane();
 	
+        // Design and populate the sales tabbed pane
+        createSalesTabbedPane();
+        
+        // Design and populate the customer tabbed pane
+        createCustomerTabbedPane();
+        
 	//design and populate the exit panel
 	pnlExit.add(btnExit);
 	
@@ -397,6 +549,8 @@ public class MainGUI extends JFrame {
 	pnlTabbedPane.addTab("Employees", pnlEmp);
 	pnlTabbedPane.addTab("Manufacturers", pnlMfact);
 	pnlTabbedPane.addTab("Products", pnlProduct);
+        pnlTabbedPane.addTab("Sales", pnlSales);
+        pnlTabbedPane.addTab("Customer", pnlCustomer);
 	
 	//populate the full screen of the application
 	pnlFullScreen.setLayout(new BorderLayout());
@@ -441,20 +595,44 @@ public class MainGUI extends JFrame {
 	pnlProduct.addTab("New Product", pnlProductNew);
     }
     
+    private void createSalesTabbedPane() {
+	createSalesSearchTab();
+	createSalesTab();
+	
+	//add the tabs
+	pnlSales.addTab("Search", pnlSalesSearch);
+	pnlSales.addTab("New Sales", pnlSalesNew);
+    }
+    
+    private void createCustomerTabbedPane() {
+	createCustomerSearchTab();
+	createCustomersTab();
+	
+	//add the tabs
+	pnlCustomer.addTab("Search", pnlCustomerSearch);
+	pnlCustomer.addTab("New Customer", pnlCustomerNew);
+    }
+    
     private void createEmployeeSearchTab() {
 	//set as a border layout
 	pnlEmpSearch.setLayout(new BorderLayout());
 	
 	//design the north panel
 	pnlEmpSearchNorth.setLayout(new FlowLayout());
-	pnlEmpSearchNorth.add(lblEmpSearch);
-	pnlEmpSearchNorth.add(txtEmpSearch);
+	pnlEmpSearchNorth.add(lblEmpSearchLastName);
+	pnlEmpSearchNorth.add(txtEmpSearchLastName);
+        pnlEmpSearchCenter.add(lblEmpSearchDepartment);
+	pnlEmpSearchCenter.add(txtEmpSearchDepartment);
 	
 	//design the center panel
 	pnlEmpSearchCenter.add(spEmpResults);
 	
 	pnlEmpSearch.add(pnlEmpSearchNorth, BorderLayout.NORTH);
 	pnlEmpSearch.add(pnlEmpSearchCenter, BorderLayout.CENTER);
+        
+        pnlEmpSouth.add(btnEmployeeEdit);
+        pnlEmpSouth.add(btnEmployeeDelete);
+	pnlEmpSearch.add(pnlEmpSouth, BorderLayout.SOUTH);
     }
     
     private void createSalaryEmployeeTab() {
@@ -655,6 +833,10 @@ public class MainGUI extends JFrame {
 	
 	pnlMfactSearch.add(pnlMfactSearchNorth, BorderLayout.NORTH);
 	pnlMfactSearch.add(pnlMfactSearchCenter, BorderLayout.CENTER);
+        
+        pnlManufacturerSouth.add(btnManufacturerEdit);
+        pnlManufacturerSouth.add(btnManufacturerDelete);
+	pnlMfactSearch.add(pnlManufacturerSouth, BorderLayout.SOUTH);
     }
     
     private void createManufacturerTab() {
@@ -692,12 +874,18 @@ public class MainGUI extends JFrame {
 	pnlProductSearchNorth.setLayout(new FlowLayout());
 	pnlProductSearchNorth.add(lblProductSearch);
 	pnlProductSearchNorth.add(txtProductSearch);
+        pnlProductSearchCenter.add(lblProductManuSearch);
+	pnlProductSearchCenter.add(txtProductManuSearch);
 	
 	//design the center panel
 	pnlProductSearchCenter.add(spProductResults);
 	
 	pnlProductSearch.add(pnlProductSearchNorth, BorderLayout.NORTH);
 	pnlProductSearch.add(pnlProductSearchCenter, BorderLayout.CENTER);
+        
+        pnlProductSouthED.add(btnProductEdit);
+        pnlProductSouthED.add(btnProductDelete);
+	pnlProductSearch.add(pnlProductSouthED, BorderLayout.SOUTH);
     }
     
     private void createProductTab() {
@@ -729,11 +917,141 @@ public class MainGUI extends JFrame {
 	pnlProductNew.add(pnlProductSouth, BorderLayout.SOUTH);
     }
     
+    private void createSalesSearchTab() {
+	//set as a border layout
+	pnlSalesSearch.setLayout(new BorderLayout());
+	
+	//design the north panel
+	pnlSalesSearchNorth.setLayout(new FlowLayout());
+	pnlSalesSearchNorth.add(lblSalesSearchLastName);
+	pnlSalesSearchNorth.add(txtSalesSearchLastName);
+        pnlSalesSearchCenter.add(lblSalesSearchProductName);
+	pnlSalesSearchCenter.add(txtSalesSearchProductName);
+        	
+	//design the center panel
+	pnlSalesSearchCenter.add(spSalesResults);
+	
+	pnlSalesSearch.add(pnlSalesSearchNorth, BorderLayout.NORTH);
+	pnlSalesSearch.add(pnlSalesSearchCenter, BorderLayout.CENTER);
+        
+        pnlSalesSouthED.add(btnSalesEdit);
+        pnlSalesSouthED.add(btnSalesDelete);
+	pnlSalesSearch.add(pnlSalesSouthED, BorderLayout.SOUTH);
+    }
+    
+    private void createSalesTab() {
+	//set as a border layout
+	pnlSalesNew.setLayout(new BorderLayout());
+	
+	//create the label sub-panel of the center panel
+	pnlSalesLabelGrid.setLayout(new GridLayout(13,1));
+	pnlSalesLabelGrid.add(new JLabel("Product Name"));
+        pnlSalesLabelGrid.add(new JLabel("Customer"));
+	pnlSalesLabelGrid.add(new JLabel("Employee"));
+	pnlSalesLabelGrid.add(new JLabel("Commission On Sale"));
+        pnlSalesLabelGrid.add(new JLabel("Date Of Sale"));
+	
+	//create the field sub-panel of the center panel
+	pnlSalesFieldGrid.setLayout(new GridLayout(13,1));
+	pnlSalesFieldGrid.add(txtSalesProductName);
+        pnlSalesFieldGrid.add(txtSalesCustomer);
+	pnlSalesFieldGrid.add(txtSalesEmployee);
+	pnlSalesFieldGrid.add(txtSalesCommission);
+        pnlSalesFieldGrid.add(txtSalesDate);
+	
+	//create and add the center panel
+	pnlSalesCenter.setLayout(new BorderLayout());
+	pnlSalesCenter.add(pnlSalesLabelGrid, BorderLayout.WEST);
+	pnlSalesCenter.add(pnlSalesFieldGrid, BorderLayout.EAST);
+	pnlSalesNew.add(pnlSalesCenter, BorderLayout.CENTER);
+	
+	//create and add the south panel
+	pnlSalesSouth.add(btnSalesNew);
+	pnlSalesNew.add(pnlSalesSouth, BorderLayout.SOUTH);
+    }
+    
+    private void createCustomerSearchTab() {
+	//set as a border layout
+	pnlCustomerSearch.setLayout(new BorderLayout());
+	
+	//design the north panel
+	pnlCustomerSearchNorth.setLayout(new FlowLayout());
+	pnlCustomerSearchNorth.add(lblCustomerSearchLastName);
+	pnlCustomerSearchNorth.add(txtCustomerSearchLastName);
+        pnlCustomerSearchCenter.add(lblCustomerSearchPhoneNumber);
+	pnlCustomerSearchCenter.add(txtCustomerSearchPhoneNumber);
+        	
+	//design the center panel
+	pnlCustomerSearchCenter.add(spCustomerResults);
+	
+	pnlCustomerSearch.add(pnlCustomerSearchNorth, BorderLayout.NORTH);
+	pnlCustomerSearch.add(pnlCustomerSearchCenter, BorderLayout.CENTER);
+        
+        pnlCustomerSouthED.add(btnCustomerEdit);
+        pnlCustomerSouthED.add(btnCustomerDelete);
+	pnlCustomerSearch.add(pnlCustomerSouthED, BorderLayout.SOUTH);
+    }
+            
+    private void createCustomersTab() {
+	//set as a border layout
+	pnlCustomerNew.setLayout(new BorderLayout());
+	
+	//create the label sub-panel of the center panel
+	pnlCustomerLabelGrid.setLayout(new GridLayout(13,1));
+	pnlCustomerLabelGrid.add(new JLabel("Customer's First Name"));
+	pnlCustomerLabelGrid.add(new JLabel("Customer's Last Name"));
+        pnlCustomerLabelGrid.add(new JLabel("Sex"));
+        pnlCustomerLabelGrid.add(new JLabel("Province"));
+        pnlCustomerLabelGrid.add(new JLabel("City"));
+        pnlCustomerLabelGrid.add(new JLabel("Address"));
+	pnlCustomerLabelGrid.add(new JLabel("Phone Number"));
+        pnlCustomerLabelGrid.add(new JLabel("Year Of Birth"));
+        pnlCustomerLabelGrid.add(new JLabel("Month Of Birth"));
+        pnlCustomerLabelGrid.add(new JLabel("Day Of Birth"));
+	
+	//create the field sub-panel of the center panel
+	pnlCustomerFieldGrid.setLayout(new GridLayout(13,1));
+	pnlCustomerFieldGrid.add(txtCustomerFirstName);
+	pnlCustomerFieldGrid.add(txtCustomerLastName);
+        pnlCustomerFieldGrid.add(pnlCustomerSex);
+        pnlCustomerFieldGrid.add(txtCustomerProvince);
+        pnlCustomerFieldGrid.add(txtCustomerCity);
+        pnlCustomerFieldGrid.add(txtCustomerAddress);
+	pnlCustomerFieldGrid.add(txtCustomerPhone);
+        pnlCustomerFieldGrid.add(txtCustomerYearOfBirth);
+        pnlCustomerFieldGrid.add(txtCustomerMonthOfBirth);
+        pnlCustomerFieldGrid.add(txtCustomerDayOfBirth);
+	
+	//create and add the center panel
+	pnlCustomerCenter.setLayout(new BorderLayout());
+	pnlCustomerCenter.add(pnlCustomerLabelGrid, BorderLayout.WEST);
+	pnlCustomerCenter.add(pnlCustomerFieldGrid, BorderLayout.EAST);
+	pnlCustomerNew.add(pnlCustomerCenter, BorderLayout.CENTER);
+	
+	//create and add the south panel
+	pnlCustomerSouth.add(btnCustomerNew);
+	pnlCustomerNew.add(pnlCustomerSouth, BorderLayout.SOUTH);
+    }
+    
     //button handler for the exit button
     private class ExitButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to exit?", 
+                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            {
 	    System.exit(0);
+            }
 	}
+    }
+    public static void main(String[]args)
+    {
+        MainGUI gui = new MainGUI();
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gui.setResizable(false);
+        gui.setVisible(true);
+        
+        gui.setLocationRelativeTo(null);
     }
 }
