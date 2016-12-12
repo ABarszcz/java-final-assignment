@@ -1,5 +1,6 @@
 package GUI;
 
+import Common.Validation;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -837,6 +838,7 @@ public class MainGUI extends JFrame {
         pnlManufacturerSouth.add(btnManufacturerEdit);
         pnlManufacturerSouth.add(btnManufacturerDelete);
 	pnlMfactSearch.add(pnlManufacturerSouth, BorderLayout.SOUTH);
+        
     }
     
     private void createManufacturerTab() {
@@ -863,6 +865,7 @@ public class MainGUI extends JFrame {
 	
 	//create and add the south panel
 	pnlMfactSouth.add(btnMfactNew);
+        btnMfactNew.addActionListener(new CreateMfactButtonHandler());
 	pnlMfactNew.add(pnlMfactSouth, BorderLayout.SOUTH);
     }
     
@@ -914,7 +917,8 @@ public class MainGUI extends JFrame {
 	
 	//create and add the south panel
 	pnlProductSouth.add(btnProductNew);
-	pnlProductNew.add(pnlProductSouth, BorderLayout.SOUTH);
+        btnProductNew.addActionListener(new CreateProductButtonHandler());
+        pnlProductNew.add(pnlProductSouth, BorderLayout.SOUTH);
     }
     
     private void createSalesSearchTab() {
@@ -967,6 +971,7 @@ public class MainGUI extends JFrame {
 	
 	//create and add the south panel
 	pnlSalesSouth.add(btnSalesNew);
+        btnSalesNew.addActionListener(new CreateSalesButtonHandler());
 	pnlSalesNew.add(pnlSalesSouth, BorderLayout.SOUTH);
     }
     
@@ -1033,7 +1038,11 @@ public class MainGUI extends JFrame {
 	pnlCustomerNew.add(pnlCustomerSouth, BorderLayout.SOUTH);
     }
     
-    //button handler for the exit button
+
+    
+    //** ACTION LISTENERS **\\
+    
+    //button handler for the EXIT button
     private class ExitButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1045,6 +1054,126 @@ public class MainGUI extends JFrame {
             }
 	}
     }
+    
+        private class CreateMfactButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to create a new manufacturer?", 
+                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            {
+	    //Validate Inputs
+                try{
+                Validation.isValid(txtMfactName.getText());
+                Validation.isValid(txtMfactAddress.getText());
+                Validation.isValid(txtMfactPhoneNum.getText());
+                    try{
+                    Validation.isValidName(txtMfactName.getText(), true);
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
+                    }
+                    try{                
+                    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
+                    }
+                }catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "All fields must be provided");
+                }               
+            //Submit to Database
+            
+            }
+	}
+    }//end mfactButton
+    
+    private class CreateProductButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to create a new product?", 
+                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            {
+	    //Validate Inputs
+                try{
+                Validation.isValid(txtProductName.getText());
+                Validation.isValid(txtProductPrice.getText());
+                Validation.isValid(txtProductDiscount.getText());
+                    try{
+                    Validation.isValidName(txtProductName.getText(), true);
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
+                    }
+                }catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "All fields must be provided");
+                }               
+            //Submit to Database
+            
+            }
+	}
+    }//end ProductButton  
+    
+        private class CreateSalesButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to create a new sale?", 
+                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            {
+	    //Validate Inputs
+                try{
+                Validation.isValid(txtSalesProductName.getText());
+                Validation.isValid(txtSalesCustomer.getText());
+                Validation.isValid(txtSalesEmployee.getText());
+                Validation.isValid(txtSalesCommission.getText());
+                Validation.isValid(txtSalesDate.getText());                    
+                }catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "All fields must be provided");
+                }               
+            //Submit to Database
+            
+            }
+	}
+    }//end SalesButton    
+    
+    
+    private class CreateCustomerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to create a new manufacturer?", 
+                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            {
+	    //Validate Inputs
+                try{
+                Validation.isValid(txtCustomerFirstName.getText());
+                Validation.isValid(txtCustomerLastName.getText());
+               // Validation.isValid(pnlCustomerSex);
+                Validation.isValid(txtCustomerAddress.getText());
+                Validation.isValid(txtCustomerCity.getText());
+                Validation.isValid(txtCustomerPhone.getText());
+                Validation.isValid(txtCustomerYearOfBirth.getText());
+                Validation.isValid(txtCustomerMonthOfBirth.getText());
+                Validation.isValid(txtCustomerDayOfBirth.getText());
+                    try{
+                    Validation.isValidName(txtMfactName.getText(), true);
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
+                    }
+                    try{                
+                    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
+                    }
+                }catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "All fields must be provided");
+                }               
+            //Submit to Database
+            
+            }
+	}
+    }//end mfactButton    
+        
+    //** MAIN **\\
     public static void main(String[]args)
     {
         MainGUI gui = new MainGUI();
