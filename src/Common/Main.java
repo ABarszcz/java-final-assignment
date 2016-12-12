@@ -1,9 +1,11 @@
 package Common;
 
+import Employees.CommissionSalesEmployee;
 import Employees.Employee;
 import GUI.MainGUI;
 import Products.Product;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -18,6 +20,12 @@ public class Main {
 	ArrayList<Product> productList = new ArrayList<>();
 	
 	MainGUI gui = new MainGUI();
+	
+	//create test emp
+	CommissionSalesEmployee emp = new CommissionSalesEmployee(
+	"name", "name", "male", "ontario", "city", "address", "phoneNum",
+	"department", "position", "ssn", 2000, 11, 25, new BigDecimal("50"),
+		new BigDecimal("10"));
 	
 	//<editor-fold desc="Menu Driven Application">
 	

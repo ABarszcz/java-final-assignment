@@ -2,6 +2,7 @@ package Sale;
 
 import Common.Utils;
 import Customer.Customer;
+import Employees.CommissionSalesEmployee;
 import Employees.Employee;
 import Products.Product;
 import java.util.GregorianCalendar;
@@ -25,6 +26,13 @@ public class Sale {
 	this.customer = customer;
 	this.employee = employee;
 	this.dateOfSale = new GregorianCalendar(); //initializes to today
+	/*
+	if(employee.getClass().toString().equals("Employees.CommissionSalesEmployee")) {
+	    employee = 
+	}
+	    employee.addSales(product.getPrice());
+	else if(employee.getClass().toString().equals("Employees.BasePlusCommissionEmployee"))
+	*/ 
     } //end of sale constructor
     
     //<editor-fold desc="Accessor Methods">
