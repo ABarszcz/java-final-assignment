@@ -1,5 +1,6 @@
 package GUI;
 
+import Common.Utils;
 import Common.Validation;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -153,7 +154,7 @@ public class MainGUI extends JFrame {
     
     //</editor-fold>
     
-    //</editor-fold desc="Customer GUI components">
+    //<editor-fold desc="Customer GUI components">
     // pnlCustomerSouthED; E = Edit, D = Delete
     private final JTabbedPane pnlCustomer;
     private final JPanel pnlCustomerNew, pnlCustomerNorth, pnlCustomerCenter,
@@ -518,7 +519,9 @@ public class MainGUI extends JFrame {
     private void setupGUI() {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setSize(685,545);
-	//create the vew
+        this.setResizable(false);
+	this.setLocationRelativeTo(null);
+	//create the view
 	this.setContentPane(this.createContentPane());
 	this.setVisible(true);
     }
@@ -1046,41 +1049,35 @@ public class MainGUI extends JFrame {
     private class ExitButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to exit?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+	    if(Utils.showConfirmDialog("exit"))
             {
-	    System.exit(0);
+		System.exit(0);
             }
 	}
     }
     
-        private class CreateMfactButtonHandler implements ActionListener {
+    private class CreateMfactButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new manufacturer?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+	    if(Utils.showConfirmDialog("exit"))
             {
-	    //Validate Inputs
-                try{
-                Validation.isValid(txtMfactName.getText());
-                Validation.isValid(txtMfactAddress.getText());
-                Validation.isValid(txtMfactPhoneNum.getText());
-                    try{
-                    Validation.isValidName(txtMfactName.getText(), true);
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                    }
-                    try{                
-                    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
-                    }
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                }               
-            //Submit to Database
+		//Validate Inputs     
+		try{
+		    Validation.isValidName(txtMfactName.getText(), true);
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, "Name provided is invalid");
+		}
+		try{
+		    Validation.isValid(txtMfactAddress.getText());
+		}catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "Address is invalid");
+                }
+		try{                
+		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, "Phone number is invalid");
+		}          
+            //TODO Submit to Database
             
             }
 	}
@@ -1112,7 +1109,7 @@ public class MainGUI extends JFrame {
 	}
     }//end ProductButton  
     
-        private class CreateSalesButtonHandler implements ActionListener {
+    private class CreateSalesButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
             if(JOptionPane.showConfirmDialog(null,
@@ -1174,6 +1171,7 @@ public class MainGUI extends JFrame {
     }//end mfactButton    
         
     //** MAIN **\\
+    /* not needed; just call the maingui in Main.java. These properties are set in setupGUI
     public static void main(String[]args)
     {
         MainGUI gui = new MainGUI();
@@ -1183,4 +1181,5 @@ public class MainGUI extends JFrame {
         
         gui.setLocationRelativeTo(null);
     }
+    */
 }

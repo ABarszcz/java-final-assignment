@@ -28,10 +28,11 @@ public class Sale {
 	this.dateOfSale = new GregorianCalendar(); //initializes to today
 	/*
 	if(employee.getClass().toString().equals("Employees.CommissionSalesEmployee")) {
-	    employee = 
-	}
 	    employee.addSales(product.getPrice());
-	else if(employee.getClass().toString().equals("Employees.BasePlusCommissionEmployee"))
+	}
+	else if(employee.getClass().toString().equals("Employees.BasePlusCommissionEmployee")) {
+	    employee.addSales(product.getPrice());
+	}
 	*/ 
     } //end of sale constructor
     

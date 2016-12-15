@@ -2,7 +2,7 @@ package Common;
 
 import Employees.CommissionSalesEmployee;
 import Employees.Employee;
-import GUI.MainGUI;
+import GUI.Login;
 import Products.Product;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,112 +15,16 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-	//initialize arraylists of employees
+	//initialize arraylists
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
-	MainGUI gui = new MainGUI();
+	new Login();
 	
-	//create test emp
+	//create emp object for testing purposes
 	CommissionSalesEmployee emp = new CommissionSalesEmployee(
 	"name", "name", "male", "ontario", "city", "address", "phoneNum",
 	"department", "position", "ssn", 2000, 11, 25, new BigDecimal("50"),
 		new BigDecimal("10"));
-	
-	//<editor-fold desc="Menu Driven Application">
-	
-	/*
-	//create a buffered reader to get user inputs
-	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	
-	boolean shouldLoop = true;
-	
-	while(shouldLoop) {
-	    //greet the user and provide options
-	    Utils.welcomeMsg();
-
-	    //request selection
-	    String selection = br.readLine();
-
-	    switch(selection) {
-		case "1": //selected create new employee
-		    System.out.println("You selected \"Create New Employee\"!");
-		    Utils.employeeSelectMsg();
-		    
-		    //request selection
-		    selection = br.readLine();
-		    
-		    switch(selection) {
-			case "1": //selected salary employee
-			    empList.add(Utils.createSalaryEmployee());
-			    break;
-			case "2": //selected hourly employee
-			    empList.add(Utils.createHourlyEmployee());
-			    break;
-			case "3": //selected commission employee
-			    empList.add(Utils.createCommissionSalesEmployee());
-			    break;
-			case "4": //selected base plus commission employee
-			    empList.add(Utils.createBasePlusCommissionEmployee());
-			    break;
-		    }
-		    break; 
-		case "2": //selected create new product
-		    System.out.println("You selected \"Create New Product\"!");
-		    productList.add(Utils.createProduct());
-		    break;
-		case "3": //selected search for employee
-		    System.out.println("You selected \"Search for Employee\"!");
-		    String lastName = Utils.requestStringParam("Last Name", "Employee you wish to search for");
-		    
-		    //create a boolean that saves whether or not a match was found
-		    boolean employeeMatchFound = false;
-		    
-		    //for each employee in the list of employees
-		    for(Iterator<Employee> i = empList.iterator(); i.hasNext(); ) {
-			//get employee
-			Employee emp = i.next();
-			
-			//if employee's last name matches last name searched for
-			if(lastName.equalsIgnoreCase(emp.getLastName())) {
-			    System.out.println("Employee found!\n"
-				+ emp.toString());
-			    employeeMatchFound = true;
-			}
-		    }
-		    
-		    if(!employeeMatchFound)
-			System.out.println("No match found for an Employee with a last name of " + lastName);
-		    break;
-		case "4": //selected search for product
-		    System.out.println("You selected \"Search for Product\"!");
-		    String productName = Utils.requestStringParam("Product Name", "Product you wish to search for");
-		    
-		    //create a boolean that saves whether or not a match was found
-		    boolean productMatchFound = false;
-		    
-		    //for each product in the list of products
-		    for(Iterator<Product> i = productList.iterator(); i.hasNext(); ) {
-			//get product
-			Product product = i.next();
-			
-			//if product's name matches product name searched for
-			if(productName.equalsIgnoreCase(product.getName())) {
-			    System.out.println("Product found!\n"
-				+ product.toString());
-			    productMatchFound = true;
-			}
-		    }
-		    
-		    if(!productMatchFound)
-			System.out.println("No match found for a product named " + productName);
-		    break;
-		default: //no correct selection
-		    System.out.println("You did not select a valid option.");
-		    break;
-	    }
-	} //end of while
-	*/
-	//</editor-fold>
     } //end of main
 } //end of class

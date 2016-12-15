@@ -9,13 +9,13 @@ import java.awt.event.*;
  * @author Noah Michael
  */
 
-class Login extends JFrame implements ActionListener {
+public class Login extends JFrame implements ActionListener {
     
     // Submit button
     private final JButton btnSubmit;
     
     // GUI components
-    private final JPanel panel;
+    private final JPanel fieldsPanel, outerPanel, btnPanel;
     private final JLabel lblUsername,lblPassword;
     private final JTextField  txtUsername,txtPassword;
     
@@ -31,18 +31,31 @@ class Login extends JFrame implements ActionListener {
         // Initializing the submit button
         btnSubmit = new JButton("Submit");
    
-        // Designing the panel
-        panel = new JPanel(new GridLayout(3,1));
-        panel.add(lblUsername);
-        panel.add(txtUsername);
-        panel.add(lblPassword);
-        panel.add(txtPassword);
-        panel.add(btnSubmit);
-        add(panel,BorderLayout.CENTER);
+        // Designing the panels
+        fieldsPanel = new JPanel(new GridLayout(2,1));
+	outerPanel = new JPanel(new BorderLayout());
+	btnPanel = new JPanel();
+        fieldsPanel.add(lblUsername);
+        fieldsPanel.add(txtUsername);
+        fieldsPanel.add(lblPassword);
+        fieldsPanel.add(txtPassword);
+	btnPanel.add(btnSubmit);
+        outerPanel.add(fieldsPanel,BorderLayout.CENTER);
+        outerPanel.add(btnPanel, BorderLayout.SOUTH);
+	
+	this.add(outerPanel);
+	
         btnSubmit.addActionListener(this);
-        
-        // Giving the window a title
-        setTitle("LOGIN");
+	
+	setupGUI();
+    }
+    
+    private void setupGUI() {
+        this.setTitle("Login");
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.setSize(300,120);
+	//create the view
+	this.setVisible(true);
     }
     
     /*
@@ -56,6 +69,7 @@ class Login extends JFrame implements ActionListener {
             MainGUI page = new MainGUI();
             page.setVisible(true);
             page.setLocationRelativeTo(null);
+	    this.setVisible(false);
         }
         else {
             System.out.println("Enter a valid username and password");
