@@ -48,7 +48,7 @@ public class MainGUI extends JFrame {
 	    pnlEmpCSSouth, pnlEmpBPCSouth, pnlEmpSLabelGrid, pnlEmpHLabelGrid,
 	    pnlEmpCSLabelGrid, pnlEmpBPCLabelGrid, pnlEmpSFieldGrid, pnlEmpHFieldGrid,
 	    pnlEmpCSFieldGrid, pnlEmpBPCFieldGrid, pnlEmpSSex, pnlEmpHSex, pnlEmpCSSex,
-	    pnlEmpBPCSex, pnlEmpSearch, pnlEmpSearchNorth, pnlEmpSearchCenter;
+	    pnlEmpBPCSex, pnlEmpSearch, pnlEmpSearchNorth, pnlEmpSearchCenter, pnlEmpSearchSouth;
     private final JLabel lblEmpSearchLastName, lblEmpSearchDepartment;
     private final JTextField txtEmpSearchLastName, txtEmpSearchDepartment;
     private final JTextArea txaEmpResults;
@@ -216,6 +216,7 @@ public class MainGUI extends JFrame {
 	this.pnlEmpSearch = new JPanel();
 	this.pnlEmpSearchNorth = new JPanel();
 	this.pnlEmpSearchCenter = new JPanel();
+        this.pnlEmpSearchSouth = new JPanel();
 	
 	//initialize salary JTextFields
 	this.txtEmpSFirstName = new JTextField();
@@ -382,6 +383,7 @@ public class MainGUI extends JFrame {
 	
 	//initialize JButton
 	this.btnMfactNew = new JButton("Create Manufacturer");
+        this.btnMfactNew.addActionListener(new CreateMfactButtonHandler());
 	this.btnManufacturerEdit = new JButton("Edit");
         this.btnManufacturerDelete = new JButton("Delete");
         
@@ -636,14 +638,14 @@ public class MainGUI extends JFrame {
 	pnlEmpSearchNorth.setLayout(new FlowLayout());
 	pnlEmpSearchNorth.add(lblEmpSearchLastName);
 	pnlEmpSearchNorth.add(txtEmpSearchLastName);
-        pnlEmpSearchCenter.add(lblEmpSearchDepartment);
-	pnlEmpSearchCenter.add(txtEmpSearchDepartment);
+      //  pnlEmpSearchCenter.add(lblEmpSearchDepartment);
+     //	pnlEmpSearchCenter.add(txtEmpSearchDepartment);
 	
 	//design the center panel
 	pnlEmpSearchCenter.add(spEmpResults);
-	
+        
 	pnlEmpSearch.add(pnlEmpSearchNorth, BorderLayout.NORTH);
-	pnlEmpSearch.add(pnlEmpSearchCenter, BorderLayout.CENTER);
+	pnlEmpSearch.add(pnlEmpSearchCenter, BorderLayout.CENTER);  
         
         pnlEmpSouth.add(btnEmployeeEdit);
         pnlEmpSouth.add(btnEmployeeDelete);
@@ -898,8 +900,8 @@ public class MainGUI extends JFrame {
 	pnlMfactNew.add(pnlMfactCenter, BorderLayout.CENTER);
 	
 	//create and add the south panel
-	pnlMfactSouth.add(btnMfactNew);
-        btnMfactNew.addActionListener(new CreateMfactButtonHandler());
+        pnlMfactSouth.add(btnMfactNew);
+        
 	pnlMfactNew.add(pnlMfactSouth, BorderLayout.SOUTH);
     }
     
@@ -1090,7 +1092,9 @@ public class MainGUI extends JFrame {
     private class CreateMfactButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	    if(Utils.showConfirmDialog("exit"))
+	      if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to create a new manufacture?", 
+                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
             {
 		//Validate Inputs     
 		try{
@@ -1103,14 +1107,26 @@ public class MainGUI extends JFrame {
 		}catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "Address is invalid");
                 }
+                try{
+		    Validation.isValid(txtMfactCity.getText());
+		}catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "City is invalid");
+                }
+                try{
+		    Validation.isValid(txtMfactProvince.getText());
+		}catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "Province is invalid");
+                }
 		try{                
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
 		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, "Phone number is invalid");
+		    JOptionPane.showMessageDialog(null, "Phone number is invalid\nFormat: ###-###-#####");
 		}          
             //TODO Submit to Database
-            
+            ServiceClass.insert(txtMfactName.getText(), txtMfactAddress.getText(),txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
             }
+            
+            
 	}
     }//end mfactButton
     

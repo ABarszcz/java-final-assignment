@@ -96,7 +96,7 @@ public class CommonJTableTest extends JFrame {
                 System.out.println("PASS:    " + pass);
 
                 // connect
-                ConnectionHelper.initialize(dbName, user, pass);
+             //   ConnectionHelper.initialize(dbName, user, pass);
                 ConnectionHelper.connect();
 
                 dbCredCheck = true;

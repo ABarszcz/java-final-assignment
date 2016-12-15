@@ -3,6 +3,9 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
  
 /**
  * Creates the Graphical User Interface for the Login window.
@@ -22,11 +25,24 @@ public class Login extends JFrame implements ActionListener {
     // Constructor
     public Login() {
         
+        //connection
+        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+        final String QRY = "SELECT * FROM gatheringInfo";
+        
+        //connection object
+         Connection conn = null;     
+        //statement object
+        Statement stat = null;     
+        //result set
+         ResultSet rs = null;
+     
         // Initializing the login components
         lblUsername = new JLabel("Username");
         txtUsername = new JTextField(15);
+        txtUsername.setText("gc200321034");
         lblPassword = new JLabel("Password");
         txtPassword = new JPasswordField(15);
+        txtUsername.setText("KqxeZ*gk");
   
         // Initializing the submit button
         btnSubmit = new JButton("Submit");
