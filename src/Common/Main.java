@@ -20,9 +20,9 @@ public class Main {
 	ArrayList<Product> productList = new ArrayList<>();
 	
 	//new Login();
-       new LoginK();
-//	MainGUI gui = new MainGUI();
-    //   gui.setVisible(true);
+      // new LoginK();
+MainGUI gui = new MainGUI();
+       gui.setVisible(true);
 	
         //create emp object for testing purposes
 	CommissionSalesEmployee emp = new CommissionSalesEmployee(

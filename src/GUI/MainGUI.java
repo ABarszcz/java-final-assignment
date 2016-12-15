@@ -8,6 +8,12 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Double.parseDouble;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -944,6 +950,44 @@ public class MainGUI extends JFrame {
 	pnlProductFieldGrid.add(txtProductPrice);
 	pnlProductFieldGrid.add(txtProductDiscount);
 	pnlProductFieldGrid.add(cboProductManufacturer);
+        
+        //add cbo Items
+       //connection string
+     final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+     final String QRY = "SELECT * FROM MANUFACTURER";
+      
+       Connection conn = null;
+     
+     //statement object
+     Statement stat = null;
+     
+     //result set
+     ResultSet rs = null;
+     
+     //DB Connection
+     try{
+     conn = DriverManager.getConnection(DB_URL, "gc200321034", "KqxeZ*gk");
+     stat = conn.createStatement();
+     rs = stat.executeQuery(QRY);
+     
+     System.out.println("ok");
+     
+     //fill in cbo
+     while (rs.next())
+            {
+                //finds types in result set
+                cboProductManufacturer.addItem(rs.getString("MFACTNAME"));
+            }
+     
+     
+     
+     }
+     catch(SQLException error){
+         //error
+         System.out.println(error.toString());
+     }
+        
+   
 	
 	//create and add the center panel
 	pnlProductCenter.setLayout(new BorderLayout());
@@ -1096,37 +1140,46 @@ public class MainGUI extends JFrame {
                     "Are you sure you like to create a new manufacture?", 
                     "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
             {
+                boolean ok = true;
 		//Validate Inputs     
 		try{
 		    Validation.isValidName(txtMfactName.getText(), true);
+                   
 		}catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, "Name provided is invalid");
+                     ok = false;
 		}
 		try{
 		    Validation.isValid(txtMfactAddress.getText());
+                   
 		}catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "Address is invalid");
+                     ok = false;
                 }
                 try{
 		    Validation.isValid(txtMfactCity.getText());
 		}catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "City is invalid");
+                    ok = false;
                 }
                 try{
 		    Validation.isValid(txtMfactProvince.getText());
 		}catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "Province is invalid");
+                    ok = false;
                 }
 		try{                
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
 		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, "Phone number is invalid\nFormat: ###-###-#####");
+		    JOptionPane.showMessageDialog(null, "Phone number is invalid");
+                    ok = false;
 		}          
-            //TODO Submit to Database
-            ServiceClass.insert(txtMfactName.getText(), txtMfactAddress.getText(),txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
+            //Submit to Database
+            if(ok){
+                ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
             }
             
-            
+            }           
 	}
     }//end mfactButton
     
@@ -1137,6 +1190,7 @@ public class MainGUI extends JFrame {
                     "Are you sure you like to create a new product?", 
                     "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
             {
+                boolean ok = true;
 	    //Validate Inputs
                 try{
                 Validation.isValid(txtProductName.getText());
@@ -1146,11 +1200,16 @@ public class MainGUI extends JFrame {
                     Validation.isValidName(txtProductName.getText(), true);
                     }catch(IllegalArgumentException error){
                         JOptionPane.showMessageDialog(null, "Name provided is invalid");
+                        ok = false;
                     }
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
+                    ok = false;
                 }               
             //Submit to Database
+                 if(ok){
+                ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedIndex());
+            }
             
             }
 	}

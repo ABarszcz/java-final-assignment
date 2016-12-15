@@ -31,7 +31,7 @@ public class ServiceClass {
      //result set
     private static ResultSet rs = null;
     
-    public static void insert(String name, String address, String city, String province, String phoneNum){
+    public static void insertMfact(String name, String address, String city, String province, String phoneNum){
         
         try{
          conn = DriverManager.getConnection(DB_URL, username, password);
@@ -49,6 +49,40 @@ public class ServiceClass {
          }catch(SQLException error){
           //error   
           System.out.println(error);
+          //print to file
+          
+          //
+          
+         }
+          
+         }//end insert
+    
+    
+    
+    
+    
+    public static void insertProduct(String name, double price, double discount, int mfact){
+        
+        try{
+         conn = DriverManager.getConnection(DB_URL, username, password);
+            // Sets up the query.
+            String sql = "INSERT INTO `PRODUCT`(`PRODUCTNAME`, `PRICE`, `DISCOUNT`, `MANID`) VALUES ('"+name+"','"+price+"','"+discount+"','"+mfact+"')";
+            
+            stat = conn.createStatement();            
+            
+            
+             // Executes the query. 
+                stat.executeUpdate(sql);
+                
+                System.out.println("Insert: " + name + price+discount+mfact);
+            
+         }catch(SQLException error){
+          //error   
+          System.out.println(error);
+          //print to file
+          
+          //
+          
          }
           
          }//end insert
