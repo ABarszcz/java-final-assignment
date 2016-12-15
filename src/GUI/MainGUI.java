@@ -56,7 +56,7 @@ public class MainGUI extends JFrame {
     
     //text fields for Salary employee
     private final JTextField txtEmpSFirstName,
-	    txtEmpSLastName, txtEmpSAddress, txtEmpSPhoneNum, txtEmpSDepartment,
+	    txtEmpSLastName, txtEmpSAddress, txtEmpSCity, txtEmpSProvince, txtEmpSPhoneNum, txtEmpSDepartment,
 	    txtEmpSPosition, txtEmpSSocialSecurityNum, txtEmpSYearOfBirth,
 	    txtEmpSMonthOfBirth, txtEmpSDayOfBirth, txtEmpSSalaryType, txtEmpSSalaryAmount,
 	    txtEmpSWage, txtEmpSCommissionRates, txtEmpSBaseSalary;
@@ -67,7 +67,7 @@ public class MainGUI extends JFrame {
     
     //text fields for Hourly employee
     private final JTextField txtEmpHFirstName,
-	    txtEmpHLastName, txtEmpHAddress, txtEmpHPhoneNum, txtEmpHDepartment,
+	    txtEmpHLastName, txtEmpHAddress, txtEmpHCity, txtEmpHProvince, txtEmpHPhoneNum, txtEmpHDepartment,
 	    txtEmpHPosition, txtEmpHSocialSecurityNum, txtEmpHYearOfBirth,
 	    txtEmpHMonthOfBirth, txtEmpHDayOfBirth, txtEmpHSalaryType, txtEmpHSalaryAmount,
 	    txtEmpHWage, txtEmpHCommissionRates, txtEmpHBaseSalary;
@@ -78,7 +78,7 @@ public class MainGUI extends JFrame {
     
     //text fields for Commission-Sales employee
     private final JTextField txtEmpCSFirstName,
-	    txtEmpCSLastName, txtEmpCSAddress, txtEmpCSPhoneNum, txtEmpCSDepartment,
+	    txtEmpCSLastName, txtEmpCSAddress, txtEmpCSCity, txtEmpCSProvince, txtEmpCSPhoneNum, txtEmpCSDepartment,
 	    txtEmpCSPosition, txtEmpCSSocialSecurityNum, txtEmpCSYearOfBirth,
 	    txtEmpCSMonthOfBirth, txtEmpCSDayOfBirth, txtEmpCSSalaryType, txtEmpCSSalaryAmount,
 	    txtEmpCSWage, txtEmpCSCommissionRates, txtEmpCSBaseSalary;
@@ -89,7 +89,7 @@ public class MainGUI extends JFrame {
     
     //text fields for Base Plus Commission employee
     private final JTextField txtEmpBPCFirstName,
-	    txtEmpBPCLastName, txtEmpBPCAddress, txtEmpBPCPhoneNum, txtEmpBPCDepartment,
+	    txtEmpBPCLastName, txtEmpBPCAddress, txtEmpBPCCity, txtEmpBPCProvince, txtEmpBPCPhoneNum, txtEmpBPCDepartment,
 	    txtEmpBPCPosition, txtEmpBPCSocialSecurityNum, txtEmpBPCYearOfBirth,
 	    txtEmpBPCMonthOfBirth, txtEmpBPCDayOfBirth, txtEmpBPCSalaryType, txtEmpBPCSalaryAmount,
 	    txtEmpBPCWage, txtEmpBPCCommissionRates, txtEmpBPCBaseSalary;
@@ -108,7 +108,7 @@ public class MainGUI extends JFrame {
     private final JPanel pnlMfactNew, pnlMfactNorth, pnlMfactCenter, pnlMfactSouth,
 	    pnlMfactLabelGrid, pnlMfactFieldGrid, pnlMfactSearch, pnlMfactSearchNorth,
 	    pnlMfactSearchCenter, pnlManufacturerSouth;
-    private final JTextField txtMfactSearch, txtMfactName, txtMfactAddress,
+    private final JTextField txtMfactSearch, txtMfactName, txtMfactAddress, txtMfactCity, txtMfactProvince,
 	    txtMfactPhoneNum;
     private final JButton btnMfactNew;
     private final JLabel lblMfactSearch;
@@ -221,6 +221,8 @@ public class MainGUI extends JFrame {
 	this.txtEmpSFirstName = new JTextField();
 	this.txtEmpSLastName = new JTextField();
 	this.txtEmpSAddress = new JTextField();
+        this.txtEmpSCity = new JTextField();
+        this.txtEmpSProvince = new JTextField();
 	this.txtEmpSPhoneNum = new JTextField();
 	this.txtEmpSDepartment = new JTextField();
 	this.txtEmpSPosition = new JTextField();
@@ -250,6 +252,8 @@ public class MainGUI extends JFrame {
 	this.txtEmpHFirstName = new JTextField();
 	this.txtEmpHLastName = new JTextField();
 	this.txtEmpHAddress = new JTextField();
+        this.txtEmpHCity = new JTextField();
+        this.txtEmpHProvince = new JTextField();
 	this.txtEmpHPhoneNum = new JTextField();
 	this.txtEmpHDepartment = new JTextField();
 	this.txtEmpHPosition = new JTextField();
@@ -279,6 +283,8 @@ public class MainGUI extends JFrame {
 	this.txtEmpCSFirstName = new JTextField();
 	this.txtEmpCSLastName = new JTextField();
 	this.txtEmpCSAddress = new JTextField();
+        this.txtEmpCSCity = new JTextField();
+        this.txtEmpCSProvince = new JTextField();
 	this.txtEmpCSPhoneNum = new JTextField();
 	this.txtEmpCSDepartment = new JTextField();
 	this.txtEmpCSPosition = new JTextField();
@@ -308,6 +314,8 @@ public class MainGUI extends JFrame {
 	this.txtEmpBPCFirstName = new JTextField();
 	this.txtEmpBPCLastName = new JTextField();
 	this.txtEmpBPCAddress = new JTextField();
+        this.txtEmpBPCCity = new JTextField();
+        this.txtEmpBPCProvince = new JTextField();
 	this.txtEmpBPCPhoneNum = new JTextField();
 	this.txtEmpBPCDepartment = new JTextField();
 	this.txtEmpBPCPosition = new JTextField();
@@ -367,6 +375,8 @@ public class MainGUI extends JFrame {
 	
 	//initialize JTextFields
 	this.txtMfactAddress = new JTextField(15);
+        this.txtMfactCity = new JTextField(15);
+        this.txtMfactProvince = new JTextField(15);
 	this.txtMfactName = new JTextField(15);
 	this.txtMfactPhoneNum = new JTextField(15);
 	
@@ -476,6 +486,7 @@ public class MainGUI extends JFrame {
         this.txtCustomerProvince = new JTextField(15);
         this.txtCustomerCity = new JTextField(15);
         this.txtCustomerAddress = new JTextField(15);
+        
 	this.txtCustomerPhone = new JTextField(15);
         this.txtCustomerYearOfBirth = new JTextField(15);
         this.txtCustomerMonthOfBirth = new JTextField(15);
@@ -644,11 +655,13 @@ public class MainGUI extends JFrame {
 	pnlEmpS.setLayout(new BorderLayout());
 	
 	//create the label sub-panel of the center panel
-	pnlEmpSLabelGrid.setLayout(new GridLayout(13,1));
+	pnlEmpSLabelGrid.setLayout(new GridLayout(15,1));
 	pnlEmpSLabelGrid.add(new JLabel("First Name"));
 	pnlEmpSLabelGrid.add(new JLabel("Last Name"));
 	pnlEmpSLabelGrid.add(new JLabel("Sex"));
 	pnlEmpSLabelGrid.add(new JLabel("Address"));
+        pnlEmpSLabelGrid.add(new JLabel("City"));
+        pnlEmpSLabelGrid.add(new JLabel("Province"));
 	pnlEmpSLabelGrid.add(new JLabel("Phone Number"));
 	pnlEmpSLabelGrid.add(new JLabel("Department"));
 	pnlEmpSLabelGrid.add(new JLabel("Position"));
@@ -660,11 +673,13 @@ public class MainGUI extends JFrame {
 	pnlEmpSLabelGrid.add(new JLabel("Salary Amount"));
 	
 	//create the field sub-panel of the center panel
-	pnlEmpSFieldGrid.setLayout(new GridLayout(13,1));
+	pnlEmpSFieldGrid.setLayout(new GridLayout(15,1));
 	pnlEmpSFieldGrid.add(txtEmpSFirstName);
 	pnlEmpSFieldGrid.add(txtEmpSLastName);
 	pnlEmpSFieldGrid.add(pnlEmpSSex);
 	pnlEmpSFieldGrid.add(txtEmpSAddress);
+        pnlEmpSFieldGrid.add(txtEmpSCity);
+        pnlEmpSFieldGrid.add(txtEmpSProvince);
 	pnlEmpSFieldGrid.add(txtEmpSPhoneNum);
 	pnlEmpSFieldGrid.add(txtEmpSDepartment);
 	pnlEmpSFieldGrid.add(txtEmpSPosition);
@@ -691,11 +706,13 @@ public class MainGUI extends JFrame {
 	pnlEmpH.setLayout(new BorderLayout());
 	
 	//create the label sub-panel of the center panel
-	pnlEmpHLabelGrid.setLayout(new GridLayout(13,1));
+	pnlEmpHLabelGrid.setLayout(new GridLayout(15,1));
 	pnlEmpHLabelGrid.add(new JLabel("First Name"));
 	pnlEmpHLabelGrid.add(new JLabel("Last Name"));
 	pnlEmpHLabelGrid.add(new JLabel("Sex"));
 	pnlEmpHLabelGrid.add(new JLabel("Address"));
+        pnlEmpHLabelGrid.add(new JLabel("City"));
+        pnlEmpHLabelGrid.add(new JLabel("Province"));
 	pnlEmpHLabelGrid.add(new JLabel("Phone Number"));
 	pnlEmpHLabelGrid.add(new JLabel("Department"));
 	pnlEmpHLabelGrid.add(new JLabel("Position"));
@@ -706,11 +723,13 @@ public class MainGUI extends JFrame {
 	pnlEmpHLabelGrid.add(new JLabel("Wage"));
 	
 	//create the field sub-panel of the center panel
-	pnlEmpHFieldGrid.setLayout(new GridLayout(13,1));
+	pnlEmpHFieldGrid.setLayout(new GridLayout(15,1));
 	pnlEmpHFieldGrid.add(txtEmpHFirstName);
 	pnlEmpHFieldGrid.add(txtEmpHLastName);
 	pnlEmpHFieldGrid.add(pnlEmpHSex);
 	pnlEmpHFieldGrid.add(txtEmpHAddress);
+        pnlEmpHFieldGrid.add(txtEmpHCity);
+        pnlEmpHFieldGrid.add(txtEmpHProvince);
 	pnlEmpHFieldGrid.add(txtEmpHPhoneNum);
 	pnlEmpHFieldGrid.add(txtEmpHDepartment);
 	pnlEmpHFieldGrid.add(txtEmpHPosition);
@@ -736,11 +755,13 @@ public class MainGUI extends JFrame {
 	pnlEmpCS.setLayout(new BorderLayout());
 	
 	//create the label sub-panel of the center panel
-	pnlEmpCSLabelGrid.setLayout(new GridLayout(13,1));
+	pnlEmpCSLabelGrid.setLayout(new GridLayout(15,1));
 	pnlEmpCSLabelGrid.add(new JLabel("First Name"));
 	pnlEmpCSLabelGrid.add(new JLabel("Last Name"));
 	pnlEmpCSLabelGrid.add(new JLabel("Sex"));
 	pnlEmpCSLabelGrid.add(new JLabel("Address"));
+        pnlEmpCSLabelGrid.add(new JLabel("City"));
+        pnlEmpCSLabelGrid.add(new JLabel("Province"));
 	pnlEmpCSLabelGrid.add(new JLabel("Phone Number"));
 	pnlEmpCSLabelGrid.add(new JLabel("Department"));
 	pnlEmpCSLabelGrid.add(new JLabel("Position"));
@@ -751,11 +772,13 @@ public class MainGUI extends JFrame {
 	pnlEmpCSLabelGrid.add(new JLabel("Commission Rates"));
 	
 	//create the field sub-panel of the center panel
-	pnlEmpCSFieldGrid.setLayout(new GridLayout(13,1));
+	pnlEmpCSFieldGrid.setLayout(new GridLayout(15,1));
 	pnlEmpCSFieldGrid.add(txtEmpCSFirstName);
 	pnlEmpCSFieldGrid.add(txtEmpCSLastName);
 	pnlEmpCSFieldGrid.add(pnlEmpCSSex);
 	pnlEmpCSFieldGrid.add(txtEmpCSAddress);
+        pnlEmpCSFieldGrid.add(txtEmpCSCity);
+        pnlEmpCSFieldGrid.add(txtEmpCSProvince);
 	pnlEmpCSFieldGrid.add(txtEmpCSPhoneNum);
 	pnlEmpCSFieldGrid.add(txtEmpCSDepartment);
 	pnlEmpCSFieldGrid.add(txtEmpCSPosition);
@@ -781,11 +804,13 @@ public class MainGUI extends JFrame {
 	pnlEmpBPC.setLayout(new BorderLayout());
 	
 	//create the label sub-panel of the center panel
-	pnlEmpBPCLabelGrid.setLayout(new GridLayout(13,1));
+	pnlEmpBPCLabelGrid.setLayout(new GridLayout(15,1));
 	pnlEmpBPCLabelGrid.add(new JLabel("First Name"));
 	pnlEmpBPCLabelGrid.add(new JLabel("Last Name"));
 	pnlEmpBPCLabelGrid.add(new JLabel("Sex"));
 	pnlEmpBPCLabelGrid.add(new JLabel("Address"));
+        pnlEmpBPCLabelGrid.add(new  JLabel("City"));
+        pnlEmpBPCLabelGrid.add(new JLabel("Province"));
 	pnlEmpBPCLabelGrid.add(new JLabel("Phone Number"));
 	pnlEmpBPCLabelGrid.add(new JLabel("Department"));
 	pnlEmpBPCLabelGrid.add(new JLabel("Position"));
@@ -797,12 +822,14 @@ public class MainGUI extends JFrame {
 	pnlEmpBPCLabelGrid.add(new JLabel("Base Salary"));
 	
 	//create the field sub-panel of the center panel
-	pnlEmpBPCFieldGrid.setLayout(new GridLayout(13,1));
+	pnlEmpBPCFieldGrid.setLayout(new GridLayout(15,1));
 	pnlEmpBPCFieldGrid.add(txtEmpBPCFirstName);
 	pnlEmpBPCFieldGrid.add(txtEmpBPCLastName);
 	pnlEmpBPCFieldGrid.add(pnlEmpBPCSex);
 	pnlEmpBPCFieldGrid.add(txtEmpBPCAddress);
-	pnlEmpBPCFieldGrid.add(txtEmpBPCPhoneNum);
+        pnlEmpBPCFieldGrid.add(txtEmpBPCCity);
+        pnlEmpBPCFieldGrid.add(txtEmpBPCProvince);
+        pnlEmpBPCFieldGrid.add(txtEmpBPCPhoneNum);
 	pnlEmpBPCFieldGrid.add(txtEmpBPCDepartment);
 	pnlEmpBPCFieldGrid.add(txtEmpBPCPosition);
 	pnlEmpBPCFieldGrid.add(txtEmpBPCSocialSecurityNum);
@@ -852,12 +879,16 @@ public class MainGUI extends JFrame {
 	pnlMfactLabelGrid.setLayout(new GridLayout(13,1));
 	pnlMfactLabelGrid.add(new JLabel("Name"));
 	pnlMfactLabelGrid.add(new JLabel("Address"));
+        pnlMfactLabelGrid.add(new JLabel("City"));
+        pnlMfactLabelGrid.add(new JLabel("Province"));
 	pnlMfactLabelGrid.add(new JLabel("Phone Number"));
 	
 	//create the field sub-panel of the center panel
 	pnlMfactFieldGrid.setLayout(new GridLayout(13,1));
 	pnlMfactFieldGrid.add(txtMfactName);
 	pnlMfactFieldGrid.add(txtMfactAddress);
+        pnlMfactFieldGrid.add(txtMfactCity);
+        pnlMfactFieldGrid.add(txtMfactProvince);
 	pnlMfactFieldGrid.add(txtMfactPhoneNum);
 	
 	//create and add the center panel

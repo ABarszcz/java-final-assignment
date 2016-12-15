@@ -2,7 +2,7 @@ package Common;
 
 import Employees.CommissionSalesEmployee;
 import Employees.Employee;
-import GUI.Login;
+import GUI.MainGUI;
 import Products.Product;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -19,8 +19,10 @@ public class Main {
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
-	new Login();
-	
+	//new Login();
+        
+	MainGUI gui = new MainGUI();
+        gui.setVisible(true);
 	//create emp object for testing purposes
 	CommissionSalesEmployee emp = new CommissionSalesEmployee(
 	"name", "name", "male", "ontario", "city", "address", "phoneNum",
