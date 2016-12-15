@@ -119,4 +119,21 @@ public class Utils {
 	
 	return reply == JOptionPane.YES_OPTION;
     }
+    
+    /**
+     * It checks the string value is empty or not.
+     * @param string
+     * @return true if it is null or "", false otherwise
+     */
+    public static boolean isEmpty(String string) {
+        if (string == null) {
+            return true;
+        }
+        
+        if ("".equals(string)) {
+            return true;
+        }
+        
+        return false;
+    }
 }

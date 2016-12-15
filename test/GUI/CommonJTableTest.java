@@ -3,7 +3,10 @@
  */
 package GUI;
 
+import GUI.JTable.CommonJTable;
 import Common.ConnectionHelper;
+import Customer.Customer;
+import GUI.JTable.CustomerJTable;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
@@ -96,7 +99,7 @@ public class CommonJTableTest extends JFrame {
                 System.out.println("PASS:    " + pass);
 
                 // connect
-             //   ConnectionHelper.initialize(dbName, user, pass);
+                ConnectionHelper.initialize(dbName, user, pass);
                 ConnectionHelper.connect();
 
                 dbCredCheck = true;
@@ -128,7 +131,8 @@ public class CommonJTableTest extends JFrame {
         searchPanel.add(this.btnSearch);
 
         /*** jTable panel ***/
-        commonJTable = new CommonJTable();
+        // TODO
+        this.commonJTable = new CustomerJTable();
 
         /*** button panel ***/
         JPanel btnPanel = new JPanel();
@@ -142,7 +146,7 @@ public class CommonJTableTest extends JFrame {
         /*** add components to the frame ***/
         super.add(searchPanel, BorderLayout.NORTH);
         super.add(btnPanel, BorderLayout.SOUTH);
-        super.add(commonJTable, BorderLayout.CENTER);
+        super.add(this.commonJTable, BorderLayout.CENTER);
 
         // pack
         super.pack();
@@ -180,7 +184,9 @@ public class CommonJTableTest extends JFrame {
             // will determine the source of the acion event
             if (event.getSource() == btnSearch) {
                 // re-build the jtable
-                commonJTable.buildTableInfoPanel(txtTableName.getText());
+//                commonJTable.buildTableInfoPanel(txtTableName.getText());
+//                Customer condition = new Customer(firstName, lastName, sex, province, city, address, phoneNum, FRAMEBITS, SOMEBITS, ALLBITS);
+                commonJTable.buildTableInfoPanel(null);
                 pack();   // TODO
             }
         }

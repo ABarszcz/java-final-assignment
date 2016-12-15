@@ -4,6 +4,7 @@
 package Common;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -114,7 +115,23 @@ public class ConnectionHelper {
         PreparedStatement stmt = conn.prepareStatement(sql);
         return stmt;
     }
+
+    /**
+     * Get DatabaseMetaData through Connection.
+     * 
+     * @return DatabaseMetaData
+     * @throws SQLException 
+     */
+    public static DatabaseMetaData  getMetaData() throws SQLException {
+        return conn.getMetaData();
+    }
     
+    public static String escape(String value, String escape) {
+        String result = value.replace("_", "_" + escape);
+        result = result.replace("%", "%" + escape);
+        result = result.replace(escape, escape + escape);
+        return result;
+    }
     /**
      * Commit.
      * 

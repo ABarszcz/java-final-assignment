@@ -2,6 +2,9 @@ package GUI;
 
 import Common.Utils;
 import Common.Validation;
+import Customer.Customer;
+import Customer.CustomerHelper;
+import GUI.JTable.CustomerJTable;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -26,6 +29,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Creates the Graphical User Interface for the application.
@@ -171,14 +176,15 @@ public class MainGUI extends JFrame {
             txtCustomerAddress, txtCustomerYearOfBirth, txtCustomerMonthOfBirth, txtCustomerDayOfBirth;
     private final JButton btnCustomerNew;
     private final JLabel lblCustomerSearchLastName, lblCustomerSearchPhoneNumber;
-    private final JTextArea txaCustomerResults;
-    private final JScrollPane spCustomerResults;
+//    private final JTextArea txaCustomerResults;
+//    private final JScrollPane spCustomerResults;
+    private final CustomerJTable customerJTable;
     
     //radio buttons and the radio button group for Salary employee
     JRadioButton rdoCustomerSexMale, rdoCustomerSexFemale;
     ButtonGroup grpCustomerSex;
     
-    private final JButton btnCustomerEdit, btnCustomerDelete;
+    private final JButton btnCustomerSearch, btnCustomerEdit, btnCustomerDelete;
     
     //</editor-fold>
     
@@ -504,14 +510,21 @@ public class MainGUI extends JFrame {
 	this.btnCustomerNew = new JButton("Create Customer");
         this.btnCustomerEdit = new JButton("Edit");
         this.btnCustomerDelete = new JButton("Delete");
+        this.btnCustomerSearch = new JButton("Search");
+
+        // set handlers
+        this.btnCustomerEdit.addActionListener(new EditCustomerButtonHandler());
+        this.btnCustomerDelete.addActionListener(new DeleteCustomerButtonHandler());
+        this.btnCustomerSearch.addActionListener(new SearchCustomerButtonHandler());
 		
 	//initialize Search components
 	this.lblCustomerSearchLastName = new JLabel("Search by Customer's Last Name");
 	this.txtCustomerSearchLastName = new JTextField(15);
         this.lblCustomerSearchPhoneNumber = new JLabel("Search Customer's by Phone Number");
 	this.txtCustomerSearchPhoneNumber = new JTextField(15);
-	this.txaCustomerResults = new JTextArea(15, 30);
-	this.spCustomerResults = new JScrollPane(txaCustomerResults);
+//	this.txaCustomerResults = new JTextArea(15, 30);
+//	this.spCustomerResults = new JScrollPane(txaCustomerResults);
+        this.customerJTable = new CustomerJTable();
         
         //create radio buttons and the radio button group for Customer
 	this.rdoCustomerSexMale = new JRadioButton("Male");
@@ -575,6 +588,9 @@ public class MainGUI extends JFrame {
         pnlTabbedPane.addTab("Sales", pnlSales);
         pnlTabbedPane.addTab("Customer", pnlCustomer);
 	
+        // add handler
+        pnlTabbedPane.addChangeListener(new MainTabChangeListener());
+	
 	//populate the full screen of the application
 	pnlFullScreen.setLayout(new BorderLayout());
 	pnlFullScreen.add(pnlTabbedPane, BorderLayout.CENTER);
@@ -582,6 +598,33 @@ public class MainGUI extends JFrame {
 	pnlFullScreen.add(pnlExit, BorderLayout.SOUTH);
 	
 	return pnlFullScreen;
+    }
+
+    private static final int TAB_IDX_CUSTOMER = 4;
+    private static final int TAB_IDX_CUSTOMER_SEARCH = 0;
+    /**
+     * That is called when customer tab is clicked.
+     */
+    private class MainTabChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            // update manufacturer id combo box
+System.out.println("Tab is changed");
+            int selectedTabIndex = pnlTabbedPane.getSelectedIndex();
+System.out.println("Selected tab:" + selectedTabIndex);
+            switch (selectedTabIndex) {
+                case TAB_IDX_CUSTOMER:
+                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_CUSTOMER_SEARCH) {
+                        // search
+                        customerJTable.buildTableInfoPanel(null);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        
     }
     
     private void createEmployeeTabbedPane() {
@@ -634,8 +677,29 @@ public class MainGUI extends JFrame {
 	//add the tabs
 	pnlCustomer.addTab("Search", pnlCustomerSearch);
 	pnlCustomer.addTab("New Customer", pnlCustomerNew);
+
+        // set handler
+        pnlCustomer.addChangeListener(new CustomerTabChangeListener());
     }
     
+    /**
+     * That is called when customer tab is clicked.
+     */
+    private class CustomerTabChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            // update manufacturer id combo box
+System.out.println("Tab is changed");
+System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
+            if (pnlCustomer.getSelectedIndex() == 0) {
+                // search
+                customerJTable.buildTableInfoPanel(null);
+            }
+        }
+        
+    }
+
     private void createEmployeeSearchTab() {
 	//set as a border layout
 	pnlEmpSearch.setLayout(new BorderLayout());
@@ -1028,11 +1092,13 @@ public class MainGUI extends JFrame {
 	pnlCustomerSearchNorth.setLayout(new FlowLayout());
 	pnlCustomerSearchNorth.add(lblCustomerSearchLastName);
 	pnlCustomerSearchNorth.add(txtCustomerSearchLastName);
+        pnlCustomerSearchNorth.add(btnCustomerSearch);
         pnlCustomerSearchCenter.add(lblCustomerSearchPhoneNumber);
 	pnlCustomerSearchCenter.add(txtCustomerSearchPhoneNumber);
         	
 	//design the center panel
-	pnlCustomerSearchCenter.add(spCustomerResults);
+//	pnlCustomerSearchCenter.add(spCustomerResults);
+	pnlCustomerSearchCenter.add(this.customerJTable);
 	
 	pnlCustomerSearch.add(pnlCustomerSearchNorth, BorderLayout.NORTH);
 	pnlCustomerSearch.add(pnlCustomerSearchCenter, BorderLayout.CENTER);
@@ -1241,6 +1307,125 @@ public class MainGUI extends JFrame {
 	}
     }//end mfactButton    
         
+    private static final String TITLE_CONFIRM = "Confirmation";
+    private class EditCustomerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to edit the customer?", 
+                    TITLE_CONFIRM, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+            {
+	    //Validate Inputs
+                boolean check = true;
+                try{
+                    Validation.isValid(customerJTable.getFname());
+                    Validation.isValid(customerJTable.getLname());
+                    // Validation.isValid(customerJTable.getGender());  // TODO validation for gender
+                    Validation.isValid(customerJTable.getAddress());
+                    Validation.isValid(customerJTable.getCity());
+                    Validation.isValid(customerJTable.getProvince());
+                    Validation.isValid(customerJTable.getPhonenum());
+                    Validation.isValid(customerJTable.getYearOfBirthdate());
+                    Validation.isValid(customerJTable.getMonthOfBirthdate());
+                    Validation.isValid(customerJTable.getDayOfBirhdate());
+                    try{
+                        Validation.isValidName(customerJTable.getFname(), true);
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
+                        check = false;
+                    }
+                    try{                
+                        Validation.isValidPhoneNum(customerJTable.getPhonenum()); 
+                    }catch(IllegalArgumentException error){
+                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
+                        check = false;
+                    }
+                }catch(IllegalArgumentException  error){
+                    JOptionPane.showMessageDialog(null, "All fields must be provided");
+                    check = false;
+                }
+            //Submit to Database
+            
+                Customer customer = new Customer(customerJTable.getFname(), customerJTable.getLname(),
+                        customerJTable.getGender(), customerJTable.getProvince(), customerJTable.getCity(),
+                        customerJTable.getAddress(), customerJTable.getPhonenum(),
+                        Integer.parseInt(customerJTable.getYearOfBirthdate()),
+                        Integer.parseInt(customerJTable.getMonthOfBirthdate()),
+                        Integer.parseInt(customerJTable.getDayOfBirhdate()));
+                customer.setCustomerID(customerJTable.getCusid());
+            System.out.println("debug customer: " + customer);
+                if (check != true) {
+                    return;
+                }
+                try {
+                    // update
+                    CustomerHelper.update(customer);
+                    // research
+                    // set search keywords
+                    Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
+                            null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
+                            0, 0, 0);
+                    System.out.println("debug customer: " + condition);
+                    // search
+                    customerJTable.buildTableInfoPanel(condition);
+                } catch (SQLException sqlex) {
+                    // error
+                    sqlex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Update is failed!");
+                }
+            }
+	}
+    }//end EditCustomerButtonHandler
+
+    private class DeleteCustomerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            if(JOptionPane.showConfirmDialog(null,
+                    "Are you sure you like to delete the customer?", 
+                    TITLE_CONFIRM, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+            {
+            //Submit to Database
+            
+                Customer customer = new Customer(null, null,
+                        null, null, null, null, null,
+                        0, 0, 0);
+                customer.setCustomerID(customerJTable.getCusid());
+            System.out.println("debug customer: " + customer);
+
+                try {
+                    // delete
+                    CustomerHelper.delete(customer);
+                    // research
+                    // set search keywords
+                    Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
+                            null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
+                            0, 0, 0);
+                    System.out.println("debug customer: " + condition);
+                    // search
+                    customerJTable.buildTableInfoPanel(null);
+                } catch (SQLException sqlex) {
+                    // error
+                    sqlex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Delete is failed!");
+                }
+            }
+	}
+    }//end DeleteCustomerButtonHandler
+
+    private class SearchCustomerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            
+            // set search keywords
+            Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
+                    null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
+                    0, 0, 0);
+            System.out.println("debug customer: " + condition);
+            // search
+            customerJTable.buildTableInfoPanel(condition);
+	}
+    }//end SearchCustomerButtonHandler
+
     //** MAIN **\\
     /* not needed; just call the maingui in Main.java. These properties are set in setupGUI
     public static void main(String[]args)

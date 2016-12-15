@@ -1,15 +1,17 @@
 /*
  * Assignment 2 - Part 2
  */
-package GUI;
+package GUI.JTable;
 
 import Common.ConnectionHelper;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,15 +29,21 @@ import javax.swing.table.DefaultTableModel;
  * 
  * @author Takaaki Goto
  */
-public class CommonJTable extends JPanel {
+public abstract class CommonJTable extends JPanel {
 
     /* properties */
     /** Information panel */
     private JPanel infoDetailPanel;
+
+    public JPanel getInfoDetailPanel() {
+        return infoDetailPanel;
+    }
     /** JTable */
     private JTable jTable;
     /** selected row of the list */
     private JTextField txtSelectedRow;
+//    /** table name */
+//    private String tableName;
 
     /* consts */
     /** number of columns per a row */
@@ -60,22 +68,30 @@ public class CommonJTable extends JPanel {
         super.add(tablePanel, BorderLayout.CENTER);
     }
 
-    /**
-     * Constructor.
-     * 
-     * @param tablename 
-     */
-    public CommonJTable(String tablename) {
-        super(new BorderLayout());
-        this.buildTableInfoPanel(tablename);
-    }
+//    /**
+//     * Constructor.
+//     * 
+//     * @param tablename 
+//     */
+////    public CommonJTable(String tablename) {
+//    public CommonJTable() {
+//        super(new BorderLayout());
+////        this.tableName = tablename;
+//        this.buildTableInfoPanel(null);
+//    }
 
+//    public void buildTableInfoPanel(String tableName) {
+//        this.tableName = tableName;
+//        this.buildTableInfoPanel(null);
+//    }
+//
     /**
      * It build table info panel.
      * 
      * @param tableName 
      */
-    public void buildTableInfoPanel(String tableName) {
+//    public void buildTableInfoPanel(String tableName, Object key) {
+    public void buildTableInfoPanel(Object key) {
         JPanel tablePanel = new JPanel();
         JPanel infoPanel = new JPanel();
         JPanel infoHead = new JPanel();
@@ -95,20 +111,26 @@ public class CommonJTable extends JPanel {
             ConnectionHelper.connect();
             // create statement
             stmt = ConnectionHelper.createStatement();
+System.out.println("debug key:" + key);
+            if (key == null) {
+                try {
+                    // select all
+                    // create sql
+                    String sql = "SELECT * FROM " + this.getTableName();
+                    System.out.println("TABLE:" + this.getTableName());
+                    // execute
+                    rs = stmt.executeQuery(sql);
+                } catch (SQLException sqlex) {
+                    // table not found
+                    sqlex.printStackTrace();
 
-            try {
-                // create sql
-                String sql = "SELECT * FROM " + tableName;
-                System.out.println("TABLE:" + tableName);
-                // execute
-                rs = stmt.executeQuery(sql);
-            } catch (SQLException sqlex) {
-                // table not found
-                sqlex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "The table name is invalid. Please try again.");
 
-                JOptionPane.showMessageDialog(null, "The table name is invalid. Please try again.");
-
-                return;
+                    return;
+                }
+            } else {
+                // select by key
+                rs = this.selectByKey(key);
             }
 
             tbl = this.buildTBModel(rs);
@@ -128,6 +150,7 @@ public class CommonJTable extends JPanel {
         this.jTable.getSelectionModel().addListSelectionListener(new TableListSelectionListener());
         this.jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane jscroll = new JScrollPane(this.jTable);
+        jscroll.setPreferredSize(new Dimension(500, 100));
         jscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         tablePanel.add(jscroll);
@@ -142,15 +165,18 @@ public class CommonJTable extends JPanel {
         infoHead.add(new JLabel(""));
         infoHead.add(lblSelectedRow);
         infoHead.add(this.txtSelectedRow);
+        /*
         int colcount = tbl.getColumnCount();
 
         for (int i = 0; i < colcount; i++) {
             infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
             JTextField jTextField = new JTextField();
-            jTextField.setEditable(false);
+//            jTextField.setEditable(false);
             infoDetailPanel.add(jTextField);
         }
-        tbl.getDataVector();
+//        tbl.getDataVector();
+        */
+        setDetailInfo(tbl);
 
         int row;
         int remainder;
@@ -172,6 +198,52 @@ public class CommonJTable extends JPanel {
 
         super.add(infoPanel, BorderLayout.SOUTH);
         super.validate();
+    }
+//    protected ResultSet selectAll() throws SQLException {
+//        // connect to db
+//        ConnectionHelper.connect();
+//        // create statement
+//        Statement stmt = ConnectionHelper.createStatement();
+//        // select all
+//        // create sql
+//        String sql = "SELECT * FROM " + this.getTableName();
+//        System.out.println("TABLE:" + this.getTableName());
+//        // execute
+//        ResultSet rs = stmt.executeQuery(sql);
+//        ConnectionHelper.disconnect();
+//        return rs;
+//    }
+    
+    protected abstract ResultSet selectByKey(Object obj) throws SQLException;
+    protected abstract String getTableName();
+    protected abstract Map<Integer, Integer> getIgnoreColMap();
+    protected abstract Map<Integer, Integer> getReadOnlyColMap();
+
+    public String getTextValue(int index) {
+        String textValue = null;
+        try {
+            textValue = ((JTextField) this.infoDetailPanel.getComponent((index * 2) + 1)).getText();
+        } catch (Exception e) {
+            textValue = null;
+        }
+        return textValue;
+    }
+
+    protected void setDetailInfo(DefaultTableModel tbl) {
+        int colcount = tbl.getColumnCount();
+        Map<Integer, Integer> ignores = this.getIgnoreColMap();
+        Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
+        for (int i = 0; i < colcount; i++) {
+            if (ignores.get(i) != null) {
+                continue;
+            }
+            infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
+            JTextField jTextField = new JTextField();
+            if (readOnlys.get(i) != null) {
+                jTextField.setEditable(false);                
+            }
+            infoDetailPanel.add(jTextField);
+        }
     }
 
     /**
