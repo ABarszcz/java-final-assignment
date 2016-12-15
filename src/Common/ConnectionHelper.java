@@ -34,14 +34,9 @@ public class ConnectionHelper {
 
     /**
      * Constructor.
-     * @param dbName
-     * @param user
-     * @param pass
      */
-    protected ConnectionHelper(String dbName, String user, String pass) {
-        _dbName = dbName;
-        _user = user;
-        _pass = pass;
+    protected ConnectionHelper() {
+        //do nothing
     }
     
     /**
@@ -50,13 +45,11 @@ public class ConnectionHelper {
      * @param user
      * @param pass 
      */
-    /* just use the constructor instead of creating a new method
     public static void initialize(String dbName, String user, String pass) {
         _dbName = dbName;
         _user = user;
         _pass = pass;
     }
-    */
     
     /**
      * Get a connection.

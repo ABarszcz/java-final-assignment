@@ -1061,22 +1061,20 @@ public class MainGUI extends JFrame {
 	public void actionPerformed(ActionEvent e) {
 	    if(Utils.showConfirmDialog("exit"))
             {
-		//Validate Inputs     
+		//create a string to hold the name of the field we're evaluating
+		String fieldName = "";
+		
+		//Validate Inputs
 		try{
+		    fieldName = "Name";
 		    Validation.isValidName(txtMfactName.getText(), true);
-		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, "Name provided is invalid");
-		}
-		try{
+		    fieldName = "Address";
 		    Validation.isValid(txtMfactAddress.getText());
-		}catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "Address is invalid");
-                }
-		try{                
+		    fieldName = "Phone number";
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
 		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, "Phone number is invalid");
-		}          
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}     
             //TODO Submit to Database
             
             }
@@ -1086,23 +1084,22 @@ public class MainGUI extends JFrame {
     private class CreateProductButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new product?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            if(Utils.showConfirmDialog("create a new product"))
             {
-	    //Validate Inputs
-                try{
-                Validation.isValid(txtProductName.getText());
-                Validation.isValid(txtProductPrice.getText());
-                Validation.isValid(txtProductDiscount.getText());
-                    try{
-                    Validation.isValidName(txtProductName.getText(), true);
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                    }
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                }               
+		//create a string to hold the name of the field we're evaluating
+		String fieldName = "";
+		
+		//validate inputs
+		try{
+		    fieldName = "Name";
+		    Validation.isValidName(txtProductName.getText(), true);
+		    fieldName = "Price";
+		    Validation.isValid(txtProductPrice.getText());
+		    fieldName = "Discount";
+		    Validation.isValid(txtProductDiscount.getText());
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
             //Submit to Database
             
             }
@@ -1112,17 +1109,18 @@ public class MainGUI extends JFrame {
     private class CreateSalesButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new sale?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            if(Utils.showConfirmDialog("create a new sale"))
             {
-	    //Validate Inputs
+		
+		//Validate Inputs
                 try{
-                Validation.isValid(txtSalesProductName.getText());
-                Validation.isValid(txtSalesCustomer.getText());
-                Validation.isValid(txtSalesEmployee.getText());
-                Validation.isValid(txtSalesCommission.getText());
-                Validation.isValid(txtSalesDate.getText());                    
+		    //TODO I think these need to be drop-down boxes to select available customers
+		    //employees, etc.
+		    Validation.isValid(txtSalesProductName.getText());
+		    Validation.isValid(txtSalesCustomer.getText());
+		    Validation.isValid(txtSalesEmployee.getText());
+		    Validation.isValid(txtSalesCommission.getText());
+		    Validation.isValid(txtSalesDate.getText());                    
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
                 }               
@@ -1136,34 +1134,34 @@ public class MainGUI extends JFrame {
     private class CreateCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new manufacturer?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            if(Utils.showConfirmDialog("create a new manufacturer"))
             {
-	    //Validate Inputs
-                try{
-                Validation.isValid(txtCustomerFirstName.getText());
-                Validation.isValid(txtCustomerLastName.getText());
-               // Validation.isValid(pnlCustomerSex);
-                Validation.isValid(txtCustomerAddress.getText());
-                Validation.isValid(txtCustomerCity.getText());
-                Validation.isValid(txtCustomerPhone.getText());
-                Validation.isValid(txtCustomerYearOfBirth.getText());
-                Validation.isValid(txtCustomerMonthOfBirth.getText());
-                Validation.isValid(txtCustomerDayOfBirth.getText());
-                    try{
-                    Validation.isValidName(txtMfactName.getText(), true);
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                    }
-                    try{                
-                    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
-                    }
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                }               
+		//create a string to hold the name of the field we're evaluating
+		String fieldName = "";
+		
+		//validate inputs
+		try{
+		    fieldName = "First name";
+		    Validation.isValidName(txtCustomerFirstName.getText(), false);
+		    fieldName = "Last name";
+		    Validation.isValidName(txtCustomerLastName.getText(), false);
+		    //fieldName = "Sex";
+		    //Validation.isValid(pnlCustomerSex);
+		    fieldName = "Address";
+		    Validation.isValid(txtCustomerAddress.getText());
+		    fieldName = "City";
+		    Validation.isValid(txtCustomerCity.getText());
+		    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtCustomerPhone.getText());
+		    fieldName = "Year of birth";
+		    Validation.isValid(txtCustomerYearOfBirth.getText());
+		    fieldName = "Month of birth";
+		    Validation.isValid(txtCustomerMonthOfBirth.getText());
+		    fieldName = "Day of birth";
+		    Validation.isValid(txtCustomerDayOfBirth.getText());
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
             //Submit to Database
             
             }
