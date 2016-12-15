@@ -1167,81 +1167,48 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
     private class CreateMfactButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	      if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new manufacture?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
-            {
-                boolean ok = true;
-		//Validate Inputs     
+	    if(Utils.showConfirmDialog("create a new manufacturer")) {
+		String fieldName = "";
+		
+		//Validate Inputs
 		try{
+		    fieldName = "Name";
 		    Validation.isValidName(txtMfactName.getText(), true);
-                   
-		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                     ok = false;
-		}
-		try{
+		    fieldName = "Address";
 		    Validation.isValid(txtMfactAddress.getText());
-                   
-		}catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "Address is invalid");
-                     ok = false;
-                }
-                try{
-		    Validation.isValid(txtMfactCity.getText());
-		}catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "City is invalid");
-                    ok = false;
-                }
-                try{
-		    Validation.isValid(txtMfactProvince.getText());
-		}catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "Province is invalid");
-                    ok = false;
-                }
-		try{                
-		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
-		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, "Phone number is invalid");
-                    ok = false;
-		}          
-            //Submit to Database
-            if(ok){
-                ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
-            }
-            
-            }           
+		    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
+		    //submit to the database
+		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
+			    txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
+		} catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }           
 	}
     }//end mfactButton
     
     private class CreateProductButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new product?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            if(Utils.showConfirmDialog("create a new product"))
             {
-                boolean ok = true;
-	    //Validate Inputs
-                try{
-                Validation.isValid(txtProductName.getText());
-                Validation.isValid(txtProductPrice.getText());
-                Validation.isValid(txtProductDiscount.getText());
-                    try{
-                    Validation.isValidName(txtProductName.getText(), true);
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                        ok = false;
-                    }
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                    ok = false;
-                }               
-            //Submit to Database
-                 if(ok){
-                ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedIndex());
-            }
-            
+                String fieldName = "";
+		
+		//validate inputs
+		try{
+		    fieldName = "Name";
+		    Validation.isValidName(txtProductName.getText(), true);
+		    fieldName = "Price";
+		    Validation.isValid(txtProductPrice.getText());
+		    fieldName = "Discount";
+		    Validation.isValid(txtProductDiscount.getText());
+		    //Submit to Database
+		    ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),
+			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedIndex());
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
             }
 	}
     }//end ProductButton  
@@ -1255,11 +1222,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
             {
 	    //Validate Inputs
                 try{
-                Validation.isValid(txtSalesProductName.getText());
-                Validation.isValid(txtSalesCustomer.getText());
-                Validation.isValid(txtSalesEmployee.getText());
-                Validation.isValid(txtSalesCommission.getText());
-                Validation.isValid(txtSalesDate.getText());                    
+		    //TODO I think these need to be drop-down boxes to select available customers
+		    Validation.isValid(txtSalesProductName.getText());
+		    Validation.isValid(txtSalesCustomer.getText());
+		    Validation.isValid(txtSalesEmployee.getText());
+		    Validation.isValid(txtSalesCommission.getText());
+		    Validation.isValid(txtSalesDate.getText());                    
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
                 }               
@@ -1273,34 +1241,32 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
     private class CreateCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new manufacturer?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
+            if(Utils.showConfirmDialog("create a new customer"))
             {
-	    //Validate Inputs
+		String fieldName = "";
+		//Validate Inputs
                 try{
-                Validation.isValid(txtCustomerFirstName.getText());
-                Validation.isValid(txtCustomerLastName.getText());
-               // Validation.isValid(pnlCustomerSex);
-                Validation.isValid(txtCustomerAddress.getText());
-                Validation.isValid(txtCustomerCity.getText());
-                Validation.isValid(txtCustomerPhone.getText());
-                Validation.isValid(txtCustomerYearOfBirth.getText());
-                Validation.isValid(txtCustomerMonthOfBirth.getText());
-                Validation.isValid(txtCustomerDayOfBirth.getText());
-                    try{
-                    Validation.isValidName(txtMfactName.getText(), true);
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                    }
-                    try{                
-                    Validation.isValidPhoneNum(txtMfactPhoneNum.getText()); 
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
-                    }
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                }               
+		    fieldName = "First name";
+		    Validation.isValidName(txtCustomerFirstName.getText(), false);
+		    fieldName = "Last name";
+		    Validation.isValidName(txtCustomerLastName.getText(), false);
+		    //fieldName = "Sex";
+		    //Validation.isValid(pnlCustomerSex);
+		    fieldName = "Address";
+		    Validation.isValid(txtCustomerAddress.getText());
+		    fieldName = "City";
+		    Validation.isValid(txtCustomerCity.getText());
+		    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtCustomerPhone.getText());
+		    fieldName = "Year of birth";
+		    Validation.isValid(txtCustomerYearOfBirth.getText());
+		    fieldName = "Month of birth";
+		    Validation.isValid(txtCustomerMonthOfBirth.getText());
+		    fieldName = "Day of birth";
+		    Validation.isValid(txtCustomerDayOfBirth.getText());
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}    
             //Submit to Database
             
             }
