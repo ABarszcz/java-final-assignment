@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -56,6 +57,43 @@ public class ServiceClass {
          }
           
          }//end insert
+    
+         public static void productList(JComboBox list){
+              final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+     final String QRY = "SELECT * FROM MANUFACTURER";
+      
+       Connection conn = null;
+     
+     //statement object
+     Statement stat = null;
+     
+     //result set
+     ResultSet rs = null;
+     
+     //DB Connection
+     try{
+     conn = DriverManager.getConnection(DB_URL, "gc200321034", "KqxeZ*gk");
+     stat = conn.createStatement();
+     rs = stat.executeQuery(QRY);
+     
+     System.out.println("ok");
+     
+     //fill in cbo
+     while (rs.next())
+            {
+                //finds types in result set
+                list.addItem(rs.getString("MFACTNAME"));
+            }
+     
+     
+     
+     }
+     catch(SQLException error){
+         //error
+         System.out.println(error.toString());
+     }
+        
+         }
     
     
     

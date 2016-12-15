@@ -952,42 +952,7 @@ public class MainGUI extends JFrame {
 	pnlProductFieldGrid.add(cboProductManufacturer);
         
         //add cbo Items
-       //connection string
-     final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
-     final String QRY = "SELECT * FROM MANUFACTURER";
-      
-       Connection conn = null;
-     
-     //statement object
-     Statement stat = null;
-     
-     //result set
-     ResultSet rs = null;
-     
-     //DB Connection
-     try{
-     conn = DriverManager.getConnection(DB_URL, "gc200321034", "KqxeZ*gk");
-     stat = conn.createStatement();
-     rs = stat.executeQuery(QRY);
-     
-     System.out.println("ok");
-     
-     //fill in cbo
-     while (rs.next())
-            {
-                //finds types in result set
-                cboProductManufacturer.addItem(rs.getString("MFACTNAME"));
-            }
-     
-     
-     
-     }
-     catch(SQLException error){
-         //error
-         System.out.println(error.toString());
-     }
-        
-   
+       ServiceClass.productList(cboProductManufacturer);   
 	
 	//create and add the center panel
 	pnlProductCenter.setLayout(new BorderLayout());
