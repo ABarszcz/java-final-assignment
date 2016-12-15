@@ -92,7 +92,7 @@ public class CustomerHelper {
 
         StringBuffer sql = new StringBuffer();
         sql.append("UPDATE ");
-        sql.append("comp1004_CUSTOMER");
+        sql.append("CUSTOMER");
         sql.append("  SET ");
         sql.append("    FNAME = ?");
         sql.append("  , LNAME = ?");
@@ -134,7 +134,7 @@ public class CustomerHelper {
 
             StringBuffer sql = new StringBuffer();
             sql.append("DELETE FROM ");
-            sql.append("comp1004_CUSTOMER");
+            sql.append("CUSTOMER");
             sql.append("  WHERE ");
             sql.append("    CUSID = ?");
             //

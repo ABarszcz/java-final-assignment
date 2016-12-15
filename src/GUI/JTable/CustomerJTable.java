@@ -80,7 +80,7 @@ public class CustomerJTable extends CommonJTable {
 //    }
     @Override
     protected String getTableName() {
-        return "comp1004_CUSTOMER";
+        return "CUSTOMER";
     }
 
     @Override
