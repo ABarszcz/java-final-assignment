@@ -1,6 +1,5 @@
 package GUI;
 
-import Common.Utils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -94,7 +93,7 @@ class LoginForm {
         }
         catch(Exception e)
         {
-            Utils.logError(e);
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }       
     }
 }

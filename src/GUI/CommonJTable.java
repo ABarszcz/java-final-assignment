@@ -4,7 +4,6 @@
 package GUI;
 
 import Common.ConnectionHelper;
-import Common.Utils;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.sql.ResultSet;
@@ -110,17 +109,13 @@ public class CommonJTable extends JPanel {
                 JOptionPane.showMessageDialog(null, "The table name is invalid. Please try again.");
 
                 return;
-            } catch (Exception genEx) {
-		Utils.logError(genEx);
-	    }
+            }
 
             tbl = this.buildTBModel(rs);
 
         } catch (SQLException sqlex) {
             sqlex.printStackTrace();
-        } catch (Exception genEx) {
-	    Utils.logError(genEx);
-	} finally {
+        } finally {
             try {
                 ConnectionHelper.disconnect();
             } catch (SQLException sqlex) {
