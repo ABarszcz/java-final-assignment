@@ -70,40 +70,46 @@ public class Utils {
      try {  
          Integer.parseInt(str);  
          return true;
-      } catch (NumberFormatException ex) {  
+      } catch (NumberFormatException ex) {
          return false;  
+      } catch (Exception ex) {
+	  logError(ex);
+	  return false;
       }
     }
     
     //log an error
-    public static void logError(Exception ex) throws IOException {
-	//create a GregorianCalendar to get the current time
-	GregorianCalendar now = new GregorianCalendar();
-	
-	StringWriter sw = new StringWriter();
-	ex.printStackTrace(new PrintWriter(sw)); //get the stack trace
-	String error = sw.toString(); //save the stack trace in a string
-	sw.close();
-	
-	//create the directory
-	File errorDir = new File("C:/Errors/");
-	File errorFile = new File(errorDir, "errors.txt");
-	
-	//if the file doesn't exist
-	if(!errorFile.exists()) {
-	    errorDir.mkdirs(); //make the directories
-	    errorFile.createNewFile();//create the file in the directory
+    public static void logError(Exception ex) {
+	try {
+	    StringWriter sw = new StringWriter();
+	    ex.printStackTrace(new PrintWriter(sw)); //get the stack trace
+	    String error = sw.toString(); //save the stack trace in a string
+	    sw.close();
+
+	    //create the directory
+	    File errorDir = new File("C:/Errors/");
+	    File errorFile = new File(errorDir, "errors.txt");
+
+	    //if the file doesn't exist
+	    if(!errorFile.exists()) {
+		errorDir.mkdirs(); //make the directories
+		errorFile.createNewFile();//create the file in the directory
+	    }
+
+	    //create BufferedWriter for writing to the text file
+	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(errorFile, true)));
+
+	    //append the info
+	    out.append(new GregorianCalendar().getTime() + "\n"); //current date/time
+	    out.append(error + "\n"); //error
+	    out.append("=====================================================================================\n\n"); //bottom separator
+
+	    out.close();
+	} catch (IOException ioEx) {
+	    System.out.println("Error logging exception\n" + ioEx.toString());
+	} catch (Exception genEx) {
+	    System.out.println("Error logging exception\n" + genEx.toString());
 	}
-	
-	//create BufferedWriter for writing to the text file
-	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(errorFile, true)));
-	
-	//append the info
-	out.append(now.getTime() + "\n"); //current date/time
-	out.append(error + "\n"); //error
-	out.append("=====================================================================================\n\n"); //bottom separator
-	
-	out.close();
     }
     
     //show a confirmation dialog
