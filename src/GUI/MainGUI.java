@@ -1149,7 +1149,6 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlCustomerNew.add(pnlCustomerSouth, BorderLayout.SOUTH);
     }
     
-
     
     //** ACTION LISTENERS **\\
     
@@ -1170,14 +1169,15 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	    if(Utils.showConfirmDialog("create a new manufacturer")) {
 		String fieldName = "";
 		
-		//Validate Inputs
 		try{
+		    //Validate Inputs
 		    fieldName = "Name";
 		    Validation.isValidName(txtMfactName.getText(), true);
 		    fieldName = "Address";
 		    Validation.isValid(txtMfactAddress.getText());
 		    fieldName = "Phone number";
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
+		    
 		    //submit to the database
 		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
 			    txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
@@ -1191,22 +1191,24 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
     private class CreateProductButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(Utils.showConfirmDialog("create a new product"))
-            {
+            if(Utils.showConfirmDialog("create a new product")) {
                 String fieldName = "";
 		
-		//validate inputs
 		try{
+		    //validate inputs
 		    fieldName = "Name";
 		    Validation.isValidName(txtProductName.getText(), true);
 		    fieldName = "Price";
 		    Validation.isValid(txtProductPrice.getText());
 		    fieldName = "Discount";
 		    Validation.isValid(txtProductDiscount.getText());
+		    
 		    //Submit to Database
 		    ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),
 			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedIndex());
-		}catch(IllegalArgumentException error){
+		} catch(NumberFormatException exNfe) {
+		    Utils.logError(exNfe);
+		} catch(IllegalArgumentException exIae){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
             }
@@ -1216,10 +1218,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
     private class CreateSalesButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to create a new sale?", 
-                    "Exit", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.OK_OPTION)
-            {
+            if(Utils.showConfirmDialog("create a new sale")) {
 	    //Validate Inputs
                 try{
 		    //TODO I think these need to be drop-down boxes to select available customers
@@ -1227,12 +1226,13 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtSalesCustomer.getText());
 		    Validation.isValid(txtSalesEmployee.getText());
 		    Validation.isValid(txtSalesCommission.getText());
-		    Validation.isValid(txtSalesDate.getText());                    
+		    Validation.isValid(txtSalesDate.getText());
+
+		    //Submit to Database
+		    
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
-                }               
-            //Submit to Database
-            
+                }
             }
 	}
     }//end SalesButton    
@@ -1241,11 +1241,11 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
     private class CreateCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(Utils.showConfirmDialog("create a new customer"))
-            {
+            if(Utils.showConfirmDialog("create a new customer")) {
 		String fieldName = "";
-		//Validate Inputs
+		
                 try{
+		    //Validate Inputs
 		    fieldName = "First name";
 		    Validation.isValidName(txtCustomerFirstName.getText(), false);
 		    fieldName = "Last name";
@@ -1264,99 +1264,88 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtCustomerMonthOfBirth.getText());
 		    fieldName = "Day of birth";
 		    Validation.isValid(txtCustomerDayOfBirth.getText());
-		}catch(IllegalArgumentException error){
+		    
+		    //Submit to Database
+		    
+		}catch(IllegalArgumentException exIae){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}    
-            //Submit to Database
-            
+		}
             }
 	}
     }//end mfactButton    
-        
-    private static final String TITLE_CONFIRM = "Confirmation";
+
     private class EditCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to edit the customer?", 
-                    TITLE_CONFIRM, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-            {
-	    //Validate Inputs
-                boolean check = true;
+            if(Utils.showConfirmDialog("edit this customer")) {
+		String fieldName = "";
+		
                 try{
-                    Validation.isValid(customerJTable.getFname());
-                    Validation.isValid(customerJTable.getLname());
-                    // Validation.isValid(customerJTable.getGender());  // TODO validation for gender
+		    //Validate Inputs
+		    fieldName = "First name";
+                    Validation.isValidName(customerJTable.getFname(), false);
+		    fieldName = "Last name";
+                    Validation.isValidName(customerJTable.getLname(), false);
+		    //fieldName = "Gender";
+                    //Validation.isValid(customerJTable.getGender());  // TODO validation for gender
+		    fieldName = "Address";
                     Validation.isValid(customerJTable.getAddress());
+		    fieldName = "City";
                     Validation.isValid(customerJTable.getCity());
-                    Validation.isValid(customerJTable.getProvince());
-                    Validation.isValid(customerJTable.getPhonenum());
+                    fieldName = "Province";
+		    Validation.isValid(customerJTable.getProvince());
+                    fieldName = "Phone number";
+                    Validation.isValidPhoneNum(customerJTable.getPhonenum());
+                    fieldName = "Year of birth";
                     Validation.isValid(customerJTable.getYearOfBirthdate());
+                    fieldName = "Month of birth";
                     Validation.isValid(customerJTable.getMonthOfBirthdate());
+                    fieldName = "Day of birth";
                     Validation.isValid(customerJTable.getDayOfBirhdate());
-                    try{
-                        Validation.isValidName(customerJTable.getFname(), true);
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Name provided is invalid");
-                        check = false;
-                    }
-                    try{                
-                        Validation.isValidPhoneNum(customerJTable.getPhonenum()); 
-                    }catch(IllegalArgumentException error){
-                        JOptionPane.showMessageDialog(null, "Phone number is invalid");
-                        check = false;
-                    }
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                    check = false;
-                }
-            //Submit to Database
-            
-                Customer customer = new Customer(customerJTable.getFname(), customerJTable.getLname(),
+		    
+		    //Create customer object
+		    Customer customer = new Customer(customerJTable.getFname(), customerJTable.getLname(),
                         customerJTable.getGender(), customerJTable.getProvince(), customerJTable.getCity(),
                         customerJTable.getAddress(), customerJTable.getPhonenum(),
                         Integer.parseInt(customerJTable.getYearOfBirthdate()),
                         Integer.parseInt(customerJTable.getMonthOfBirthdate()),
                         Integer.parseInt(customerJTable.getDayOfBirhdate()));
-                customer.setCustomerID(customerJTable.getCusid());
-            System.out.println("debug customer: " + customer);
-                if (check != true) {
-                    return;
-                }
-                try {
-                    // update
-                    CustomerHelper.update(customer);
-                    // research
-                    // set search keywords
-                    Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
-                            null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
-                            0, 0, 0);
-                    System.out.println("debug customer: " + condition);
-                    // search
-                    customerJTable.buildTableInfoPanel(condition);
-                } catch (SQLException sqlex) {
-                    // error
-                    sqlex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Update is failed!");
-                }
-            }
+		    customer.setCustomerID(customerJTable.getCusid());
+		    
+		    try {
+			System.out.println("debug customer: " + customer);
+			// update
+			CustomerHelper.update(customer);
+			// research
+			// set search keywords
+			Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
+				null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
+				0, 0, 0);
+			System.out.println("debug customer: " + condition);
+			// search
+			customerJTable.buildTableInfoPanel(condition);
+		    } catch(SQLException exSql) {
+			Utils.logError(exSql);
+			JOptionPane.showMessageDialog(null, "Update failed!");
+		    }
+		} catch(IllegalArgumentException exIae){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }
 	}
     }//end EditCustomerButtonHandler
 
     private class DeleteCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-            if(JOptionPane.showConfirmDialog(null,
-                    "Are you sure you like to delete the customer?", 
-                    TITLE_CONFIRM, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-            {
-            //Submit to Database
+            if(Utils.showConfirmDialog("delete this customer")) {
+		//Submit to Database
             
                 Customer customer = new Customer(null, null,
                         null, null, null, null, null,
                         0, 0, 0);
                 customer.setCustomerID(customerJTable.getCusid());
-            System.out.println("debug customer: " + customer);
+		System.out.println("debug customer: " + customer);
 
                 try {
                     // delete
@@ -1371,7 +1360,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                     customerJTable.buildTableInfoPanel(null);
                 } catch (SQLException sqlex) {
                     // error
-                    sqlex.printStackTrace();
+                    Utils.logError(sqlex);
                     JOptionPane.showMessageDialog(null, "Delete is failed!");
                 }
             }
@@ -1391,17 +1380,4 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
             customerJTable.buildTableInfoPanel(condition);
 	}
     }//end SearchCustomerButtonHandler
-
-    //** MAIN **\\
-    /* not needed; just call the maingui in Main.java. These properties are set in setupGUI
-    public static void main(String[]args)
-    {
-        MainGUI gui = new MainGUI();
-        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gui.setResizable(false);
-        gui.setVisible(true);
-        
-        gui.setLocationRelativeTo(null);
-    }
-    */
 }
