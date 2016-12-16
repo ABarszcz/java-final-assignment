@@ -1229,15 +1229,10 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    
 		    //Submit to Database
 		    ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),
-<<<<<<< HEAD
-			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedIndex());
+			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedItem().toString());
 		} catch(NumberFormatException exNfe) {
 		    Utils.logError(exNfe);
-		} catch(IllegalArgumentException exIae){
-=======
-			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedItem().toString());
-		}catch(IllegalArgumentException error){
->>>>>>> origin/master
+		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
             }
@@ -1255,22 +1250,13 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtSalesCustomer.getText());
 		    Validation.isValid(txtSalesEmployee.getText());
 		    Validation.isValid(txtSalesCommission.getText());
-<<<<<<< HEAD
 		    Validation.isValid(txtSalesDate.getText());
 
 		    //Submit to Database
-		    
+
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
                 }
-=======
-		    Validation.isValid(txtSalesDate.getText());  
-                    //Submit to Database
-		   // ServiceClass.
-                }catch(IllegalArgumentException  error){
-                    JOptionPane.showMessageDialog(null, "All fields must be provided");
-                }               
->>>>>>> origin/master
             }
 	}
     }//end SalesButton    
@@ -1302,20 +1288,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtCustomerMonthOfBirth.getText());
 		    fieldName = "Day of birth";
 		    Validation.isValid(txtCustomerDayOfBirth.getText());
-<<<<<<< HEAD
 		    
 		    //Submit to Database
 		    
 		}catch(IllegalArgumentException exIae){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
-=======
-                    //Submit to Database
-		   // ServiceClass.
-		}catch(IllegalArgumentException error){
-		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}    
->>>>>>> origin/master
             }
 	}
     }//end mfactButton    
