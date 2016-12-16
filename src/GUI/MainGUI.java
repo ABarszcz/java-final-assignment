@@ -4,7 +4,11 @@ import Common.Utils;
 import Common.Validation;
 import Customer.Customer;
 import Customer.CustomerHelper;
+import Employees.Employee;
 import GUI.JTable.CustomerJTable;
+import Manufacturers.Manufacturer;
+import Products.Product;
+import Sale.Sale;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -12,11 +16,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Double.parseDouble;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -37,6 +43,13 @@ import javax.swing.event.ChangeListener;
  * @author Noah Michael
  */
 public class MainGUI extends JFrame {
+    //lists to hold objects
+    ArrayList<Employee> empList = new ArrayList<Employee>();
+    ArrayList<Manufacturer> mfactList = new ArrayList<Manufacturer>();
+    ArrayList<Product> productList = new ArrayList<Product>();
+    ArrayList<Customer> custList = new ArrayList<Customer>();
+    ArrayList<Sale> saleList = new ArrayList<Sale>();
+    
     private final JPanel pnlFullScreen;
     private final JTabbedPane pnlTabbedPane;
     
@@ -1171,6 +1184,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		
 		//Validate Inputs
 		try{
+		    /* this is the code for create Mfact, not Employee.
 		    fieldName = "Name";
 		    Validation.isValidName(txtMfactName.getText(), true);
 		    fieldName = "Address";
@@ -1180,6 +1194,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    //submit to the database
 		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
 			    txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
+		    */
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
@@ -1197,10 +1212,19 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    //Validate Inputs
 		    fieldName = "Name";
 		    Validation.isValidName(txtMfactName.getText(), true);
+		    fieldName = "Province";
+		    Validation.isValid(txtMfactProvince.getText());
+		    fieldName = "City";
+		    Validation.isValid(txtMfactCity.getText());
 		    fieldName = "Address";
 		    Validation.isValid(txtMfactAddress.getText());
 		    fieldName = "Phone number";
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
+		    
+		    //create object
+		    mfactList.add(new Manufacturer(txtMfactName.getText(),
+			    txtMfactProvince.getText(), txtMfactCity.getText(),
+			    txtMfactAddress.getText(), txtMfactPhoneNum.getText()));
 		    
 		    //submit to the database
 		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
@@ -1227,6 +1251,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    fieldName = "Discount";
 		    Validation.isValid(txtProductDiscount.getText());
 		    
+		    //TODO create object -- needs the mfact from the combobox
+//		    productList.add(new Product(txtProductName.getText(),
+//			    new BigDecimal(txtProductPrice.getText()),
+//			    new BigDecimal(txtProductDiscount.getText(),
+//			    <placeholder text for mfact>)));
+		    
 		    //Submit to Database
 		    ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),
 			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedItem().toString());
@@ -1251,6 +1281,9 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtSalesEmployee.getText());
 		    Validation.isValid(txtSalesCommission.getText());
 		    Validation.isValid(txtSalesDate.getText());
+		    
+		    //create object
+		    
 
 		    //Submit to Database
 
@@ -1274,6 +1307,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValidName(txtCustomerFirstName.getText(), false);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtCustomerLastName.getText(), false);
+		    //TODO get the sex
 		    //fieldName = "Sex";
 		    //Validation.isValid(pnlCustomerSex);
 		    fieldName = "Address";
@@ -1288,6 +1322,9 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtCustomerMonthOfBirth.getText());
 		    fieldName = "Day of birth";
 		    Validation.isValid(txtCustomerDayOfBirth.getText());
+		    
+		    //create object
+		    
 		    
 		    //Submit to Database
 		    
@@ -1385,7 +1422,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                 } catch (SQLException sqlex) {
                     // error
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Delete is failed!");
+                    JOptionPane.showMessageDialog(null, "Delete failed!");
                 }
             }
 	}
