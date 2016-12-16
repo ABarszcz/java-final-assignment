@@ -27,7 +27,7 @@ CREATE TABLE EMPLOYEE(EMPID INT NOT NULL,
                       PRIMARY KEY(EMPID));
                       
 /* Customer Table */
-CREATE TABLE CUSTOMER(CUSID INT NOT NULL,
+CREATE TABLE CUSTOMER(CUSID INT NOT NULL auto_increment,
 					   FNAME VARCHAR(50) NOT NULL,
                        LNAME VARCHAR(50) NOT NULL,
                        GENDER VARCHAR(6) NOT NULL,
@@ -39,23 +39,25 @@ CREATE TABLE CUSTOMER(CUSID INT NOT NULL,
                        PRIMARY KEY(CUSID));
                        
 /* Manufacturer Table */
-CREATE TABLE MANUFACTURER(MANID INT NOT NULL,
-						 NAME VARCHAR(100) NOT NULL,
+CREATE TABLE MANUFACTURER(
+							MFACTID INT NOT NULL auto_increment
+						 MFACRNAME VARCHAR(100) NOT NULL,
 						 ADDRESS VARCHAR(100) NOT NULL,
-                         CITY VARCHAR(50) NOT NULL,
-                         PROVINCE VARCHAR(10),
-                         PHONENUM VARCHAR(10),
-                         PRIMARY KEY(MANID));
+                         CITY VARCHAR(100) NOT NULL,
+                         PROVINCE VARCHAR(50),
+                         PHONENUM VARCHAR(50),
+                         PRIMARY KEY(MFACTID));
+                        
                       
 /*Product Table */
-CREATE TABLE PRODUCT(PRODID INT NOT NULL,
-					 NAME VARCHAR(50) NOT NULL,
-                     PRICE DEC(30,2) NOT NULL,
-                     DISCOUNT DEC(30,2) NOT NULL,
-                     MANID INT,
-                     PRIMARY KEY(PRODID),
-                     FOREIGN KEY(MANID)
-						REFERENCES MANUFACTURER(MANID));
+CREATE TABLE PRODUCT(
+					 PRODUCTNAME VARCHAR(100) NOT NULL,
+                     PRICE DOUBLE NOT NULL,
+                     DISCOUNT DOUBLE NOT NULL,
+                     MFACTNAME VARCHAR(100),
+                     PRIMARY KEY(PRODUCTNAME),
+                     FOREIGN KEY(MFACTNAME)
+						REFERENCES MANUFACTURER(PRODUCTNAME));
                      
 /* Sales Table */
 CREATE TABLE SALES(SALEID INT NOT NULL,

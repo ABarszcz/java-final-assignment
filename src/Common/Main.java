@@ -21,8 +21,8 @@ public class Main {
 	
 	//new Login();
       // new LoginK();
-MainGUI gui = new MainGUI();
-       gui.setVisible(true);
+        MainGUI gui = new MainGUI();
+        gui.setVisible(true);
 	
         //create emp object for testing purposes
 	CommissionSalesEmployee emp = new CommissionSalesEmployee(

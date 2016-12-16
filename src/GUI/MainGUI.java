@@ -1016,7 +1016,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlProductFieldGrid.add(cboProductManufacturer);
         
         //add cbo Items
-       ServiceClass.productList(cboProductManufacturer);   
+       ServiceClass.mfactList(cboProductManufacturer);   
 	
 	//create and add the center panel
 	pnlProductCenter.setLayout(new BorderLayout());
@@ -1117,10 +1117,10 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlCustomerLabelGrid.add(new JLabel("Customer's First Name"));
 	pnlCustomerLabelGrid.add(new JLabel("Customer's Last Name"));
         pnlCustomerLabelGrid.add(new JLabel("Sex"));
-        pnlCustomerLabelGrid.add(new JLabel("Province"));
-        pnlCustomerLabelGrid.add(new JLabel("City"));
         pnlCustomerLabelGrid.add(new JLabel("Address"));
-	pnlCustomerLabelGrid.add(new JLabel("Phone Number"));
+         pnlCustomerLabelGrid.add(new JLabel("City"));
+        pnlCustomerLabelGrid.add(new JLabel("Province"));
+        pnlCustomerLabelGrid.add(new JLabel("Phone Number"));
         pnlCustomerLabelGrid.add(new JLabel("Year Of Birth"));
         pnlCustomerLabelGrid.add(new JLabel("Month Of Birth"));
         pnlCustomerLabelGrid.add(new JLabel("Day Of Birth"));
@@ -1130,9 +1130,9 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlCustomerFieldGrid.add(txtCustomerFirstName);
 	pnlCustomerFieldGrid.add(txtCustomerLastName);
         pnlCustomerFieldGrid.add(pnlCustomerSex);
-        pnlCustomerFieldGrid.add(txtCustomerProvince);
-        pnlCustomerFieldGrid.add(txtCustomerCity);
         pnlCustomerFieldGrid.add(txtCustomerAddress);
+        pnlCustomerFieldGrid.add(txtCustomerCity);
+        pnlCustomerFieldGrid.add(txtCustomerProvince);     
 	pnlCustomerFieldGrid.add(txtCustomerPhone);
         pnlCustomerFieldGrid.add(txtCustomerYearOfBirth);
         pnlCustomerFieldGrid.add(txtCustomerMonthOfBirth);
@@ -1163,6 +1163,30 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
             }
 	}
     }
+    
+        private class CreateEmployeeButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	    if(Utils.showConfirmDialog("create a new manufacturer")) {
+		String fieldName = "";
+		
+		//Validate Inputs
+		try{
+		    fieldName = "Name";
+		    Validation.isValidName(txtMfactName.getText(), true);
+		    fieldName = "Address";
+		    Validation.isValid(txtMfactAddress.getText());
+		    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
+		    //submit to the database
+		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
+			    txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
+		} catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }           
+	}
+    }//end employee
     
     private class CreateMfactButtonHandler implements ActionListener {
 	@Override
@@ -1205,7 +1229,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtProductDiscount.getText());
 		    //Submit to Database
 		    ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),
-			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedIndex());
+			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedItem().toString());
 		}catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
@@ -1227,12 +1251,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtSalesCustomer.getText());
 		    Validation.isValid(txtSalesEmployee.getText());
 		    Validation.isValid(txtSalesCommission.getText());
-		    Validation.isValid(txtSalesDate.getText());                    
+		    Validation.isValid(txtSalesDate.getText());  
+                    //Submit to Database
+		   // ServiceClass.
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
                 }               
-            //Submit to Database
-            
             }
 	}
     }//end SalesButton    
@@ -1264,11 +1288,11 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtCustomerMonthOfBirth.getText());
 		    fieldName = "Day of birth";
 		    Validation.isValid(txtCustomerDayOfBirth.getText());
+                    //Submit to Database
+		   // ServiceClass.
 		}catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}    
-            //Submit to Database
-            
             }
 	}
     }//end mfactButton    
