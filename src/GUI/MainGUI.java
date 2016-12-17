@@ -2,20 +2,18 @@ package GUI;
 
 import Common.Utils;
 import Common.Validation;
-import Customer.Customer;
-import Customer.CustomerHelper;
-import Employees.Employee;
+import Customer.*;
+import Employees.*;
 import GUI.JTable.CustomerJTable;
-import Manufacturers.Manufacturer;
-import Products.Product;
-import Sale.Sale;
+import Manufacturers.*;
+import Products.*;
+import Sale.*;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -379,6 +377,7 @@ public class MainGUI extends JFrame {
 	
 	//initialize JButtons
 	this.btnEmpSNew = new JButton("Create Salary Employee");
+        btnEmpSNew.addActionListener(new CreateSalaryEmployeeButtonHandler());
 	this.btnEmpHNew = new JButton("Create Hourly Employee");
 	this.btnEmpCSNew = new JButton("Create Commission-Sales Employee");
 	this.btnEmpBPCNew = new JButton("Create Base Plus Commission Employee");
@@ -757,7 +756,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlEmpSLabelGrid.add(new JLabel("Year Of Birth"));
 	pnlEmpSLabelGrid.add(new JLabel("Month Of Birth"));
 	pnlEmpSLabelGrid.add(new JLabel("Day Of Birth"));
-	pnlEmpSLabelGrid.add(new JLabel("Salary Type"));
+	//pnlEmpSLabelGrid.add(new JLabel("Salary Type"));
 	pnlEmpSLabelGrid.add(new JLabel("Salary Amount"));
 	
 	//create the field sub-panel of the center panel
@@ -775,7 +774,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlEmpSFieldGrid.add(txtEmpSYearOfBirth);
 	pnlEmpSFieldGrid.add(txtEmpSMonthOfBirth);
 	pnlEmpSFieldGrid.add(txtEmpSDayOfBirth);
-	pnlEmpSFieldGrid.add(txtEmpSSalaryType);
+	//pnlEmpSFieldGrid.add(txtEmpSSalaryType);
 	pnlEmpSFieldGrid.add(txtEmpSSalaryAmount);
 	
 	//create and add the center panel
@@ -1214,14 +1213,32 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtEmpSMonthOfBirth.getText());
 		    fieldName = "Day of birth";
 		    Validation.isValid(txtEmpSDayOfBirth.getText());
+                    //fieldName = "Salary Type";
+                    //Validation.isValid(txtEmpSSalaryType.getText());
+                    fieldName = "Salary Amount";
+                    Validation.isValid(txtEmpSSalaryAmount.getText());
 		    //Select Gender
-                      String gender = "Not Selected";
-                     if(rdoCustomerSexMale.isSelected()){
+                    String gender = "Not Selected";
+                    if(rdoEmpSSexMale.isSelected()){
                          gender = "Male";
-                     }
-                     if(rdoCustomerSexFemale.isSelected()){
+                    }
+                    if(rdoEmpSSexFemale.isSelected()){
                          gender = "Female";
-                     }
+                    }
+                     //Create object
+                    SalaryEmployee e1 = new SalaryEmployee(txtEmpSFirstName.getText(), txtEmpSLastName.getText(), gender, txtEmpSAddress.getText(), 
+                                                           txtEmpSCity.getText(), txtEmpSProvince.getText(), txtEmpSPhoneNum.getText(), txtEmpSDepartment.getText(), 
+                                                           txtEmpSPosition.getText(), txtEmpSSocialSecurityNum.getText(), parseInt(txtEmpSYearOfBirth.getText()),
+                                                           parseInt(txtEmpSMonthOfBirth.getText()), parseInt(txtEmpSDayOfBirth.getText()),parseDecimal(txtEmpSSalaryAmount.getText())
+                                                                   );
+                    //Add to database
+                    ServiceClass.insertSalaryEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDateOfBirth().getTime().getDate(), e1.getSalaryAmount());
+                    
+                    
+                     
+                     
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}

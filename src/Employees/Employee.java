@@ -13,10 +13,11 @@ public abstract class Employee {
     private String firstName, lastName, sex, province, city, address,
 	    phoneNum, department, position, employeeID, socialSecurityNum;
     private GregorianCalendar dateOfBirth;
+    private int year;
     //</editor-fold>
     
     public Employee(String firstName, String lastName, String sex,
-	    String province, String city, String address, String phoneNum,
+	    String address, String city, String province, String phoneNum,
 	    String department, String position, String socialSecurityNum, int yearOfBirth,
 	    int monthOfBirth, int dayOfBirth) {
         this.firstName = firstName;
@@ -32,6 +33,7 @@ public abstract class Employee {
 	this.socialSecurityNum = socialSecurityNum;
 	this.dateOfBirth = new GregorianCalendar();
 	this.dateOfBirth.set(yearOfBirth, monthOfBirth-1, dayOfBirth);
+        this.year = yearOfBirth;
     } //end of Employee constructor
     
     //<editor-fold desc="Accessor Methods">
@@ -46,6 +48,7 @@ public abstract class Employee {
     public String getPosition() { return position; }
     public String getEmployeeID() { return employeeID; }
     public String getSocialSecurityNum() { return socialSecurityNum; }
+    public int getYear(){ return year; }
     public GregorianCalendar getDateOfBirth() { return dateOfBirth; }
     @Override public String toString() {
 	return "Employee First Name: " + getFirstName() + "\n"

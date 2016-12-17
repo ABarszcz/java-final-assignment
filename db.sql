@@ -8,23 +8,22 @@ DROP TABLE MANUFACTURER;
 DROP TABLE LOGIN;
 
 /* Employee Table */
-CREATE TABLE EMPLOYEE(EMPID INT NOT NULL,
-					  FNAME VARCHAR(50) NOT NULL,
-                      LNAME VARCHAR(50) NOT NULL,
-                      GENDER VARCHAR(6) NOT NULL,
+CREATE TABLE EMPLOYEE(EMPID INT NOT NULL auto_increment,
+					  FNAME VARCHAR(100) NOT NULL,
+                      LNAME VARCHAR(100) NOT NULL,
+                      GENDER VARCHAR(10) NOT NULL,
                       ADDRESS VARCHAR(100) NOT NULL,
-                      CITY VARCHAR(50) NOT NULL,
-                      PROVINCE VARCHAR(10) NOT NULL,
+                      CITY VARCHAR(100) NOT NULL,
+                      PROVINCE VARCHAR(50) NOT NULL,
                       PHONENUM VARCHAR(25) NOT NULL,
-                      DEPT VARCHAR(50) NOT NULL,
-                      DEPTPOSITION VARCHAR(50) NOT NULL,
-                      SSN DOUBLE NOT NULL,
+                      DEPT VARCHAR(100) NOT NULL,
+                      DEPTPOSITION VARCHAR(100) NOT NULL,
+                      SSN VARCHAR(100) NOT NULL,
                       BIRTHYEAR int not null,
                       BIRTHMONTH INT NOT NULL,
                       BIRTHDATE INT NOT NULL,
                       HOURLY DEC(10,2),
                       SALARY DEC(10,2),
-                      SALES DEC(50,2),
                       COMM DEC(50,2),                      
                       PRIMARY KEY(EMPID));
                       
