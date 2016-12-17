@@ -15,6 +15,12 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
     
+//add start takaaki
+    /** action: edit */
+    public static final String ACTION_EDIT = "edit";
+    /** action: delete */
+    public static final String ACTION_DELETE = "delete";
+//add e n d takaaki
     //<editor-fold desc="ID Number Generation">
     //create default ID numbers
     private static int empID = 0;

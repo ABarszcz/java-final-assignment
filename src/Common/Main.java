@@ -19,6 +19,9 @@ public class Main {
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
+        // TODO for testing
+        // initialize connection helper
+        new ConnectionHelper(ConnectionHelper.NAME, ConnectionHelper.DEFAULT_USER, ConnectionHelper.DEFAULT_PASS);
 	//new Login();
       // new LoginK();
         MainGUI gui = new MainGUI();

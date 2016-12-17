@@ -5,6 +5,7 @@ import Common.Validation;
 import Customer.*;
 import Employees.*;
 import GUI.JTable.CustomerJTable;
+import GUI.JTable.ProductJTable;
 import Manufacturers.*;
 import Products.*;
 import Sale.*;
@@ -43,6 +44,15 @@ import static javax.xml.bind.DatatypeConverter.parseDecimal;
  * @author Noah Michael
  */
 public class MainGUI extends JFrame {
+//add start takaaki
+    /* consts */
+    private static final int TAB_IDX_EMPLOYEE = 0;
+    private static final int TAB_IDX_PRODUCT = 2;
+    private static final int TAB_IDX_CUSTOMER = 4;
+    private static final int TAB_IDX_EMPLOYEE_SEARCH = 0;
+    private static final int TAB_IDX_PRODUCT_SEARCH = 0;
+    private static final int TAB_IDX_CUSTOMER_SEARCH = 0;
+//add e n d takaaki
     //lists to hold objects
     ArrayList<Employee> empList = new ArrayList<Employee>();
     ArrayList<Manufacturer> mfactList = new ArrayList<Manufacturer>();
@@ -77,6 +87,9 @@ public class MainGUI extends JFrame {
     private final JTextField txtEmpSearchLastName, txtEmpSearchDepartment;
     private final JTextArea txaEmpResults;
     private final JScrollPane spEmpResults;
+//add start takaaki
+//    private final EmployeeJTable employeeJTable;
+//add e n d takaaki
     
     //text fields for Salary employee
     private final JTextField txtEmpSFirstName,
@@ -154,10 +167,16 @@ public class MainGUI extends JFrame {
     private final JComboBox cboProductManufacturer;
     private final JButton btnProductNew;
     private final JLabel lblProductSearch, lblProductManuSearch;
-    private final JTextArea txaProductResults;
-    private final JScrollPane spProductResults;
+//modify start takaaki
+//    private final JTextArea txaProductResults;
+//    private final JScrollPane spProductResults;
+    private final ProductJTable productJTable;
+//modify e n d takaaki
     
-    private final JButton btnProductEdit, btnProductDelete;
+//modify start takaaki
+//    private final JButton btnProductEdit, btnProductDelete;
+    private final JButton btnProductSearch, btnProductEdit, btnProductDelete;
+//modify e n d takaaki
     
     //</editor-fold>
     
@@ -446,6 +465,14 @@ public class MainGUI extends JFrame {
 	this.btnProductNew = new JButton("Create Product");
 	this.btnProductEdit = new JButton("Edit");
 	this.btnProductDelete = new JButton("Delete");
+//add start takaaki
+        this.btnProductSearch = new JButton("Search");
+
+        // set handlers
+        this.btnProductEdit.addActionListener(new EditProductButtonHandler());
+        this.btnProductDelete.addActionListener(new DeleteProductButtonHandler());
+        this.btnProductSearch.addActionListener(new SearchProductButtonHandler());
+//add e n d takaaki
 	
 	//initialize JComboBox
 	this.cboProductManufacturer = new JComboBox();
@@ -455,8 +482,15 @@ public class MainGUI extends JFrame {
 	this.txtProductSearch = new JTextField(15);
         this.lblProductManuSearch = new JLabel("Search Product by Manufacturer's Name");
 	this.txtProductManuSearch = new JTextField(15);
-	this.txaProductResults = new JTextArea(15, 30);
-	this.spProductResults = new JScrollPane(txaProductResults);
+//modify start takaaki
+//        this.txaProductResults = new JTextArea(15, 30);
+//	this.spProductResults = new JScrollPane(txaProductResults);
+        this.productJTable = new ProductJTable();
+
+        // add handler
+        this.txtProductSearch.addActionListener(new SearchProductButtonHandler());
+        this.txtProductManuSearch.addActionListener(new SearchProductButtonHandler());
+//modify e n d takaaki
         
         //<editor-fold desc="Initialize Sales Components">
 	
@@ -546,6 +580,11 @@ public class MainGUI extends JFrame {
 //	this.spCustomerResults = new JScrollPane(txaCustomerResults);
         this.customerJTable = new CustomerJTable();
         
+// add start takaaki
+        // add handler
+        this.txtCustomerSearchLastName.addActionListener(new SearchCustomerButtonHandler());
+        this.txtCustomerSearchPhoneNumber.addActionListener(new SearchCustomerButtonHandler());
+// add e n d takaaki
         //create radio buttons and the radio button group for Customer
 	this.rdoCustomerSexMale = new JRadioButton("Male");
 	this.rdoCustomerSexFemale = new JRadioButton("Female");
@@ -620,8 +659,6 @@ public class MainGUI extends JFrame {
 	return pnlFullScreen;
     }
 
-    private static final int TAB_IDX_CUSTOMER = 4;
-    private static final int TAB_IDX_CUSTOMER_SEARCH = 0;
     /**
      * That is called when customer tab is clicked.
      */
@@ -634,6 +671,14 @@ System.out.println("Tab is changed");
             int selectedTabIndex = pnlTabbedPane.getSelectedIndex();
 System.out.println("Selected tab:" + selectedTabIndex);
             switch (selectedTabIndex) {
+//add start takaaki
+                case TAB_IDX_PRODUCT:
+                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_PRODUCT_SEARCH) {
+                        // search
+                        productJTable.buildTableInfoPanel(null);
+                    }
+                    break;
+//add e n d takaaki
                 case TAB_IDX_CUSTOMER:
                     if (pnlCustomer.getSelectedIndex() == TAB_IDX_CUSTOMER_SEARCH) {
                         // search
@@ -679,7 +724,31 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	//add the tabs
 	pnlProduct.addTab("Search", pnlProductSearch);
 	pnlProduct.addTab("New Product", pnlProductNew);
+//add start takaaki
+
+        // set handler
+        pnlProduct.addChangeListener(new ProductTabChangeListener());
+//add e n d takaaki
     }
+//add
+    /**
+     * That is called when product tab is clicked.
+     */
+    private class ProductTabChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            // update manufacturer id combo box
+System.out.println("Tab is changed");
+System.out.println("Selected tab:" + pnlProduct.getSelectedIndex());
+            if (pnlProduct.getSelectedIndex() == 0) {
+                // search
+                productJTable.buildTableInfoPanel(null);
+            }
+        }
+        
+    }
+// end
     
     private void createSalesTabbedPane() {
 	createSalesSearchTab();
@@ -1004,11 +1073,17 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlProductSearchNorth.setLayout(new FlowLayout());
 	pnlProductSearchNorth.add(lblProductSearch);
 	pnlProductSearchNorth.add(txtProductSearch);
+//add start takaaki
+        pnlProductSearchNorth.add(btnProductSearch);
+//add e n d takaaki
         pnlProductSearchCenter.add(lblProductManuSearch);
 	pnlProductSearchCenter.add(txtProductManuSearch);
 	
 	//design the center panel
-	pnlProductSearchCenter.add(spProductResults);
+//modify start takaaki
+//        pnlProductSearchCenter.add(spProductResults);
+        pnlProductSearchCenter.add(this.productJTable);
+//modify e n d takaaki
 	
 	pnlProductSearch.add(pnlProductSearchNorth, BorderLayout.NORTH);
 	pnlProductSearch.add(pnlProductSearchCenter, BorderLayout.CENTER);
@@ -1514,6 +1589,130 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }//end ProductButton  
     
+//add start takaaki
+    /**
+     * Handler for edit button on Product tab.
+     */
+    private class EditProductButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!productJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog(Utils.ACTION_EDIT)) {
+                boolean check = true;
+                String fieldName = "";
+		
+		//validate inputs
+		try{
+		    fieldName = "Name";
+                    Validation.isValidName(productJTable.getProductname(), true);
+		    fieldName = "Price";
+                    Validation.isValid(productJTable.getPrice());
+                    // Validation.isValid(customerJTable.getGender());  // TODO validation for gender
+		    fieldName = "Discount";
+                    Validation.isValid(productJTable.getDiscount());
+//                    Validation.isValid(productJTable.getManid());
+                    Validation.isValid(productJTable.getManname());
+		}catch(IllegalArgumentException error){
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+                    check = false;
+                }
+            //Submit to Database
+                Manufacturer mfact = null;
+                mfact = new Manufacturer(productJTable.getManname(), null, null, null, null);
+                Product product = new Product(productJTable.getProductname(),
+                        new BigDecimal(productJTable.getPrice()), new BigDecimal(productJTable.getDiscount()), mfact);
+
+                product.setProductID(productJTable.getProdid());
+            System.out.println("debug Product: " + product);
+                if (check != true) {
+                    return;
+                }
+                try {
+                    // update
+                    ProductHelper.update(product);
+                    // re-search
+                    // set search keywords
+                    Manufacturer conditionMfact = null;
+                    if (!Utils.isEmpty(txtProductManuSearch.getText())) {
+                        conditionMfact = new Manufacturer(txtProductManuSearch.getText(), null, null, null, null);
+                    }
+                    Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
+                    System.out.println("debug Product: " + condition);
+                    // search
+                    productJTable.buildTableInfoPanel(condition);
+                } catch (SQLException sqlex) {
+                    // error
+                    sqlex.printStackTrace();    // TODO delete
+                    Utils.logError(sqlex);
+                    JOptionPane.showMessageDialog(null, "Update failed!");
+                }
+            }
+	}
+    }//end EditProductButtonHandler
+
+    /**
+     * Handler for delete button on Product tab.
+     */
+    private class DeleteProductButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!productJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog(Utils.ACTION_DELETE)) {
+            //Submit to Database
+            
+                Product product = new Product(null, null, null, null);
+                product.setProductID(productJTable.getProdid());
+
+                try {
+                    // delete
+                    ProductHelper.delete(product);
+                    // re-search
+                    // set search keywords
+                    Manufacturer conditionMfact = null;
+                    if (!Utils.isEmpty(txtProductManuSearch.getText())) {
+                        conditionMfact = new Manufacturer(txtProductManuSearch.getText(), null, null, null, null);
+                    }
+                    Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
+                    System.out.println("debug Product: " + condition);
+                    // search
+                    productJTable.buildTableInfoPanel(condition);
+                } catch (SQLException sqlex) {
+                    // error
+                    Utils.logError(sqlex);
+                    JOptionPane.showMessageDialog(null, "Delete is failed!");
+                }
+            }
+	}
+    }//end DeleteProductButtonHandler
+
+    /**
+     * Handler for search button on Customer tab.
+     */
+    private class SearchProductButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            
+            // set search keywords
+            Manufacturer conditionMfact = null;
+            if (!Utils.isEmpty(txtProductManuSearch.getText())) {
+                conditionMfact = new Manufacturer(txtProductManuSearch.getText(), null, null, null, null);
+            }
+            Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
+            System.out.println("debug Product: " + condition);
+            // search
+            productJTable.buildTableInfoPanel(condition);
+	}
+    }//end SearchProductButtonHandler
+//add e n d takaaki
+
     private class CreateSalesButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1600,12 +1799,23 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }//end mfactButton    
 
+    /**
+     * Handler for edit button on Customer tab.
+     */
     private class EditCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
+//add start takaaki
+            // if not selected, do nothing
+            if (!customerJTable.isSelected()) {
+                return;
+            }
+
+//add e n d takaaki
             if(Utils.showConfirmDialog("edit this customer")) {
 		String fieldName = "";
 		
+                boolean check = true;
                 try{
 		    //Validate Inputs
 		    fieldName = "First name";
@@ -1627,7 +1837,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                     fieldName = "Month of birth";
                     Validation.isValid(customerJTable.getMonthOfBirthdate());
                     fieldName = "Day of birth";
-                    Validation.isValid(customerJTable.getDayOfBirhdate());
+                    Validation.isValid(customerJTable.getDayOfBirthdate());
 		    
 		    //Create customer object
 		    Customer customer = new Customer(customerJTable.getFname(), customerJTable.getLname(),
@@ -1635,9 +1845,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                         customerJTable.getAddress(), customerJTable.getPhonenum(),
                         Integer.parseInt(customerJTable.getYearOfBirthdate()),
                         Integer.parseInt(customerJTable.getMonthOfBirthdate()),
-                        Integer.parseInt(customerJTable.getDayOfBirhdate()));
+                        Integer.parseInt(customerJTable.getDayOfBirthdate()));
 		    customer.setCustomerID(customerJTable.getCusid());
 		    
+                    if (check != true) {
+                        return;
+                    }
 		    try {
 			System.out.println("debug customer: " + customer);
 			// update
@@ -1655,15 +1868,26 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 			JOptionPane.showMessageDialog(null, "Update failed!");
 		    }
 		} catch(IllegalArgumentException exIae){
+                    Utils.logError(exIae);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
 	    }
 	}
     }//end EditCustomerButtonHandler
 
+    /**
+     * Handler for delete button on Customer tab.
+     */
     private class DeleteCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
+//add start takaaki
+            // if not selected, do nothing
+            if (!customerJTable.isSelected()) {
+                return;
+            }
+
+//add e n d takaaki
             if(Utils.showConfirmDialog("delete this customer")) {
 		//Submit to Database
             
@@ -1693,6 +1917,9 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }//end DeleteCustomerButtonHandler
 
+    /**
+     * Handler for search button on Customer tab.
+     */
     private class SearchCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {

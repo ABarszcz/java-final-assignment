@@ -19,12 +19,15 @@ public class ConnectionHelper {
     public static final String DBMS = "mysql";
     public static final String HOST = "sql.computerstudi.es";
     // @todo delete or change
-    public static final String NAME = "gc200292749";
+//    public static final String NAME = "gc200292749";
+    public static final String NAME = "gc200321034";
     public static final String PORT = "3306";
     // TODO delete or change
-    public static final String DEFAULT_USER = "gc200292749";
+//    public static final String DEFAULT_USER = "gc200292749";
+    public static final String DEFAULT_USER = "gc200321034";
     // TODO delete or change
-    public static final String DEFAULT_PASS = "5KD5F^QT";
+//    public static final String DEFAULT_PASS = "5KD5F^QT";
+    public static final String DEFAULT_PASS = "KqxeZ*gk";
     public static final String URL = "jdbc:" + DBMS + "://" + HOST + ":" + PORT + "/";
 
     /* properties */

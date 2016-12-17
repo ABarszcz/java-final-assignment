@@ -52,6 +52,10 @@ public class Product {
 	this.name = name;
     }
     
+    public void setProductID(String productID) {
+	this.productID = productID;
+    }
+    
     public void setPrice(BigDecimal price) {
 	this.price = price;
     }

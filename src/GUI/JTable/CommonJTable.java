@@ -4,6 +4,7 @@
 package GUI.JTable;
 
 import Common.ConnectionHelper;
+import Common.Utils;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -112,26 +113,27 @@ public abstract class CommonJTable extends JPanel {
             // create statement
             stmt = ConnectionHelper.createStatement();
 System.out.println("debug key:" + key);
-            if (key == null) {
-                try {
-                    // select all
-                    // create sql
-                    String sql = "SELECT * FROM " + this.getTableName();
-                    System.out.println("TABLE:" + this.getTableName());
-                    // execute
-                    rs = stmt.executeQuery(sql);
-                } catch (SQLException sqlex) {
-                    // table not found
-                    sqlex.printStackTrace();
-
-                    JOptionPane.showMessageDialog(null, "The table name is invalid. Please try again.");
-
-                    return;
-                }
-            } else {
-                // select by key
-                rs = this.selectByKey(key);
-            }
+//            if (key == null) {
+//                try {
+//                    // select all
+//                    // create sql
+//                    String sql = "SELECT * FROM " + this.getTableName();
+//                    System.out.println("TABLE:" + this.getTableName());
+//                    // execute
+//                    rs = stmt.executeQuery(sql);
+//                } catch (SQLException sqlex) {
+//                    // table not found
+//                    sqlex.printStackTrace();
+//
+//                    JOptionPane.showMessageDialog(null, "The table name is invalid. Please try again.");
+//
+//                    return;
+//                }
+//            } else {
+//                // select by key
+//                rs = this.selectByKey(key);
+//            }
+            rs = this.selectByKey(key);
 
             tbl = this.buildTBModel(rs);
 
@@ -213,9 +215,16 @@ System.out.println("debug key:" + key);
 //        ConnectionHelper.disconnect();
 //        return rs;
 //    }
-    
+    /**
+     * @return true if a record is selected, false otherwise.
+     */
+    public boolean isSelected() {
+        return !Utils.isEmpty(this.txtSelectedRow.getText());
+    }
+
     protected abstract ResultSet selectByKey(Object obj) throws SQLException;
     protected abstract String getTableName();
+    protected abstract Map<Integer, Integer> getComboBoxColMap();
     protected abstract Map<Integer, Integer> getIgnoreColMap();
     protected abstract Map<Integer, Integer> getReadOnlyColMap();
 
@@ -259,7 +268,8 @@ System.out.println("debug key:" + key);
         Vector<String> colNames = new Vector<String>();
         
         for (int column = 1; column <= metaData.getColumnCount(); column++) {
-            colNames.add(metaData.getColumnName(column));
+//            colNames.add(metaData.getColumnName(column));
+            colNames.add(metaData.getColumnLabel(column));
         }
         
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();

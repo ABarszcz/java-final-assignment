@@ -3,22 +3,23 @@
  */
 package GUI.JTable;
 
-import Customer.CustomerHelper;
+import Products.Product;
+import Products.ProductHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * It provides functions to build JTable for Customer tab.
+ * It provides functions to build JTable for Product tab.
  * 
  * @author Takaaki Goto
  */
-public class CustomerJTable extends CommonJTable {
+public class ProductJTable extends CommonJTable {
     /**
      * Constructor.
      */
-    public CustomerJTable() {
+    public ProductJTable() {
         super();
     }
 
@@ -31,7 +32,7 @@ public class CustomerJTable extends CommonJTable {
      */
     @Override
     protected ResultSet selectByKey(Object condition) throws SQLException {
-        return CustomerHelper.selectByKey(condition);
+        return ProductHelper.selectByKey((Product) condition);
     }
 //    /**
 //     * 
@@ -57,7 +58,7 @@ public class CustomerJTable extends CommonJTable {
      */
     @Override
     protected String getTableName() {
-        return CustomerHelper.TABLE_NAME;
+        return ProductHelper.TABLE_NAME;
     }
 
     /**
@@ -68,6 +69,7 @@ public class CustomerJTable extends CommonJTable {
     @Override
     protected Map<Integer, Integer> getComboBoxColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
+        keys.put(4, 5);     // MANID & MANNAME
         return keys;
     }
 
@@ -90,52 +92,34 @@ public class CustomerJTable extends CommonJTable {
     @Override
     protected Map<Integer, Integer> getReadOnlyColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
-        keys.put(0, 0);     // CUSID
+        keys.put(0, 0);     // PRODID
+        keys.put(4, 4);     // MANID
+        keys.put(5, 5);     // MANNAME
         return keys;
     }
 /* getters for MainGUI */
-    public String getCusid() {
+    public String getProdid() {
         return super.getTextValue(0);
     }
 
-    public String getFname() {
+    public String getProductname() {
         return super.getTextValue(1);
     }
 
-    public String getLname() {
+    public String getPrice() {
         return super.getTextValue(2);
     }
 
-    public String getGender() {
+    public String getDiscount() {
         return super.getTextValue(3);
     }
+//
+//    public String getManid() {
+//        return super.getTextValue(4);
+//    }
 
-    public String getAddress() {
+    public String getManname() {
         return super.getTextValue(4);
     }
 
-    public String getCity() {
-        return super.getTextValue(5);
-    }
-
-    public String getProvince() {
-        return super.getTextValue(6);
-    }
-
-    public String getPhonenum() {
-        return super.getTextValue(7);
-    }
-
-    public String getDayOfBirthdate() {
-        return super.getTextValue(8);
-    }
-    
-    public String getMonthOfBirthdate() {
-        return super.getTextValue(9);
-    }
-
-    public String getYearOfBirthdate() {
-        return super.getTextValue(10);
-    }    
-    
 }
