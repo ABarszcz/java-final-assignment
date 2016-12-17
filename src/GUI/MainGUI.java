@@ -37,6 +37,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import static javax.xml.bind.DatatypeConverter.parseDecimal;
 
 /**
  * Creates the Graphical User Interface for the application.
@@ -1256,10 +1257,13 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 //			    new BigDecimal(txtProductPrice.getText()),
 //			    new BigDecimal(txtProductDiscount.getText(),
 //			    <placeholder text for mfact>)));
+                    //Create manufacturer
+                    Manufacturer m1= new Manufacturer(cboProductManufacturer.getSelectedItem().toString());
+                    //Create Product
+                    Product p1 = new Product(txtProductName.getText(), parseDecimal(txtProductPrice.getText()), parseDecimal(txtProductDiscount.getText()), m1);
 		    
 		    //Submit to Database
-		    ServiceClass.insertProduct(txtProductName.getText(), parseDouble(txtProductPrice.getText()),
-			    parseDouble(txtProductDiscount.getText()), cboProductManufacturer.getSelectedItem().toString());
+		    ServiceClass.insertProduct();
 		} catch(NumberFormatException exNfe) {
 		    Utils.logError(exNfe);
 		} catch(IllegalArgumentException error){

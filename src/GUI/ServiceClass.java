@@ -6,6 +6,7 @@
 package GUI;
 
 import static java.lang.Integer.parseInt;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -98,7 +99,7 @@ public class ServiceClass {
          }
     
     //Create new product in the database     
-    public static void insertProduct(String name, double price, double discount, String mfact){
+    public static void insertProduct(String name, BigDecimal price, BigDecimal discount, String mfact){
         
         try{
          conn = DriverManager.getConnection(DB_URL, username, password);

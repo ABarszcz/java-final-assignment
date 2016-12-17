@@ -11,6 +11,9 @@ public class Manufacturer {
     String name, province, city, address, phoneNum, mfactID;
     //</editor-fold>
     
+    public Manufacturer(String name){
+        this.name = name;
+    }
     public Manufacturer(String name, String province,
 	    String city, String address, String phoneNum) {
 	this.name = name;
