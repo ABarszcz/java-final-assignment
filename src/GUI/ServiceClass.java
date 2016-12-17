@@ -47,7 +47,7 @@ public class ServiceClass {
              // Executes the query. 
                 stat.executeUpdate(sql);
                 
-                System.out.println("Insert: " + name + address+ city + province + phoneNum);
+                System.out.println("Insert: " + name + " " +  address + " " + city + " " + province + " " + phoneNum);
                 JOptionPane.showMessageDialog(null,"Manufacturer was added to database"); 
             
          }catch(SQLException error){
@@ -109,7 +109,7 @@ public class ServiceClass {
             
              // Executes the query
                 stat.executeUpdate(sql);                
-                System.out.println("Insert: " + name + price+discount+mfact);
+                System.out.println("Insert: " + name  + " " + price + " " + discount + " " + mfact);
                 JOptionPane.showMessageDialog(null,"Product was added to database"); 
             
          }catch(SQLException error){
@@ -122,12 +122,12 @@ public class ServiceClass {
          }//end insert
     
     //Create new customer in the database
-    public static void insertCustomer(String name, String address, String city, String province, String phoneNum){
+    public static void insertCustomer(String fName, String lName, String gender, String address, String city, String province, String phoneNum, int year, int month, int date){
         System.out.print("here");
         try{
          conn = DriverManager.getConnection(DB_URL, username, password);
             // Sets up the query.
-            String sql = "INSERT INTO `MANUFACTURER`(`MFACTNAME`, `ADDRESS`, `CITY`, `PROVINCE`, `PHONENUM`) VALUES ('"+name+"','"+address+"','"+city+"','"+province+"','"+phoneNum+"')";
+            String sql = "INSERT INTO `CUSTOMER`(`FNAME`, `LNAME`, `GENDER`, `ADDRESS`, `CITY`, `PROVINCE`, `PHONENUM`, `BIRTHDATE`, `BIRTHMONTH`, `BIRTHYEAR`) VALUES ('"+fName+"','"+lName+"','"+gender+"','"+address+"','"+city+"','"+province+"','"+phoneNum+"', "+date+", "+month+", "+year+")";
             
             stat = conn.createStatement();            
             
@@ -135,7 +135,7 @@ public class ServiceClass {
              // Executes the query. 
                 stat.executeUpdate(sql);
                 
-                System.out.println("Insert: " + name + address+ city + province + phoneNum);
+                System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + year + " " + month + " " + date);
                 JOptionPane.showMessageDialog(null,"Manufacturer was added to database"); 
             
          }catch(SQLException error){

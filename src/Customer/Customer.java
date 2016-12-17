@@ -11,6 +11,7 @@ public class Customer {
     //<editor-fold desc="Class Variables">
     private String firstName, lastName, sex, province, city, address,
 	    phoneNum, customerID;
+    private int year;
     private GregorianCalendar dateOfBirth, customerSince;
     //</editor-fold>
     
@@ -28,6 +29,7 @@ public class Customer {
 	this.dateOfBirth = new GregorianCalendar();
 	this.dateOfBirth.set(yearOfBirth, monthOfBirth-1, dayOfBirth);
 	this.customerSince = new GregorianCalendar(); //initializes to today
+        this.year = yearOfBirth;
     } //end of customer constructor
 
     //<editor-fold desc="Accessor Methods">
@@ -39,6 +41,7 @@ public class Customer {
     public String getAddress() { return address; }
     public String getPhoneNum() { return phoneNum; }
     public String getCustomerID() { return customerID; }
+    public int getYear() {return year;}
     public GregorianCalendar getDateOfBirth() { return dateOfBirth; }
     public GregorianCalendar getCustomerSince() { return customerSince; }
     @Override public String toString() {

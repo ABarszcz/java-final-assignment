@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -522,6 +523,7 @@ public class MainGUI extends JFrame {
 	
 	//initialize JButton
 	this.btnCustomerNew = new JButton("Create Customer");
+        btnCustomerNew.addActionListener(new CreateCustomerButtonHandler());
         this.btnCustomerEdit = new JButton("Edit");
         this.btnCustomerDelete = new JButton("Delete");
         this.btnCustomerSearch = new JButton("Search");
@@ -1328,6 +1330,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtCustomerDayOfBirth.getText());
 		    
 		    //create object
+                     String gender = "Not Selected";
+		    Customer c1 = new Customer(txtCustomerFirstName.getText(), txtCustomerLastName.getText(), gender, txtCustomerAddress.getText(), txtCustomerCity.getText(), txtCustomerProvince.getText(), txtCustomerPhone.getText(), parseInt(txtCustomerYearOfBirth.getText()), parseInt(txtCustomerMonthOfBirth.getText()), parseInt(txtCustomerDayOfBirth.getText()));
+		    
+		    //Submit to Database
+                    ServiceClass.insertCustomer(c1.getFirstName(), c1.getLastName(), c1.getSex(), c1.getAddress(), c1.getCity(), c1.getProvince(), c1.getPhoneNum(), c1.getYear(), c1.getDateOfBirth().getTime().getMonth(), c1.getDateOfBirth().getTime().getDate());
+		    
 		    
 		    
 		    //Submit to Database
