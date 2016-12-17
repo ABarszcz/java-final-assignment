@@ -172,6 +172,26 @@ public class ServiceClass {
           //print to file
          }
     }//end insert
+    
+    
+        //Create new customer in the database
+    public static void insertSales(String product, String customer, String employee, BigDecimal comm){
+        try{
+         conn = DriverManager.getConnection(DB_URL, username, password);
+
+        String sql = "INSERT INTO `SALES`(`PRODUCT`, `CUSTOMER`, `EMPLOYEE`, `COMM`) VALUES('"+product+"','"+customer+"','"+employee+"',"+comm+")";
+        stat = conn.createStatement();            
+        stat.executeUpdate(sql);
+                
+        System.out.println("Insert: " + product + " " + customer + " " + employee + " " + comm);
+        JOptionPane.showMessageDialog(null,"Sale was added to database"); 
+
+         }catch(SQLException error){
+          //error   
+          System.out.println(error);
+          //print to file
+         }
+    }//end insert
 
     
 //* Populate drop down lists *\\
