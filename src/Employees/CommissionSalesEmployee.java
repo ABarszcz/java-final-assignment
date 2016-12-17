@@ -14,7 +14,7 @@ public class CommissionSalesEmployee extends Employee {
     public CommissionSalesEmployee(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum, String department,
 	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
-	    int dayOfBirth, BigDecimal wage, BigDecimal commissionRates) {
+	    int dayOfBirth, BigDecimal commissionRates) {
 	super(firstName, lastName, sex, province, city, address, phoneNum,
 		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
 		dayOfBirth);

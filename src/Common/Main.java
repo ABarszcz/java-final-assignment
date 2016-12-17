@@ -27,7 +27,7 @@ public class Main {
         //create emp object for testing purposes
 	CommissionSalesEmployee emp = new CommissionSalesEmployee(
 	"name", "name", "male", "ontario", "city", "address", "phoneNum",
-	"department", "position", "ssn", 2000, 11, 25, new BigDecimal("50"),
+	"department", "position", "ssn", 2000, 11, 25,
 		new BigDecimal("10"));
     } //end of main
 } //end of class
