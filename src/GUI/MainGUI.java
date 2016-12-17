@@ -582,7 +582,7 @@ public class MainGUI extends JFrame {
 //add e n d takaaki
 		
 	//initialize Search components
-	this.lblSalesSearchLastName = new JLabel("Search Sales by Employee's Last Name");
+	this.lblSalesSearchLastName = new JLabel("Search Sales by Employee's Name");
 	this.txtSalesSearchLastName = new JTextField(15);
         this.lblSalesSearchProductName = new JLabel("Search Sales by Product Name");
 	this.txtSalesSearchProductName = new JTextField(15);
@@ -741,13 +741,13 @@ System.out.println("Selected tab:" + selectedTabIndex);
             switch (selectedTabIndex) {
 //add start takaaki
                 case TAB_IDX_EMPLOYEE:
-                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_EMPLOYEE_SEARCH) {
+                    if (pnlEmp.getSelectedIndex() == TAB_IDX_EMPLOYEE_SEARCH) {
                         // search
                         employeeJTable.buildTableInfoPanel(null);
                     }
                     break;
                 case TAB_IDX_MANUFACTURER:
-                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_MANUFACTURER_SEARCH) {
+                    if (pnlMfact.getSelectedIndex() == TAB_IDX_MANUFACTURER_SEARCH) {
                         // search
                         mfactJTable.buildTableInfoPanel(null);
                     }
@@ -755,7 +755,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 //add e n d takaaki
 //add start takaaki
                 case TAB_IDX_PRODUCT:
-                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_PRODUCT_SEARCH) {
+                    if (pnlProduct.getSelectedIndex() == TAB_IDX_PRODUCT_SEARCH) {
                         // search
                         productJTable.buildTableInfoPanel(null);
                     }
@@ -769,7 +769,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     break;
 //add start takaaki
                 case TAB_IDX_SALE:
-                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_SALE_SEARCH) {
+                    if (pnlSales.getSelectedIndex() == TAB_IDX_SALE_SEARCH) {
                         // search
                         saleJTable.buildTableInfoPanel(null);
                     }

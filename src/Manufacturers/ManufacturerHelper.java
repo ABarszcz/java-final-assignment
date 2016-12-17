@@ -31,6 +31,7 @@ public class ManufacturerHelper {
      * 
      * @param condition
      * @return ResultSet
+     * @throws SQLException
      */
     public static ResultSet selectByKey(Manufacturer condition) throws SQLException {
         System.out.println("debug" + condition);
@@ -39,20 +40,13 @@ public class ManufacturerHelper {
         sql.append("SELECT * FROM ");
         sql.append(TABLE_NAME);
         if (condition != null) {
-            if (!Utils.isEmpty(condition.getName())
-                    || !Utils.isEmpty(condition.getPhoneNum())) {
+            if (!Utils.isEmpty(condition.getName())) {
                 sql.append(" WHERE ");
             }
             boolean isFirstCondition = true;
             if (!Utils.isEmpty(condition.getName())) {
-                sql.append("LNAME LIKE ?");
+                sql.append("MFACTNAME LIKE ?");
                 isFirstCondition = false;
-            }
-            if (!Utils.isEmpty(condition.getPhoneNum())) {
-                if (!isFirstCondition) {
-                    sql.append(" AND ");
-                }
-                sql.append("PHONENUM LIKE ?");
             }
         }
         // create statement
@@ -63,9 +57,6 @@ public class ManufacturerHelper {
             int parameterIndex = 1;
             if (!Utils.isEmpty(condition.getName())) {
                 stmt.setString(parameterIndex++, "%" + ConnectionHelper.escape(condition.getName(), meta.getSearchStringEscape()) + "%");
-            }
-            if (!Utils.isEmpty(condition.getPhoneNum())) {
-                stmt.setString(parameterIndex++, "%" + ConnectionHelper.escape(condition.getPhoneNum(), meta.getSearchStringEscape()) + "%");
             }
         }
         // execute
