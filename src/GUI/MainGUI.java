@@ -1331,6 +1331,12 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    
 		    //create object
                      String gender = "Not Selected";
+                     if(rdoCustomerSexMale.isSelected()){
+                         gender = "Male";
+                     }
+                     if(rdoCustomerSexFemale.isSelected()){
+                         gender = "Female";
+                     }
 		    Customer c1 = new Customer(txtCustomerFirstName.getText(), txtCustomerLastName.getText(), gender, txtCustomerAddress.getText(), txtCustomerCity.getText(), txtCustomerProvince.getText(), txtCustomerPhone.getText(), parseInt(txtCustomerYearOfBirth.getText()), parseInt(txtCustomerMonthOfBirth.getText()), parseInt(txtCustomerDayOfBirth.getText()));
 		    
 		    //Submit to Database

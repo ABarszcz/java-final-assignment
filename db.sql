@@ -19,7 +19,9 @@ CREATE TABLE EMPLOYEE(EMPID INT NOT NULL,
                       DEPT VARCHAR(50) NOT NULL,
                       DEPTPOSITION VARCHAR(50) NOT NULL,
                       SSN DOUBLE NOT NULL,
-                      BIRTHDATE DATE NOT NULL,
+                      BIRTHYEAR int not null,
+                      BIRTHMONTH INT NOT NULL,
+                      BIRTHDATE INT NOT NULL,
                       HOURLY DEC(10,2),
                       SALARY DEC(10,2),
                       SALES DEC(50,2),
@@ -27,15 +29,17 @@ CREATE TABLE EMPLOYEE(EMPID INT NOT NULL,
                       PRIMARY KEY(EMPID));
                       
 /* Customer Table */
-CREATE TABLE CUSTOMER(CUSID INT NOT NULL auto_increment,
-					   FNAME VARCHAR(50) NOT NULL,
-                       LNAME VARCHAR(50) NOT NULL,
-                       GENDER VARCHAR(6) NOT NULL,
+CREATE TABLE CUSTOMER(CUSID int NOT NULL auto_increment,
+					   FNAME VARCHAR(100) NOT NULL,
+                       LNAME VARCHAR(100) NOT NULL,
+                       GENDER VARCHAR(10) NOT NULL,
                        ADDRESS VARCHAR(100) NOT NULL,
-                       CITY VARCHAR(50) NOT NULL,
-                       PROVINCE VARCHAR(10) NOT NULL,
+                       CITY VARCHAR(100) NOT NULL,
+                       PROVINCE VARCHAR(50) NOT NULL,
                        PHONENUM VARCHAR(25) NOT NULL,
-                       BIRTHDATE DATE NOT NULL,
+                       BIRTHDATE int NOT NULL,
+                       BIRTHMONTH INT NOT NULL,
+                       BIRTHYEAR INT NOT NULL,
                        PRIMARY KEY(CUSID));
                        
 /* Manufacturer Table */
@@ -51,13 +55,12 @@ CREATE TABLE MANUFACTURER(
                       
 /*Product Table */
 CREATE TABLE PRODUCT(
+					PRODID VARCHAR(100) NOT NULL,
 					 PRODUCTNAME VARCHAR(100) NOT NULL,
                      PRICE DOUBLE NOT NULL,
                      DISCOUNT DOUBLE NOT NULL,
                      MFACTNAME VARCHAR(100),
-                     PRIMARY KEY(PRODUCTNAME),
-                     FOREIGN KEY(MFACTNAME)
-						REFERENCES MANUFACTURER(PRODUCTNAME));
+                     PRIMARY KEY(PRODID));
                      
 /* Sales Table */
 CREATE TABLE SALES(SALEID INT NOT NULL,
