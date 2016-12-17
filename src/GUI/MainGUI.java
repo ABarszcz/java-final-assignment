@@ -1222,14 +1222,14 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    fieldName = "Phone number";
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
 		    
-		    //create object
-		    mfactList.add(new Manufacturer(txtMfactName.getText(),
+                    Manufacturer m1 = new Manufacturer(txtMfactName.getText(),
 			    txtMfactProvince.getText(), txtMfactCity.getText(),
-			    txtMfactAddress.getText(), txtMfactPhoneNum.getText()));
+			    txtMfactAddress.getText(), txtMfactPhoneNum.getText());
+		    //create object
+		    mfactList.add(m1);
 		    
 		    //submit to the database
-		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
-			    txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
+		    ServiceClass.insertMfact(m1.getName(), m1.getAddress(), m1.getCity(), m1.getProvince(), m1.getPhoneNum());
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
@@ -1263,7 +1263,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                     Product p1 = new Product(txtProductName.getText(), parseDecimal(txtProductPrice.getText()), parseDecimal(txtProductDiscount.getText()), m1);
 		    
 		    //Submit to Database
-		    ServiceClass.insertProduct();
+		    ServiceClass.insertProduct(p1.getName(), p1.getPrice(), p1.getDiscount(), p1.getMfact().getName());
 		} catch(NumberFormatException exNfe) {
 		    Utils.logError(exNfe);
 		} catch(IllegalArgumentException error){
