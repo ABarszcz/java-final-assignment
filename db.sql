@@ -62,18 +62,12 @@ CREATE TABLE PRODUCT(
                      PRIMARY KEY(PRODID));
                      
 /* Sales Table */
-CREATE TABLE SALES(SALEID INT NOT NULL,
-				   PRODID INT NOT NULL,
-                   CUSID INT NOT NULL,
-                   EMPID INT NOT NULL,
-                   SALEDATE DATE NOT NULL,
-                   PRIMARY KEY(SALEID),
-                   FOREIGN KEY(PRODID)
-						REFERENCES PRODUCT(PRODID),
-				   FOREIGN KEY(CUSID) 
-						REFERENCES CUSTOMER(CUSID),
-                   FOREIGN KEY(EMPID)
-						REFERENCES EMPLOYEE(EMPID));
+CREATE TABLE SALES(SALEID INT NOT NULL auto_increment,
+				   PRODUCT VARCHAR(100) NOT NULL,
+                   CUSTOMER VARCHAR(100) NOT NULL,
+                   EMPLOYEE VARCHAR(100) NOT NULL,
+                   PRIMARY KEY(SALEID)
+);
                         
 /* Login Table */
 CREATE TABLE LOGIN(ID INT NOT NULL AUTO_INCREMENT,

@@ -96,7 +96,7 @@ public class ServiceClass {
     public static void insertBasePlusCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate, BigDecimal salary){
         try{
          conn = DriverManager.getConnection(DB_URL, username, password);
-System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
+        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
         
         String sql = "INSERT INTO `EMPLOYEE`(`FNAME`, `LNAME`, `GENDER`, `ADDRESS`, `CITY`, `PROVINCE`, `PHONENUM`, `DEPT`, `DEPTPOSITION`, `SSN`, `BIRTHYEAR`, `BIRTHMONTH`, `BIRTHDATE`, `COMM`, `SALARY`) VALUES ('"+fName+"','"+lName+"','"+gender+"','"+address+"','"+city+"','"+province+"','"+phoneNum+"', '"+department+"', '"+position+"', '"+sin+"', "+year+", "+month+", "+date+", "+rate+", "+salary+")";
         stat = conn.createStatement();            
@@ -184,7 +184,7 @@ System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + addre
 
         //DB Connection
         try{
-        conn = DriverManager.getConnection(DB_URL, "gc200321034", "KqxeZ*gk");
+        conn = DriverManager.getConnection(DB_URL, username, password);
         stat = conn.createStatement();
         rs = stat.executeQuery(QRY);
 
@@ -194,6 +194,7 @@ System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + addre
                    //finds types in result set
                    list.addItem(rs.getString("MFACTNAME"));
                }
+        System.out.println("m ok");
         }
         catch(SQLException error){
             //error
@@ -202,7 +203,87 @@ System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + addre
 
     }
     
+    //Populate product list
+    public static void productList(JComboBox list){
     
+        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+        final String QRY = "SELECT * FROM PRODUCT";
+
+        //DB Connection
+        try{
+        conn = DriverManager.getConnection(DB_URL, username, password);
+        stat = conn.createStatement();
+        rs = stat.executeQuery(QRY);
+
+        //fill in cbo
+        while (rs.next())
+               {
+                   //finds types in result set
+                   list.addItem(rs.getString("PRODUCTNAME"));
+               }
+        System.out.println("p ok");
+        }
+        catch(SQLException error){
+            //error
+            System.out.println(error.toString());
+        }
+
+    }
+    
+    //Populate customer list
+    public static void customerList(JComboBox list){
+    
+        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+        final String QRY = "SELECT * FROM CUSTOMER";
+
+        //DB Connection
+        try{
+        conn = DriverManager.getConnection(DB_URL, username, password);
+        stat = conn.createStatement();
+        rs = stat.executeQuery(QRY);
+
+        //fill in cbo
+        while (rs.next())
+               {
+                   //finds types in result set
+                   list.addItem(rs.getString("FNAME") + " " + rs.getString("LNAME"));
+               }
+        System.out.println("c ok");
+        }
+        catch(SQLException error){
+            //error
+            System.out.println(error.toString());
+        }
+
+    }
+    
+    //Populate employee list
+    public static void employeeList(JComboBox list){
+    
+        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+        final String QRY = "SELECT * FROM EMPLOYEE";
+
+        //DB Connection
+        try{
+        conn = DriverManager.getConnection(DB_URL, username, password);
+        stat = conn.createStatement();
+        rs = stat.executeQuery(QRY);
+
+        //fill in cbo
+        while (rs.next())
+               {
+                   //finds types in result set
+                   list.addItem(rs.getString("FNAME") + " " + rs.getString("LNAME"));
+               }
+        System.out.println("e ok");
+
+        }
+        catch(SQLException error){
+            //error
+            System.out.println(error.toString());
+        }
+
+    }
     
 }//end ServiceClass
 

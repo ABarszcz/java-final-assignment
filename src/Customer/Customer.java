@@ -14,6 +14,10 @@ public class Customer {
     private int year;
     private GregorianCalendar dateOfBirth, customerSince;
     //</editor-fold>
+   
+    public Customer(String firstName){
+        this.firstName = firstName;
+    }
     
     public Customer(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum,

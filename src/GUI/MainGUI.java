@@ -167,8 +167,8 @@ public class MainGUI extends JFrame {
     private final JPanel pnlSalesNew, pnlSalesNorth, pnlSalesCenter,
 	    pnlSalesSouth, pnlSalesLabelGrid, pnlSalesFieldGrid, pnlSalesSearch,
 	    pnlSalesSearchNorth, pnlSalesSearchCenter, pnlSalesSouthED;
-    private final JTextField txtSalesSearchLastName, txtSalesProductName, txtSalesCustomer, txtSalesEmployee,
-	    txtSalesCommission, txtSalesSearchProductName, txtSalesDate;
+    private final JTextField txtSalesSearchLastName, txtSalesSearchProductName, txtSalesCommission;
+    private final JComboBox cboSalesProductName, cboSalesCustomer, cboSalesEmployee;
     private final JButton btnSalesNew;
     private final JLabel lblSalesSearchLastName, lblSalesSearchProductName;
     private final JTextArea txaSalesResults;
@@ -473,12 +473,15 @@ public class MainGUI extends JFrame {
 	this.pnlSalesSearchCenter = new JPanel();
         this.pnlSalesSouthED = new JPanel();
 	        
-	//initialize JTextFields
-	this.txtSalesProductName = new JTextField(15);
-        this.txtSalesCustomer = new JTextField(15);
-	this.txtSalesEmployee = new JTextField(15);
+	//initialize        
+	this.cboSalesProductName = new JComboBox();
+        ServiceClass.productList(cboSalesProductName);
+        this.cboSalesCustomer = new JComboBox();
+        ServiceClass.customerList(cboSalesCustomer);
+	this.cboSalesEmployee = new JComboBox();
+        ServiceClass.employeeList(cboSalesEmployee);
 	this.txtSalesCommission = new JTextField(15);
-        this.txtSalesDate = new JTextField(15);
+
 	
 	//initialize JButton
 	this.btnSalesNew = new JButton("Create Sales");
@@ -1080,15 +1083,15 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
         pnlSalesLabelGrid.add(new JLabel("Customer"));
 	pnlSalesLabelGrid.add(new JLabel("Employee"));
 	pnlSalesLabelGrid.add(new JLabel("Commission On Sale"));
-        pnlSalesLabelGrid.add(new JLabel("Date Of Sale"));
+
 	
 	//create the field sub-panel of the center panel
 	pnlSalesFieldGrid.setLayout(new GridLayout(13,1));
-	pnlSalesFieldGrid.add(txtSalesProductName);
-        pnlSalesFieldGrid.add(txtSalesCustomer);
-	pnlSalesFieldGrid.add(txtSalesEmployee);
+	pnlSalesFieldGrid.add(cboSalesProductName);
+        pnlSalesFieldGrid.add(cboSalesCustomer);
+	pnlSalesFieldGrid.add(cboSalesEmployee);
 	pnlSalesFieldGrid.add(txtSalesCommission);
-        pnlSalesFieldGrid.add(txtSalesDate);
+
 	
 	//create and add the center panel
 	pnlSalesCenter.setLayout(new BorderLayout());
@@ -1516,17 +1519,11 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	public void actionPerformed(ActionEvent e) {
             if(Utils.showConfirmDialog("create a new sale")) {
 	    //Validate Inputs
+            String fieldName = "";
                 try{
-		    //TODO I think these need to be drop-down boxes to select available customers
-		    Validation.isValid(txtSalesProductName.getText());
-		    Validation.isValid(txtSalesCustomer.getText());
-		    Validation.isValid(txtSalesEmployee.getText());
+                    fieldName = "Commission";
 		    Validation.isValid(txtSalesCommission.getText());
-		    Validation.isValid(txtSalesDate.getText());
 		    
-		    //create object
-		    
-
 		    //Submit to Database
 
                 }catch(IllegalArgumentException  error){

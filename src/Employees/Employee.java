@@ -16,6 +16,10 @@ public abstract class Employee {
     private int year;
     //</editor-fold>
     
+    public Employee(String firstName){
+        this.firstName = firstName;
+    }
+    
     public Employee(String firstName, String lastName, String sex,
 	    String address, String city, String province, String phoneNum,
 	    String department, String position, String socialSecurityNum, int yearOfBirth,
