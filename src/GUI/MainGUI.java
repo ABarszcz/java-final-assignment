@@ -1179,25 +1179,49 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }
     
-        private class CreateEmployeeButtonHandler implements ActionListener {
+        private class CreateSalaryEmployeeButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	    if(Utils.showConfirmDialog("create a new manufacturer")) {
+	    if(Utils.showConfirmDialog("create a new salary employee")) {
 		String fieldName = "";
 		
 		//Validate Inputs
 		try{
-		    /* this is the code for create Mfact, not Employee.
-		    fieldName = "Name";
-		    Validation.isValidName(txtMfactName.getText(), true);
+                    fieldName = "First name";
+		    Validation.isValidName(txtEmpSFirstName.getText(), false);
+		    fieldName = "Last name";
+		    Validation.isValidName(txtEmpSLastName.getText(), false);
+		    //TODO get the sex
+		    //fieldName = "Sex";
+		    //Validation.isValid(pnlEmpSSex);
 		    fieldName = "Address";
-		    Validation.isValid(txtMfactAddress.getText());
-		    fieldName = "Phone number";
-		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
-		    //submit to the database
-		    ServiceClass.insertMfact(txtMfactName.getText(), txtMfactAddress.getText(),
-			    txtMfactCity.getText(), txtMfactProvince.getText(), txtMfactPhoneNum.getText());
-		    */
+		    Validation.isValid(txtEmpSAddress.getText());
+		    fieldName = "City";
+		    Validation.isValid(txtEmpSCity.getText());
+                    fieldName = "Province";
+                    Validation.isValid(txtEmpSProvince.getText());
+                    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtEmpSPhoneNum.getText());
+                    fieldName = "Department";
+                    Validation.isValid(txtEmpSDepartment.getText());
+                    fieldName = "Posistion";
+                    Validation.isValid(txtEmpSPosition.getText());
+                    fieldName = "S.I.N.";
+                    Validation.isValid(txtEmpSSocialSecurityNum.getText());
+		    fieldName = "Year of birth";
+		    Validation.isValid(txtEmpSYearOfBirth.getText());
+		    fieldName = "Month of birth";
+		    Validation.isValid(txtEmpSMonthOfBirth.getText());
+		    fieldName = "Day of birth";
+		    Validation.isValid(txtEmpSDayOfBirth.getText());
+		    //Select Gender
+                      String gender = "Not Selected";
+                     if(rdoCustomerSexMale.isSelected()){
+                         gender = "Male";
+                     }
+                     if(rdoCustomerSexFemale.isSelected()){
+                         gender = "Female";
+                     }
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
@@ -1253,12 +1277,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtProductPrice.getText());
 		    fieldName = "Discount";
 		    Validation.isValid(txtProductDiscount.getText());
-		    
-		    //TODO create object -- needs the mfact from the combobox
-//		    productList.add(new Product(txtProductName.getText(),
-//			    new BigDecimal(txtProductPrice.getText()),
-//			    new BigDecimal(txtProductDiscount.getText(),
-//			    <placeholder text for mfact>)));
+                    
                     //Create manufacturer
                     Manufacturer m1= new Manufacturer(cboProductManufacturer.getSelectedItem().toString());
                     //Create Product
@@ -1320,6 +1339,8 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    Validation.isValid(txtCustomerAddress.getText());
 		    fieldName = "City";
 		    Validation.isValid(txtCustomerCity.getText());
+                    fieldName = "Province";
+                    Validation.isValid(txtCustomerProvince.getText());
 		    fieldName = "Phone number";
 		    Validation.isValidPhoneNum(txtCustomerPhone.getText());
 		    fieldName = "Year of birth";
@@ -1329,7 +1350,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		    fieldName = "Day of birth";
 		    Validation.isValid(txtCustomerDayOfBirth.getText());
 		    
-		    //create object
+		    //Select gender
                      String gender = "Not Selected";
                      if(rdoCustomerSexMale.isSelected()){
                          gender = "Male";
@@ -1337,6 +1358,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                      if(rdoCustomerSexFemale.isSelected()){
                          gender = "Female";
                      }
+                    //create object
 		    Customer c1 = new Customer(txtCustomerFirstName.getText(), txtCustomerLastName.getText(), gender, txtCustomerAddress.getText(), txtCustomerCity.getText(), txtCustomerProvince.getText(), txtCustomerPhone.getText(), parseInt(txtCustomerYearOfBirth.getText()), parseInt(txtCustomerMonthOfBirth.getText()), parseInt(txtCustomerDayOfBirth.getText()));
 		    
 		    //Submit to Database
