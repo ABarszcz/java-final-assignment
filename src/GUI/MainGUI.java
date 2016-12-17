@@ -1533,8 +1533,9 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                     //Create sale
                     Sale s1 = new Sale(p1, c1, e1, parseDecimal(txtSalesCommission.getText()));
 		       
+                 
 		    //Submit to Database
-                    ServiceClass.insertSales(s1.getProduct().getName(),(s1.getCustomer().getFirstName()+ " " + s1.getCustomer().getLastName()), (s1.getEmployee().getFirstName() + " " + s1.getEmployee().getLastName()), s1.getComm());
+                    ServiceClass.insertSales(s1.getProduct().getName(),s1.getCustomer().getFirstName(),s1.getEmployee().getFirstName(), s1.getComm());
 
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
