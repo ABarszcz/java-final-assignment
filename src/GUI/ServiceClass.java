@@ -91,6 +91,26 @@ public class ServiceClass {
           //print to file
          }
     }//end insert
+  
+        //Create new base plus commission employee in the database
+    public static void insertBasePlusCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate, BigDecimal salary){
+        try{
+         conn = DriverManager.getConnection(DB_URL, username, password);
+System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
+        
+        String sql = "INSERT INTO `EMPLOYEE`(`FNAME`, `LNAME`, `GENDER`, `ADDRESS`, `CITY`, `PROVINCE`, `PHONENUM`, `DEPT`, `DEPTPOSITION`, `SSN`, `BIRTHYEAR`, `BIRTHMONTH`, `BIRTHDATE`, `COMM`, `SALARY`) VALUES ('"+fName+"','"+lName+"','"+gender+"','"+address+"','"+city+"','"+province+"','"+phoneNum+"', '"+department+"', '"+position+"', '"+sin+"', "+year+", "+month+", "+date+", "+rate+", "+salary+")";
+        stat = conn.createStatement();            
+        stat.executeUpdate(sql);
+                
+        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
+        JOptionPane.showMessageDialog(null,"Commission Employee was added to database"); 
+
+         }catch(SQLException error){
+          //error   
+          System.out.println(error);
+          //print to file
+         }
+    }//end insert
     
     //Create manufacture in database
     public static void insertMfact(String name, String address, String city, String province, String phoneNum){

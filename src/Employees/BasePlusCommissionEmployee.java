@@ -14,10 +14,10 @@ public class BasePlusCommissionEmployee extends CommissionSalesEmployee {
     public BasePlusCommissionEmployee(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum, String department,
 	    String position, String socialSecurityNum, int yearOfBirth, int monthOfBirth,
-	    int dayOfBirth, BigDecimal wage, BigDecimal commissionRates, BigDecimal baseSalary) {
+	    int dayOfBirth, BigDecimal commissionRates, BigDecimal baseSalary) {
 	super(firstName, lastName, sex, province, city, address, phoneNum,
 		department, position, socialSecurityNum, yearOfBirth, monthOfBirth,
-		dayOfBirth, wage, commissionRates);
+		dayOfBirth, commissionRates);
 	this.baseSalary = baseSalary;
     } //end of BasePlusCommissionEmployee constructor
     

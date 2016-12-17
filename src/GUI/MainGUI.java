@@ -382,6 +382,7 @@ public class MainGUI extends JFrame {
         btnEmpHNew.addActionListener(new CreateHourlyEmployeeButtonHandler());
 	this.btnEmpCSNew = new JButton("Create Commission-Sales Employee");
 	this.btnEmpBPCNew = new JButton("Create Base Plus Commission Employee");
+        btnEmpBPCNew.addActionListener(new CreateBasePlusCommissionEmployeeButtonHandler());
         this.btnEmployeeEdit = new JButton("Edit");
         this.btnEmployeeDelete = new JButton("Delete");
 	//</editor-fold>
@@ -1312,6 +1313,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }//end employee 
     
+    //Create new commission employee
     private class CreateCommissionEmployeeButtonHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1371,6 +1373,74 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		} catch(IllegalArgumentException error){
                         System.out.print(error);
 		   // JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }           
+	}
+    }//end employee
+    
+    //Create new Base plus commission employee
+    private class CreateBasePlusCommissionEmployeeButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(Utils.showConfirmDialog("create a new base plus commission sale employee")) {
+                    String fieldName = "";
+		
+		//Validate Inputs
+		try{
+                    fieldName = "First name";
+		    Validation.isValidName(txtEmpBPCFirstName.getText(), false);
+		    fieldName = "Last name";
+		    Validation.isValidName(txtEmpBPCLastName.getText(), false);
+		    //TODO get the sex
+		    //fieldName = "Sex";
+		    //Validation.isValid(pnlEmpBPCSex);
+		    fieldName = "Address";
+		    Validation.isValid(txtEmpBPCAddress.getText());
+		    fieldName = "City";
+		    Validation.isValid(txtEmpBPCCity.getText());
+                    fieldName = "Province";
+                    Validation.isValid(txtEmpBPCProvince.getText());
+                    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtEmpBPCPhoneNum.getText());
+                    fieldName = "Department";
+                    Validation.isValid(txtEmpBPCDepartment.getText());
+                    fieldName = "Posistion";
+                    Validation.isValid(txtEmpBPCPosition.getText());
+                    fieldName = "S.I.N.";
+                    Validation.isValid(txtEmpBPCSocialSecurityNum.getText());
+		    fieldName = "Year of birth";
+		    Validation.isValid(txtEmpBPCYearOfBirth.getText());
+		    fieldName = "Month of birth";
+		    Validation.isValid(txtEmpBPCMonthOfBirth.getText());
+		    fieldName = "Day of birth";
+		    Validation.isValid(txtEmpBPCDayOfBirth.getText());
+                    fieldName = "Commission";
+                    Validation.isValid(txtEmpBPCCommissionRates.getText());
+                    fieldName = "Base Salary";
+                    Validation.isValid(txtEmpBPCBaseSalary.getText());
+		    //Select Gender
+                    String gender = "Not Selected";
+                    if(rdoEmpBPCSexMale.isSelected()){
+                         gender = "Male";
+                    }
+                    if(rdoEmpBPCSexFemale.isSelected()){
+                         gender = "Female";
+                    }
+                    //Create object
+                    fieldName = "sql";
+                    BasePlusCommissionEmployee e1 = new BasePlusCommissionEmployee(txtEmpBPCFirstName.getText(), txtEmpBPCLastName.getText(), gender, txtEmpBPCAddress.getText(), 
+                                                           txtEmpBPCCity.getText(), txtEmpBPCProvince.getText(), txtEmpBPCPhoneNum.getText(), txtEmpBPCDepartment.getText(), 
+                                                           txtEmpBPCPosition.getText(), txtEmpBPCSocialSecurityNum.getText(), parseInt(txtEmpBPCYearOfBirth.getText()),
+                                                           parseInt(txtEmpBPCMonthOfBirth.getText()), parseInt(txtEmpBPCDayOfBirth.getText()),parseDecimal(txtEmpBPCCommissionRates.getText()), parseDecimal(txtEmpBPCBaseSalary.getText()));
+                                                                   
+                    //Add to database
+                    ServiceClass.insertBasePlusCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates(), e1.getBaseSalary());
+        
+		} catch(IllegalArgumentException error){
+                        System.out.print(error);
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
 	    }           
 	}
