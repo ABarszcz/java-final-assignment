@@ -1,10 +1,16 @@
 /*
  * Assignment 2 - Part 2
  */
-package Customer;
+package Sale;
 
+import Manufacturers.*;
+import Customer.*;
 import Common.ConnectionHelper;
 import Common.Utils;
+import Employees.CommissionSalesEmployee;
+import Employees.Employee;
+import Employees.HourlyEmployee;
+import Employees.SalaryEmployee;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,42 +18,43 @@ import java.sql.SQLException;
 import java.util.Calendar;
 
 /**
- * It provides CRUD functionalities of Customer table.
+ * It provides CRUD functionalities of Sale table.
  * 
  * @author Takaaki Goto
  */
-public class CustomerHelper {
+public class SaleHelper {
 
     /** table name */
-    public static final String TABLE_NAME = "CUSTOMER";
+    public static final String TABLE_NAME = "SALES";
 
     /**
      * Search by keywords and return ResultSet.
      * 
-     * @param condition
+     * @param obj
      * @return ResultSet
      */
-    public static ResultSet selectByKey(Customer condition) throws SQLException {
-        System.out.println("debug" + condition);
+    public static ResultSet selectByKey(Object obj) throws SQLException {
+        System.out.println("debug" + obj);
+        Sale condition = (Sale) obj;
         // create sql
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM ");
         sql.append(TABLE_NAME);
         if (condition != null) {
-            if (!Utils.isEmpty(condition.getLastName())
-                    || !Utils.isEmpty(condition.getPhoneNum())) {
+            if (!Utils.isEmpty(condition.getProduct().getName())
+                    || !Utils.isEmpty(condition.getEmployee().getFirstName())) {
                 sql.append(" WHERE ");
             }
             boolean isFirstCondition = true;
-            if (!Utils.isEmpty(condition.getLastName())) {
-                sql.append("LNAME LIKE ?");
+            if (!Utils.isEmpty(condition.getProduct().getName())) {
+                sql.append("PRODUCT LIKE ?");
                 isFirstCondition = false;
             }
-            if (!Utils.isEmpty(condition.getPhoneNum())) {
+            if (!Utils.isEmpty(condition.getEmployee().getFirstName())) {
                 if (!isFirstCondition) {
                     sql.append(" AND ");
                 }
-                sql.append("PHONENUM LIKE ?");
+                sql.append("EMPLOYEE LIKE ?");
             }
         }
         // create statement
@@ -56,11 +63,11 @@ public class CustomerHelper {
             // bind parameters
             DatabaseMetaData meta = ConnectionHelper.getMetaData();
             int parameterIndex = 1;
-            if (!Utils.isEmpty(condition.getLastName())) {
-                stmt.setString(parameterIndex++, "%" + ConnectionHelper.escape(condition.getLastName(), meta.getSearchStringEscape()) + "%");
+            if (!Utils.isEmpty(condition.getProduct().getName())) {
+                stmt.setString(parameterIndex++, "%" + ConnectionHelper.escape(condition.getProduct().getName(), meta.getSearchStringEscape()) + "%");
             }
-            if (!Utils.isEmpty(condition.getPhoneNum())) {
-                stmt.setString(parameterIndex++, "%" + ConnectionHelper.escape(condition.getPhoneNum(), meta.getSearchStringEscape()) + "%");
+            if (!Utils.isEmpty(condition.getEmployee().getFirstName())) {
+                stmt.setString(parameterIndex++, "%" + ConnectionHelper.escape(condition.getEmployee().getFirstName(), meta.getSearchStringEscape()) + "%");
             }
         }
         // execute
@@ -70,10 +77,10 @@ public class CustomerHelper {
     /**
      * Update a customer.
      * 
-     * @param customer
+     * @param sale
      * @throws SQLException 
      */
-    public static void update(Customer customer) throws SQLException {
+    public static void update(Sale sale) throws SQLException {
         try {
             // connect to db
             ConnectionHelper.connect();
@@ -82,37 +89,22 @@ public class CustomerHelper {
             sql.append("UPDATE ");
             sql.append(TABLE_NAME);
             sql.append("  SET ");
-            sql.append("    FNAME = ?");
-            sql.append("  , LNAME = ?");
-            sql.append("  , GENDER = ?");
-            sql.append("  , ADDRESS = ?");
-            sql.append("  , CITY = ?");
-            sql.append("  , PROVINCE = ?");
-            sql.append("  , PHONENUM = ?");
-            sql.append("  , BIRTHDATE = ?");
-            sql.append("  , BIRTHMONTH = ?");
-            sql.append("  , BIRTHYEAR = ?");
+            sql.append("    PRODUCT = ?");
+            sql.append("  , CUSTOMER = ?");
+            sql.append("  , EMPLOYEE = ?");
+            sql.append("  , COMM = ?");
             sql.append(" WHERE");
-            sql.append("    CUSID = ?");
+            sql.append("    SALEID = ?");
             // create statement
             PreparedStatement stmt = ConnectionHelper.prepareStatement(sql.toString());
             // bind parameters
             int parameterIndex = 1;
-            stmt.setString(parameterIndex++, customer.getFirstName());
-            stmt.setString(parameterIndex++, customer.getLastName());
-            stmt.setString(parameterIndex++, customer.getSex());
-            stmt.setString(parameterIndex++, customer.getAddress());
-            stmt.setString(parameterIndex++, customer.getCity());
-            stmt.setString(parameterIndex++, customer.getProvince());
-            stmt.setString(parameterIndex++, customer.getPhoneNum());
-            stmt.setInt(parameterIndex++, customer.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
-            stmt.setInt(parameterIndex++, customer.getDateOfBirth().get(Calendar.MONTH) + 1);
-            stmt.setInt(parameterIndex++, customer.getDateOfBirth().get(Calendar.YEAR));
-            System.out.println("day:" + customer.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
-            System.out.println("mon:" + (customer.getDateOfBirth().get(Calendar.MONTH) + 1));
-            System.out.println("yea:" + customer.getDateOfBirth().get(Calendar.YEAR));
+            stmt.setString(parameterIndex++, sale.getProduct().getName());
+            stmt.setString(parameterIndex++, sale.getCustomer().getFirstName());
+            stmt.setString(parameterIndex++, sale.getEmployee().getFirstName());
+            stmt.setBigDecimal(parameterIndex++, sale.getComm());
             // condition
-            stmt.setString(parameterIndex++, customer.getCustomerID());
+            stmt.setString(parameterIndex++, sale.getSalesID());
             // execute
             stmt.executeUpdate();
             // commit
@@ -134,7 +126,7 @@ public class CustomerHelper {
      * @param customer
      * @throws SQLException 
      */
-    public static void delete(Customer customer) throws SQLException {
+    public static void delete(Sale customer) throws SQLException {
         try {
             // connect to db
             ConnectionHelper.connect();
@@ -143,12 +135,12 @@ public class CustomerHelper {
             sql.append("DELETE FROM ");
             sql.append(TABLE_NAME);
             sql.append("  WHERE ");
-            sql.append("    CUSID = ?");
+            sql.append("    SALEID = ?");
             // create statement
             PreparedStatement stmt = ConnectionHelper.prepareStatement(sql.toString());
             // bind parameters
             int parameterIndex = 1;
-            stmt.setString(parameterIndex++, customer.getCustomerID());
+            stmt.setString(parameterIndex++, customer.getSalesID());
             // execute
             stmt.execute();
             // commit

@@ -55,6 +55,10 @@ public class Sale {
     //</editor-fold>
     
     //<editor-fold desc="Mutator Methods">
+    public void setSaleID(String salesID) {
+	this.salesID = salesID;
+    }
+
     public void setProduct(Product product) {
 	this.product = product;
     }
@@ -65,6 +69,10 @@ public class Sale {
 
     public void setEmployee(Employee employee) {
 	this.employee = employee;
+    }
+
+    public void setComm(BigDecimal comm) {
+	this.comm = comm;
     }
     //</editor-fold>
 }

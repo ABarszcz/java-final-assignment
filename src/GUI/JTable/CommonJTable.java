@@ -34,17 +34,11 @@ public abstract class CommonJTable extends JPanel {
 
     /* properties */
     /** Information panel */
-    private JPanel infoDetailPanel;
-
-    public JPanel getInfoDetailPanel() {
-        return infoDetailPanel;
-    }
+    protected JPanel infoDetailPanel;
     /** JTable */
-    private JTable jTable;
+    protected JTable jTable;
     /** selected row of the list */
     private JTextField txtSelectedRow;
-//    /** table name */
-//    private String tableName;
 
     /* consts */
     /** number of columns per a row */
@@ -69,27 +63,10 @@ public abstract class CommonJTable extends JPanel {
         super.add(tablePanel, BorderLayout.CENTER);
     }
 
-//    /**
-//     * Constructor.
-//     * 
-//     * @param tablename 
-//     */
-////    public CommonJTable(String tablename) {
-//    public CommonJTable() {
-//        super(new BorderLayout());
-////        this.tableName = tablename;
-//        this.buildTableInfoPanel(null);
-//    }
-
-//    public void buildTableInfoPanel(String tableName) {
-//        this.tableName = tableName;
-//        this.buildTableInfoPanel(null);
-//    }
-//
     /**
      * It build table info panel.
      * 
-     * @param tableName 
+     * @param key search key 
      */
 //    public void buildTableInfoPanel(String tableName, Object key) {
     public void buildTableInfoPanel(Object key) {
@@ -112,33 +89,11 @@ public abstract class CommonJTable extends JPanel {
             ConnectionHelper.connect();
             // create statement
             stmt = ConnectionHelper.createStatement();
-System.out.println("debug key:" + key);
-//            if (key == null) {
-//                try {
-//                    // select all
-//                    // create sql
-//                    String sql = "SELECT * FROM " + this.getTableName();
-//                    System.out.println("TABLE:" + this.getTableName());
-//                    // execute
-//                    rs = stmt.executeQuery(sql);
-//                } catch (SQLException sqlex) {
-//                    // table not found
-//                    sqlex.printStackTrace();
-//
-//                    JOptionPane.showMessageDialog(null, "The table name is invalid. Please try again.");
-//
-//                    return;
-//                }
-//            } else {
-//                // select by key
-//                rs = this.selectByKey(key);
-//            }
             rs = this.selectByKey(key);
-
             tbl = this.buildTBModel(rs);
 
         } catch (SQLException sqlex) {
-            sqlex.printStackTrace();
+            Utils.logError(sqlex);
         } finally {
             try {
                 ConnectionHelper.disconnect();
@@ -167,18 +122,21 @@ System.out.println("debug key:" + key);
         infoHead.add(new JLabel(""));
         infoHead.add(lblSelectedRow);
         infoHead.add(this.txtSelectedRow);
-        /*
-        int colcount = tbl.getColumnCount();
 
+        int colcount = tbl.getColumnCount();
+        Map<Integer, Integer> ignores = this.getIgnoreColMap();
+        Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
         for (int i = 0; i < colcount; i++) {
+            if (ignores.get(i) != null) {
+                continue;
+            }
             infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
             JTextField jTextField = new JTextField();
-//            jTextField.setEditable(false);
+            if (readOnlys.get(i) != null) {
+                jTextField.setEditable(false);                
+            }
             infoDetailPanel.add(jTextField);
         }
-//        tbl.getDataVector();
-        */
-        setDetailInfo(tbl);
 
         int row;
         int remainder;
@@ -192,8 +150,8 @@ System.out.println("debug key:" + key);
             }
         }
         infoPanel.setLayout(new BorderLayout());
-        infoHead.setLayout(new GridLayout(1, COLS, 10, 10));
-        infoDetailPanel.setLayout(new GridLayout(row, COLS, 10, 10));
+        infoHead.setLayout(new GridLayout(1, COLS, 3, 0));
+        infoDetailPanel.setLayout(new GridLayout(row, COLS, 3, 0));
 
         infoPanel.add(infoHead, BorderLayout.NORTH);
         infoPanel.add(infoDetailPanel, BorderLayout.CENTER);
@@ -238,22 +196,26 @@ System.out.println("debug key:" + key);
         return textValue;
     }
 
-    protected void setDetailInfo(DefaultTableModel tbl) {
-        int colcount = tbl.getColumnCount();
-        Map<Integer, Integer> ignores = this.getIgnoreColMap();
-        Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
-        for (int i = 0; i < colcount; i++) {
-            if (ignores.get(i) != null) {
-                continue;
-            }
-            infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
-            JTextField jTextField = new JTextField();
-            if (readOnlys.get(i) != null) {
-                jTextField.setEditable(false);                
-            }
-            infoDetailPanel.add(jTextField);
-        }
-    }
+//    /**
+//     * 
+//     * @param tbl 
+//     */
+//    protected void setDetailInfo(DefaultTableModel tbl) {
+//        int colcount = tbl.getColumnCount();
+//        Map<Integer, Integer> ignores = this.getIgnoreColMap();
+//        Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
+//        for (int i = 0; i < colcount; i++) {
+//            if (ignores.get(i) != null) {
+//                continue;
+//            }
+//            infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
+//            JTextField jTextField = new JTextField();
+//            if (readOnlys.get(i) != null) {
+//                jTextField.setEditable(false);                
+//            }
+//            infoDetailPanel.add(jTextField);
+//        }
+//    }
 
     /**
      * It builds a table model.
@@ -297,13 +259,21 @@ System.out.println("debug key:" + key);
                 /* set value from selected */
                 // selected row
                 txtSelectedRow.setText(Integer.toString(jTable.getSelectedRow() + 1));
-                int loopCount = jTable.getColumnCount();
-                for (int i = 0; i < loopCount; i++) {
-                    JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
-                    jTextField.setText(jTable.getValueAt(jTable.getSelectedRow(), i).toString());
-                }
+                displayDetailInformation();
             }
         }
     } // end TableListSelectionListener
 
+    /**
+     * Display detail information from JTable.
+     * If needed customize, override it.
+     */
+    protected void displayDetailInformation() {
+        final int SELECTED_ROW = jTable.getSelectedRow();
+        final int LOOP_COUNT = jTable.getColumnCount();
+        for (int i = 0; i < LOOP_COUNT; i++) {
+            JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
+            jTextField.setText(jTable.getValueAt(SELECTED_ROW, i).toString());
+        }
+    }
 }

@@ -64,11 +64,15 @@ public abstract class Employee {
 	    + "Employee Position: " + getPosition() + "\n"
 	    + "Employee EmployeeID: " + getEmployeeID() + "\n"
 	    + "Employee Social Security Number: " + getSocialSecurityNum() + "\n"
-	    + "Employee Date Of Birth: " + getDateOfBirth().getTime() + "\n";
+	    + "Employee Date Of Birth: " + (getDateOfBirth() == null? "": getDateOfBirth().getTime()) + "\n";
     }
     //</editor-fold>
     
     //<editor-fold desc="Mutator Methods">
+    public void setEmployeeID(String employeeID) {
+	this.employeeID = employeeID;
+    }
+    
     public void setFirstName(String firstName) {
 	this.firstName = firstName;
     }

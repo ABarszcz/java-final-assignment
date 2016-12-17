@@ -4,6 +4,7 @@
 package GUI.JTable;
 
 import Customer.CustomerHelper;
+import Customer.Customer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -31,27 +32,9 @@ public class CustomerJTable extends CommonJTable {
      */
     @Override
     protected ResultSet selectByKey(Object condition) throws SQLException {
-        return CustomerHelper.selectByKey(condition);
+        return CustomerHelper.selectByKey((Customer) condition);
     }
-//    /**
-//     * 
-//     * @param tbl 
-//     */
-//    @Override
-//    protected void setDetailInfo(DefaultTableModel tbl) {
-//        int colcount = tbl.getColumnCount();
-//        
-//        for (int i = 0; i < colcount; i++) {
-//            super.getInfoDetailPanel().add(new JLabel(tbl.getColumnName(i)));
-//            JTextField jTextField = new JTextField();
-//            // set uneditable to PKs
-//            if (i == 0) {
-//                // CUSID
-//                jTextField.setEditable(false);
-//            }
-//            super.getInfoDetailPanel().add(jTextField);
-//        }
-//    }
+
     /**
      * @return table name
      */
@@ -136,6 +119,6 @@ public class CustomerJTable extends CommonJTable {
 
     public String getYearOfBirthdate() {
         return super.getTextValue(10);
-    }    
+    }
     
 }

@@ -5,7 +5,10 @@ import Common.Validation;
 import Customer.*;
 import Employees.*;
 import GUI.JTable.CustomerJTable;
+import GUI.JTable.EmployeeJTable;
+import GUI.JTable.ManufacturerJTable;
 import GUI.JTable.ProductJTable;
+import GUI.JTable.SaleJTable;
 import Manufacturers.*;
 import Products.*;
 import Sale.*;
@@ -47,10 +50,14 @@ public class MainGUI extends JFrame {
 //add start takaaki
     /* consts */
     private static final int TAB_IDX_EMPLOYEE = 0;
+    private static final int TAB_IDX_MANUFACTURER = 1;
     private static final int TAB_IDX_PRODUCT = 2;
+    private static final int TAB_IDX_SALE = 3;
     private static final int TAB_IDX_CUSTOMER = 4;
     private static final int TAB_IDX_EMPLOYEE_SEARCH = 0;
+    private static final int TAB_IDX_MANUFACTURER_SEARCH = 0;
     private static final int TAB_IDX_PRODUCT_SEARCH = 0;
+    private static final int TAB_IDX_SALE_SEARCH = 0;
     private static final int TAB_IDX_CUSTOMER_SEARCH = 0;
 //add e n d takaaki
     //lists to hold objects
@@ -85,11 +92,11 @@ public class MainGUI extends JFrame {
 	    pnlEmpBPCSex, pnlEmpSearch, pnlEmpSearchNorth, pnlEmpSearchCenter, pnlEmpSearchSouth;
     private final JLabel lblEmpSearchLastName, lblEmpSearchDepartment;
     private final JTextField txtEmpSearchLastName, txtEmpSearchDepartment;
-    private final JTextArea txaEmpResults;
-    private final JScrollPane spEmpResults;
-//add start takaaki
-//    private final EmployeeJTable employeeJTable;
-//add e n d takaaki
+//modify start takaaki
+//    private final JTextArea txaEmpResults;
+//    private final JScrollPane spEmpResults;
+    private final EmployeeJTable employeeJTable;
+//modify e n d takaaki
     
     //text fields for Salary employee
     private final JTextField txtEmpSFirstName,
@@ -136,7 +143,10 @@ public class MainGUI extends JFrame {
     ButtonGroup grpEmpBPCSex;
     
     //create "create new" buttons
-    private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew,btnEmployeeEdit, btnEmployeeDelete;
+//modify start takaaki
+//    private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew,btnEmployeeEdit, btnEmployeeDelete;
+    private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew, btnEmployeeSearch, btnEmployeeEdit, btnEmployeeDelete;
+//modify e n d takaaki
     
     //</editor-fold>
     
@@ -149,10 +159,16 @@ public class MainGUI extends JFrame {
 	    txtMfactPhoneNum;
     private final JButton btnMfactNew;
     private final JLabel lblMfactSearch;
-    private final JTextArea txaMfactResults;
-    private final JScrollPane spMfactResults;
+//modify start takaaki
+//    private final JTextArea txaMfactResults;
+//    private final JScrollPane spMfactResults;
+    private final ManufacturerJTable mfactJTable;
+//modify e n d takaaki
     
-    private final JButton btnManufacturerEdit, btnManufacturerDelete;
+//modify start takaaki
+//    private final JButton btnManufacturerEdit, btnManufacturerDelete;
+    private final JButton btnManufacturerSearch, btnManufacturerEdit, btnManufacturerDelete;
+//modify e n d takaaki
     
     //</editor-fold>
     
@@ -190,10 +206,16 @@ public class MainGUI extends JFrame {
     private final JComboBox cboSalesProductName, cboSalesCustomer, cboSalesEmployee;
     private final JButton btnSalesNew;
     private final JLabel lblSalesSearchLastName, lblSalesSearchProductName;
-    private final JTextArea txaSalesResults;
-    private final JScrollPane spSalesResults;
+//modify start takaaki
+//    private final JTextArea txaSalesResults;
+//    private final JScrollPane spSalesResults;
+    private final SaleJTable saleJTable;
+//modify e n d takaaki
     
-    private final JButton btnSalesEdit, btnSalesDelete;
+//modify start takaaki
+//    private final JButton btnSalesEdit, btnSalesDelete;
+    private final JButton btnSalesSearch, btnSalesEdit, btnSalesDelete;
+//modify e n d takaaki
     
     //</editor-fold>
     
@@ -391,9 +413,16 @@ public class MainGUI extends JFrame {
 	this.txtEmpSearchLastName = new JTextField(15);
         this.lblEmpSearchDepartment = new JLabel("Search by Department");
 	this.txtEmpSearchDepartment = new JTextField(15);
-	this.txaEmpResults = new JTextArea(15, 30);
-	this.spEmpResults = new JScrollPane(txaEmpResults);
-	
+//modify start takaaki
+//	this.txaEmpResults = new JTextArea(15, 30);
+//	this.spEmpResults = new JScrollPane(txaEmpResults);
+        this.employeeJTable = new EmployeeJTable();
+
+        // add handler
+        this.txtEmpSearchLastName.addActionListener(new SearchEmployeeButtonHandler());
+        this.txtEmpSearchDepartment.addActionListener(new SearchEmployeeButtonHandler());
+//modify e n d takaaki
+        
 	//initialize JButtons
 	this.btnEmpSNew = new JButton("Create Salary Employee");
         btnEmpSNew.addActionListener(new CreateSalaryEmployeeButtonHandler());
@@ -404,6 +433,14 @@ public class MainGUI extends JFrame {
         btnEmpBPCNew.addActionListener(new CreateBasePlusCommissionEmployeeButtonHandler());
         this.btnEmployeeEdit = new JButton("Edit");
         this.btnEmployeeDelete = new JButton("Delete");
+//add start takaaki
+        this.btnEmployeeSearch = new JButton("Search");
+
+        // set handlers
+        this.btnEmployeeEdit.addActionListener(new EditEmployeeButtonHandler());
+        this.btnEmployeeDelete.addActionListener(new DeleteEmployeeButtonHandler());
+        this.btnEmployeeSearch.addActionListener(new SearchEmployeeButtonHandler());
+//add e n d takaaki
 	//</editor-fold>
 	
 	//<editor-fold desc="Initialize Manufacturer Components">
@@ -433,12 +470,26 @@ public class MainGUI extends JFrame {
         this.btnMfactNew.addActionListener(new CreateMfactButtonHandler());
 	this.btnManufacturerEdit = new JButton("Edit");
         this.btnManufacturerDelete = new JButton("Delete");
+//add start takaaki
+        this.btnManufacturerSearch = new JButton("Search");
+
+        // set handlers
+        this.btnManufacturerEdit.addActionListener(new EditManufacturerButtonHandler());
+        this.btnManufacturerDelete.addActionListener(new DeleteManufacturerButtonHandler());
+        this.btnManufacturerSearch.addActionListener(new SearchManufacturerButtonHandler());
+//add e n d takaaki
         
 	//initialize search components
 	this.lblMfactSearch = new JLabel("Search by Manufacturer's Name");
 	this.txtMfactSearch = new JTextField(15);
-	this.txaMfactResults = new JTextArea(15, 30);
-	this.spMfactResults = new JScrollPane(txaMfactResults);
+//modify start takaaki
+//	this.txaMfactResults = new JTextArea(15, 30);
+//	this.spMfactResults = new JScrollPane(txaMfactResults);
+        this.mfactJTable = new ManufacturerJTable();
+
+        // add handler
+        this.txtMfactSearch.addActionListener(new SearchManufacturerButtonHandler());
+//modify e n d takaaki
 	//</editor-fold>
 	
 	//<editor-fold desc="Initialize Product Components">
@@ -521,14 +572,29 @@ public class MainGUI extends JFrame {
 	this.btnSalesNew = new JButton("Create Sales");
         this.btnSalesEdit = new JButton("Edit");
         this.btnSalesDelete = new JButton("Delete");
+//add start takaaki
+        this.btnSalesSearch = new JButton("Search");
+
+        // set handlers
+        this.btnSalesEdit.addActionListener(new EditSalesButtonHandler());
+        this.btnSalesDelete.addActionListener(new DeleteSalesButtonHandler());
+        this.btnSalesSearch.addActionListener(new SearchSalesButtonHandler());
+//add e n d takaaki
 		
 	//initialize Search components
 	this.lblSalesSearchLastName = new JLabel("Search Sales by Employee's Last Name");
 	this.txtSalesSearchLastName = new JTextField(15);
         this.lblSalesSearchProductName = new JLabel("Search Sales by Product Name");
 	this.txtSalesSearchProductName = new JTextField(15);
-	this.txaSalesResults = new JTextArea(15, 30);
-	this.spSalesResults = new JScrollPane(txaSalesResults);       
+//modify start takaaki
+//	this.txaSalesResults = new JTextArea(15, 30);
+//	this.spSalesResults = new JScrollPane(txaSalesResults);       
+        this.saleJTable = new SaleJTable();
+
+        // add handler
+        this.txtSalesSearchLastName.addActionListener(new SearchSalesButtonHandler());
+        this.txtSalesSearchProductName.addActionListener(new SearchSalesButtonHandler());
+//modify e n d takaaki
         //</editor-fold>
         
         //<editor-fold desc="Initialize Customer Components">
@@ -609,11 +675,13 @@ public class MainGUI extends JFrame {
     
     private void setupGUI() {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setSize(685,545);
+	this.setSize(715,565);
         this.setResizable(false);
 	this.setLocationRelativeTo(null);
 	//create the view
 	this.setContentPane(this.createContentPane());
+        // initial search
+        this.employeeJTable.buildTableInfoPanel(null);
 	this.setVisible(true);
     }
 
@@ -672,6 +740,20 @@ System.out.println("Tab is changed");
 System.out.println("Selected tab:" + selectedTabIndex);
             switch (selectedTabIndex) {
 //add start takaaki
+                case TAB_IDX_EMPLOYEE:
+                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_EMPLOYEE_SEARCH) {
+                        // search
+                        employeeJTable.buildTableInfoPanel(null);
+                    }
+                    break;
+                case TAB_IDX_MANUFACTURER:
+                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_MANUFACTURER_SEARCH) {
+                        // search
+                        mfactJTable.buildTableInfoPanel(null);
+                    }
+                    break;
+//add e n d takaaki
+//add start takaaki
                 case TAB_IDX_PRODUCT:
                     if (pnlCustomer.getSelectedIndex() == TAB_IDX_PRODUCT_SEARCH) {
                         // search
@@ -685,6 +767,14 @@ System.out.println("Selected tab:" + selectedTabIndex);
                         customerJTable.buildTableInfoPanel(null);
                     }
                     break;
+//add start takaaki
+                case TAB_IDX_SALE:
+                    if (pnlCustomer.getSelectedIndex() == TAB_IDX_SALE_SEARCH) {
+                        // search
+                        saleJTable.buildTableInfoPanel(null);
+                    }
+                    break;
+//add e n d takaaki
                 default:
                     break;
             }
@@ -706,7 +796,29 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlEmp.addTab("New Hourly", pnlEmpH);
 	pnlEmp.addTab("New Commission-Sales", pnlEmpCS);
 	pnlEmp.addTab("New Base Plus Commission", pnlEmpBPC);
+//add start takaaki
+
+        // set handler
+        pnlEmp.addChangeListener(new EmployeeTabChangeListener());
+//add e n d takaaki
     }
+
+//add start takaaki
+    /**
+     * That is called when employee tab is clicked.
+     */
+    private class EmployeeTabChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            if (pnlEmp.getSelectedIndex() == 0) {
+                // search
+                employeeJTable.buildTableInfoPanel(null);
+            }
+        }
+        
+    }
+//add e n d takaaki
     
     private void createManufacturerTabbedPane() {
 	createManufacturerSearchTab();
@@ -715,7 +827,28 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	//add the tabs
 	pnlMfact.addTab("Search", pnlMfactSearch);
 	pnlMfact.addTab("New Manufacturer", pnlMfactNew);
+//add start takaaki
+
+        // set handler
+        pnlMfact.addChangeListener(new ManufacturerTabChangeListener());
+//add e n d takaaki
     }
+//add start takaaki
+    /**
+     * That is called when manufacturer tab is clicked.
+     */
+    private class ManufacturerTabChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            if (pnlMfact.getSelectedIndex() == 0) {
+                // search
+                mfactJTable.buildTableInfoPanel(null);
+            }
+        }
+        
+    }
+//add e n d takaaki
     
     private void createProductTabbedPane() {
 	createProductSearchTab();
@@ -738,9 +871,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
         @Override
         public void stateChanged(ChangeEvent e) {
-            // update manufacturer id combo box
-System.out.println("Tab is changed");
-System.out.println("Selected tab:" + pnlProduct.getSelectedIndex());
             if (pnlProduct.getSelectedIndex() == 0) {
                 // search
                 productJTable.buildTableInfoPanel(null);
@@ -757,7 +887,29 @@ System.out.println("Selected tab:" + pnlProduct.getSelectedIndex());
 	//add the tabs
 	pnlSales.addTab("Search", pnlSalesSearch);
 	pnlSales.addTab("New Sales", pnlSalesNew);
+//add start takaaki
+
+        // set handler
+        pnlSales.addChangeListener(new SaleTabChangeListener());
+//add e n d takaaki
     }
+
+//add start takaaki
+    /**
+     * That is called when sales tab is clicked.
+     */
+    private class SaleTabChangeListener implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            if (pnlSales.getSelectedIndex() == 0) {
+                // search
+                saleJTable.buildTableInfoPanel(null);
+            }
+        }
+        
+    }
+//add e n d takaaki
     
     private void createCustomerTabbedPane() {
 	createCustomerSearchTab();
@@ -778,9 +930,6 @@ System.out.println("Selected tab:" + pnlProduct.getSelectedIndex());
 
         @Override
         public void stateChanged(ChangeEvent e) {
-            // update manufacturer id combo box
-System.out.println("Tab is changed");
-System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
             if (pnlCustomer.getSelectedIndex() == 0) {
                 // search
                 customerJTable.buildTableInfoPanel(null);
@@ -797,11 +946,17 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlEmpSearchNorth.setLayout(new FlowLayout());
 	pnlEmpSearchNorth.add(lblEmpSearchLastName);
 	pnlEmpSearchNorth.add(txtEmpSearchLastName);
-      //  pnlEmpSearchCenter.add(lblEmpSearchDepartment);
-     //	pnlEmpSearchCenter.add(txtEmpSearchDepartment);
+//add start takaaki
+        pnlEmpSearchNorth.add(btnEmployeeSearch);
+//add e n d takaaki
+        pnlEmpSearchCenter.add(lblEmpSearchDepartment);
+     	pnlEmpSearchCenter.add(txtEmpSearchDepartment);
 	
 	//design the center panel
-	pnlEmpSearchCenter.add(spEmpResults);
+//modify start takaaki
+//	pnlEmpSearchCenter.add(spEmpResults);
+        pnlEmpSearchCenter.add(this.employeeJTable);
+//modify e n d takaaki
         
 	pnlEmpSearch.add(pnlEmpSearchNorth, BorderLayout.NORTH);
 	pnlEmpSearch.add(pnlEmpSearchCenter, BorderLayout.CENTER);  
@@ -1020,9 +1175,15 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlMfactSearchNorth.setLayout(new FlowLayout());
 	pnlMfactSearchNorth.add(lblMfactSearch);
 	pnlMfactSearchNorth.add(txtMfactSearch);
+//add start takaaki
+        pnlMfactSearchNorth.add(btnManufacturerSearch);
+//add e n d takaaki
 	
 	//design the center panel
-	pnlMfactSearchCenter.add(spMfactResults);
+//modify start takaaki
+//	pnlMfactSearchCenter.add(spMfactResults);
+        pnlMfactSearchCenter.add(this.mfactJTable);
+//modify e n d takaaki
 	
 	pnlMfactSearch.add(pnlMfactSearchNorth, BorderLayout.NORTH);
 	pnlMfactSearch.add(pnlMfactSearchCenter, BorderLayout.CENTER);
@@ -1134,11 +1295,17 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	pnlSalesSearchNorth.setLayout(new FlowLayout());
 	pnlSalesSearchNorth.add(lblSalesSearchLastName);
 	pnlSalesSearchNorth.add(txtSalesSearchLastName);
+//add start takaaki
+        pnlSalesSearchNorth.add(btnSalesSearch);
+//add e n d takaaki
         pnlSalesSearchCenter.add(lblSalesSearchProductName);
 	pnlSalesSearchCenter.add(txtSalesSearchProductName);
         	
 	//design the center panel
-	pnlSalesSearchCenter.add(spSalesResults);
+//modify start takaaki
+//	pnlSalesSearchCenter.add(spSalesResults);
+        pnlSalesSearchCenter.add(this.saleJTable);
+//modify e n d takaaki
 	
 	pnlSalesSearch.add(pnlSalesSearchNorth, BorderLayout.NORTH);
 	pnlSalesSearch.add(pnlSalesSearchCenter, BorderLayout.CENTER);
@@ -1524,6 +1691,213 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }//end employee
     
+//add start takaaki
+    /**
+     * Handler for edit button on Employee tab.
+     */
+    private class EditEmployeeButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!employeeJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog("edit this employee")) {
+		String fieldName = "";
+		
+                boolean check = true;
+                try{
+		    //Validate Inputs
+		    fieldName = "First name";
+                    Validation.isValidName(employeeJTable.getFname(), false);
+		    fieldName = "Last name";
+                    Validation.isValidName(employeeJTable.getLname(), false);
+		    //fieldName = "Gender";
+                    //Validation.isValid(employeeJTable.getGender());  // TODO validation for gender
+		    fieldName = "Address";
+                    Validation.isValid(employeeJTable.getAddress());
+		    fieldName = "City";
+                    Validation.isValid(employeeJTable.getCity());
+                    fieldName = "Province";
+		    Validation.isValid(employeeJTable.getProvince());
+                    fieldName = "Phone number";
+                    Validation.isValidPhoneNum(employeeJTable.getPhonenum());
+                    fieldName = "Department";
+		    Validation.isValid(employeeJTable.getDept());
+                    fieldName = "Posistion";
+		    Validation.isValid(employeeJTable.getDeptposition());
+                    fieldName = "S.I.N.";
+		    Validation.isValid(employeeJTable.getSsn());
+                    fieldName = "Year of birth";
+                    Validation.isValid(employeeJTable.getYearOfBirthdate());
+                    fieldName = "Month of birth";
+                    Validation.isValid(employeeJTable.getMonthOfBirthdate());
+                    fieldName = "Day of birth";
+                    System.out.println("Debug:");
+                    Validation.isValid(employeeJTable.getDayOfBirthdate());
+                    System.out.println("Debug day of birth:" + employeeJTable.getDayOfBirthdate());
+                    System.out.println("Debug getHourly:" + employeeJTable.getHourly());
+                    System.out.println("Debug getSalary:" + employeeJTable.getSalary());
+                    System.out.println("Debug getComm:" + employeeJTable.getComm());
+                    BigDecimal hourly = (Utils.isEmpty(employeeJTable.getHourly()) ? null : new BigDecimal(employeeJTable.getHourly()));
+                    BigDecimal salary = (Utils.isEmpty(employeeJTable.getSalary()) ? null : new BigDecimal(employeeJTable.getSalary()));
+                    BigDecimal comm = (Utils.isEmpty(employeeJTable.getComm()) ? null : new BigDecimal(employeeJTable.getComm()));
+
+                    //Create customer object
+		    Employee employee;
+                    final int EMPLOYEE_TYPE = EmployeeHelper.getEmployeeType(hourly, salary, comm);
+                    switch (EMPLOYEE_TYPE) {
+                        case EmployeeHelper.EMP_TYPE_BASE_PLUS_COMMISSION:
+                            fieldName = "Salary Amount";
+                            Validation.isValid(salary);
+                            fieldName = "Commission";
+                            Validation.isValid(comm);
+
+                            employee = new BasePlusCommissionEmployee(employeeJTable.getFname(), employeeJTable.getLname(),
+                                    employeeJTable.getGender(), employeeJTable.getAddress(), employeeJTable.getCity(),
+                                    employeeJTable.getProvince(), employeeJTable.getPhonenum(), employeeJTable.getDept(),
+                                    employeeJTable.getDeptposition(), employeeJTable.getSsn(),
+                                    Integer.parseInt(employeeJTable.getYearOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getMonthOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getDayOfBirthdate()),
+                                    comm, salary);
+                            break;
+                        case EmployeeHelper.EMP_TYPE_COMMISSION:
+                            fieldName = "Commission";
+                            Validation.isValid(comm);
+
+                            employee = new CommissionSalesEmployee(employeeJTable.getFname(), employeeJTable.getLname(),
+                                    employeeJTable.getGender(), employeeJTable.getAddress(), employeeJTable.getCity(),
+                                    employeeJTable.getProvince(), employeeJTable.getPhonenum(), employeeJTable.getDept(),
+                                    employeeJTable.getDeptposition(), employeeJTable.getSsn(),
+                                    Integer.parseInt(employeeJTable.getYearOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getMonthOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getDayOfBirthdate()),
+                                    comm);
+                            break;
+                        case EmployeeHelper.EMP_TYPE_HOURLY:
+                            fieldName = "Wage";
+                            Validation.isValid(hourly);
+
+                            employee = new HourlyEmployee(employeeJTable.getFname(), employeeJTable.getLname(),
+                                    employeeJTable.getGender(), employeeJTable.getAddress(), employeeJTable.getCity(),
+                                    employeeJTable.getProvince(), employeeJTable.getPhonenum(), employeeJTable.getDept(),
+                                    employeeJTable.getDeptposition(), employeeJTable.getSsn(),
+                                    Integer.parseInt(employeeJTable.getYearOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getMonthOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getDayOfBirthdate()),
+                                    hourly);
+                            break;
+                        case EmployeeHelper.EMP_TYPE_SALARY:
+                            fieldName = "Salary Amount";
+                            Validation.isValid(salary);
+
+                            employee = new SalaryEmployee(employeeJTable.getFname(), employeeJTable.getLname(),
+                                    employeeJTable.getGender(), employeeJTable.getAddress(), employeeJTable.getCity(),
+                                    employeeJTable.getProvince(), employeeJTable.getPhonenum(), employeeJTable.getDept(),
+                                    employeeJTable.getDeptposition(), employeeJTable.getSsn(),
+                                    Integer.parseInt(employeeJTable.getYearOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getMonthOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getDayOfBirthdate()),
+                                    salary);
+                            break;
+                        default:
+                            // update only basic info
+                            employee = new SalaryEmployee(employeeJTable.getFname(), employeeJTable.getLname(),
+                                    employeeJTable.getGender(), employeeJTable.getAddress(), employeeJTable.getCity(),
+                                    employeeJTable.getProvince(), employeeJTable.getPhonenum(), employeeJTable.getDept(),
+                                    employeeJTable.getDeptposition(), employeeJTable.getSsn(),
+                                    Integer.parseInt(employeeJTable.getYearOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getMonthOfBirthdate()),
+                                    Integer.parseInt(employeeJTable.getDayOfBirthdate()),
+                                    null);
+                            break;
+                    }
+
+		    employee.setEmployeeID(employeeJTable.getEmpid());
+		    
+                    if (check != true) {
+                        return;
+                    }
+		    try {
+			System.out.println("debug employee: " + employee);
+			// update
+			EmployeeHelper.update(employee);
+			// research
+			// set search keywords
+                        Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
+                            null, null, null, null, null, txtEmpSearchDepartment.getText(),
+                            null, null, 0, 0, 0, null);
+			System.out.println("debug employee: " + condition);
+			// search
+			employeeJTable.buildTableInfoPanel(condition);
+		    } catch(SQLException exSql) {
+			Utils.logError(exSql);
+			JOptionPane.showMessageDialog(null, "Update failed!");
+		    }
+		} catch(IllegalArgumentException exIae){
+                    Utils.logError(exIae);
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }
+	}
+    }//end EditEmployeeButtonHandler
+
+    /**
+     * Handler for delete button on Employee tab.
+     */
+    private class DeleteEmployeeButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!employeeJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog("delete this employee")) {
+		//Submit to Database
+            
+                Employee employee = new SalaryEmployee(null);
+                employee.setEmployeeID(employeeJTable.getEmpid());
+
+                try {
+                    // delete
+                    EmployeeHelper.delete(employee);
+                    // re-search
+                    // set search keywords
+                    Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
+                        null, null, null, null, null, txtEmpSearchDepartment.getText(),
+                        null, null, 0, 0, 0, null);
+                    System.out.println("debug employee: " + condition);
+                    // search
+                    employeeJTable.buildTableInfoPanel(null);
+                } catch (SQLException sqlex) {
+                    // error
+                    Utils.logError(sqlex);
+                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                }
+            }
+	}
+    }//end DeleteEmployeeButtonHandler
+
+    /**
+     * Handler for search button on Employee tab.
+     */
+    private class SearchEmployeeButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            
+            // set search keywords
+            Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
+                null, null, null, null, null, txtEmpSearchDepartment.getText(),
+                null, null, 0, 0, 0, null);
+            System.out.println("debug employee: " + condition);
+            // search
+            employeeJTable.buildTableInfoPanel(condition);
+	}
+    }//end SearchEmployeeButtonHandler
+
     private class CreateMfactButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1556,8 +1930,122 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		}
 	    }           
 	}
-    }//end mfactButton
+    }//end CreateMfactButtonHandler
     
+// add start takaaki
+    /**
+     * Handler for edit button on Manufacturers tab.
+     */
+    private class EditManufacturerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!mfactJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog("edit this manufacturer")) {
+		String fieldName = "";
+		
+                boolean check = true;
+                try{
+		    //Validate Inputs
+		    fieldName = "Name";
+                    Validation.isValidName(mfactJTable.getMfactname(), true);
+		    fieldName = "Province";
+                    Validation.isValid(mfactJTable.getProvince());
+		    fieldName = "City";
+                    Validation.isValid(mfactJTable.getCity());
+                    fieldName = "Address";
+                    Validation.isValid(mfactJTable.getAddress());
+		    fieldName = "Phone Number";
+                    Validation.isValidPhoneNum(mfactJTable.getPhonenum());
+		    
+		    //Create sale object
+		    Manufacturer sale = new Manufacturer(mfactJTable.getMfactname(),
+                            mfactJTable.getProvince(),
+                            mfactJTable.getCity(),
+                            mfactJTable.getAddress(),
+                            mfactJTable.getPhonenum());
+		    sale.setMfactID(mfactJTable.getMfactid());
+		    
+                    if (check != true) {
+                        return;
+                    }
+		    try {
+			System.out.println("debug manufacturer: " + sale);
+			// update
+			ManufacturerHelper.update(sale);
+			// re-search
+                        // set search keywords
+                        Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
+                        System.out.println("debug manufacturer: " + condition);
+                        // search
+                        mfactJTable.buildTableInfoPanel(condition);
+		    } catch(SQLException exSql) {
+			Utils.logError(exSql);
+			JOptionPane.showMessageDialog(null, "Update failed!");
+		    }
+		} catch(IllegalArgumentException exIae){
+                    Utils.logError(exIae);
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }
+	}
+    }//end EditManufacturerButtonHandler
+
+    /**
+     * Handler for delete button on Manufacturers tab.
+     */
+    private class DeleteManufacturerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!mfactJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog("delete this manufacturer")) {
+		//Submit to Database
+            
+                Manufacturer manufacturer = new Manufacturer(null);
+                manufacturer.setMfactID(mfactJTable.getMfactid());
+		System.out.println("debug manufacturer: " + manufacturer);
+
+                try {
+                    // delete
+                    ManufacturerHelper.delete(manufacturer);
+                    // re-search
+                    // set search keywords
+                    Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
+                    System.out.println("debug manufacturer: " + condition);
+                    // search
+                    mfactJTable.buildTableInfoPanel(condition);
+                } catch (SQLException sqlex) {
+                    // error
+                    Utils.logError(sqlex);
+                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                }
+            }
+	}
+    }//end DeleteManufacturerButtonHandler
+
+    /**
+     * Handler for search button on Manufacturers tab.
+     */
+    private class SearchManufacturerButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            
+            // set search keywords
+            Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
+            System.out.println("debug manufacturer: " + condition);
+            // search
+            mfactJTable.buildTableInfoPanel(condition);
+	}
+    }//end SearchManufacturerButtonHandler
+//add e n d takaaki
+
     private class CreateProductButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1587,7 +2075,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		}
             }
 	}
-    }//end ProductButton  
+    }//end CreateProductButtonHandler
     
 //add start takaaki
     /**
@@ -1694,7 +2182,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
     }//end DeleteProductButtonHandler
 
     /**
-     * Handler for search button on Customer tab.
+     * Handler for search button on Product tab.
      */
     private class SearchProductButtonHandler implements ActionListener {
 	@Override
@@ -1741,8 +2229,117 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                 }
             }
 	}
-    }//end SalesButton    
+    }//end CreateSalesButtonHandler    
     
+// add start takaaki
+    /**
+     * Handler for edit button on Sales tab.
+     */
+    private class EditSalesButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!saleJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog("edit this sale")) {
+		String fieldName = "";
+		
+                boolean check = true;
+                try{
+		    //Validate Inputs
+                    fieldName = "Commission";
+                    BigDecimal comm = new BigDecimal(saleJTable.getComm());
+                    Validation.isValid(comm);
+		    
+		    //Create sale object
+		    Sale sale = new Sale(new Product(saleJTable.getProduct()),
+                            new Customer(saleJTable.getCustomer()),
+                            new SalaryEmployee(saleJTable.getEmployee()),
+                            comm);
+		    sale.setSaleID(saleJTable.getSaleid());
+		    
+                    if (check != true) {
+                        return;
+                    }
+		    try {
+			// update
+			SaleHelper.update(sale);
+			// re-search
+                        // set search keywords
+                        Product product = new Product(txtSalesSearchProductName.getText());
+                        Customer customer = new Customer(null);
+                        Employee employee = new SalaryEmployee(txtSalesSearchLastName.getText());
+                        Sale condition = new Sale(product, customer, employee, null);
+                        // search
+                        saleJTable.buildTableInfoPanel(condition);
+		    } catch(SQLException exSql) {
+			Utils.logError(exSql);
+			JOptionPane.showMessageDialog(null, "Update failed!");
+		    }
+		} catch(IllegalArgumentException exIae){
+                    Utils.logError(exIae);
+		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }
+	}
+    }//end EditSalesButtonHandler
+
+    /**
+     * Handler for delete button on Sales tab.
+     */
+    private class DeleteSalesButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            // if not selected, do nothing
+            if (!saleJTable.isSelected()) {
+                return;
+            }
+
+            if(Utils.showConfirmDialog("delete this sale")) {
+		//Submit to Database
+            
+                Sale sale = new Sale(null, null, null, null);
+                sale.setSaleID(saleJTable.getSaleid());
+
+                try {
+                    // delete
+                    SaleHelper.delete(sale);
+                    // re-search
+                    // set search keywords
+                    Product product = new Product(txtSalesSearchProductName.getText());
+                    Customer customer = new Customer(null);
+                    Employee employee = new SalaryEmployee(txtSalesSearchLastName.getText());
+                    Sale condition = new Sale(product, customer, employee, null);
+                    // search
+                    saleJTable.buildTableInfoPanel(condition);
+                } catch (SQLException sqlex) {
+                    // error
+                    Utils.logError(sqlex);
+                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                }
+            }
+	}
+    }//end DeleteSalesButtonHandler
+
+    /**
+     * Handler for search button on Sales tab.
+     */
+    private class SearchSalesButtonHandler implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+            
+            // set search keywords
+            Product product = new Product(txtSalesSearchProductName.getText());
+            Customer customer = new Customer(null);
+            Employee employee = new SalaryEmployee(txtSalesSearchLastName.getText());
+            Sale condition = new Sale(product, customer, employee, null);
+            // search
+            saleJTable.buildTableInfoPanel(condition);
+	}
+    }//end SearchSalesButtonHandler
+//add e n d takaaki
     
     private class CreateCustomerButtonHandler implements ActionListener {
 	@Override
@@ -1797,7 +2394,7 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 		}
             }
 	}
-    }//end mfactButton    
+    }//end createCustomerButtonHandler
 
     /**
      * Handler for edit button on Customer tab.
@@ -1900,14 +2497,14 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                 try {
                     // delete
                     CustomerHelper.delete(customer);
-                    // research
+                    // re-search
                     // set search keywords
                     Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
                             null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
                             0, 0, 0);
                     System.out.println("debug customer: " + condition);
                     // search
-                    customerJTable.buildTableInfoPanel(null);
+                    customerJTable.buildTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
                     // error
                     Utils.logError(sqlex);

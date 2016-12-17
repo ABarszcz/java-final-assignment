@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
@@ -140,6 +141,23 @@ public class Utils {
             return true;
         }
         
+        return false;
+    }
+    
+    /**
+     * It checks the string value is empty or not.
+     * @param string
+     * @return true if it is null or "", false otherwise
+     */
+    public static boolean isZero(BigDecimal value) {
+        if (value == null) {
+            return true;
+        }
+        System.out.println("value:" + value);
+        System.out.println("result of compareTo:" + BigDecimal.ZERO.compareTo(value));
+        if (BigDecimal.ZERO.compareTo(value) == 0) {
+            return true;
+        }
         return false;
     }
 }

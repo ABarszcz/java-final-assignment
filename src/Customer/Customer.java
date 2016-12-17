@@ -55,7 +55,7 @@ public class Customer {
 	    + "Customer Address: " + getAddress() + "\n"
 	    + "Customer Phone Number: " + getPhoneNum() + "\n"
 	    + "Customer EmployeeID: " + getCustomerID() + "\n"
-	    + "Customer Date Of Birth: " + getDateOfBirth().getTime();
+	    + "Customer Date Of Birth: " + (getDateOfBirth() == null? "": getDateOfBirth().getTime());
     }
     //</editor-fold>
 

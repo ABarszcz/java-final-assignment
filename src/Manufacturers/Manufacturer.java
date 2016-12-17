@@ -40,6 +40,10 @@ public class Manufacturer {
     //</editor-fold>
     
     //<editor-fold desc="Mutator Methods">
+    public void setMfactID(String mfactID) {
+	this.mfactID = mfactID;
+    }
+
     public void setName(String name) {
 	this.name = name;
     }

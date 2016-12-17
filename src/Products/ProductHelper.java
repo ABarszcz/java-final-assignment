@@ -3,15 +3,9 @@
  */
 package Products;
 
-import Products.*;
 import Common.ConnectionHelper;
 import Common.Utils;
-import Employees.CommissionSalesEmployee;
-import Employees.Employee;
-import Employees.HourlyEmployee;
-import Employees.SalaryEmployee;
 import java.sql.DatabaseMetaData;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,54 +21,6 @@ public class ProductHelper {
     public static final String TABLE_NAME = "PRODUCT";
 
     /**
-     * Create a new Employee.
-     * 
-     * @param employee
-     * @throws SQLException 
-     */
-    public static void create(Product employee) throws SQLException {
-
-        PreparedStatement stmt = null;
-        try {
-            // connect to db
-            ConnectionHelper.connect();
-            // create sql
-            String sql = "INSERT INTO " + TABLE_NAME + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            stmt = ConnectionHelper.prepareStatement(sql);
-            // bind parameters
-            int parameterIndex = 1;
-/*
-                private String name, productID;
-    private BigDecimal price, discount;
-    private Manufacturer mfact;
-            */
-            stmt.setString(parameterIndex++, employee.getProductID());
-            stmt.setString(parameterIndex++, employee.getName());
-            stmt.setBigDecimal(parameterIndex++, employee.getPrice());
-            stmt.setBigDecimal(parameterIndex++, employee.getDiscount());
-//            stmt.setString(parameterIndex++, employee.getManID);
-            // execute
-            stmt.execute();
-            // commit
-            ConnectionHelper.commit();
-        } catch (SQLException sqle) {
-            try {
-                Utils.logError(sqle);
-                // rollback
-                ConnectionHelper.rollback();
-            } catch (SQLException sqle2) {
-                Utils.logError(sqle2);
-            }
-        } finally {
-            try {
-                // disconnect
-                ConnectionHelper.disconnect();
-            } catch (SQLException sqle) {
-                Utils.logError(sqle);
-            }
-        }
-    }
-    /**
      * Search by keywords and return ResultSet.
      * 
      * @param condition
@@ -85,12 +31,6 @@ public class ProductHelper {
         System.out.println("debug" + product);
 
         // create sql
-/*
-SELECT PR.*, MA.MFACRNAME FROM PRODUCT PR
-JOIN MANUFACTURER MA
-ON   PR.MFACTNAME = MA.MFACRNAME
-WHERE PR.PRODUCTNAME LIKE '%pro%' AND MA.MFACRNAME LIKE '%%';
-        */
 //        StringBuilder sql = new StringBuilder();
 //        sql.append("SELECT PR.*, MA.MFACRNAME, MA.MFACRNAME FROM ");
 //        sql.append(TABLE_NAME);

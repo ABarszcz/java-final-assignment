@@ -1,0 +1,234 @@
+/*
+ * Assignment 2 - Part 2
+ */
+package GUI.JTable;
+
+import Common.Utils;
+import Employees.EmployeeHelper;
+import Employees.Employee;
+import Products.ProductHelper;
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ * It provides functions to build JTable for Employee tab.
+ * 
+ * @author Takaaki Goto
+ */
+public class EmployeeJTable extends CommonJTable {
+    /* consts */
+    private static final int IDX_HOURLY = 14;
+    private static final int IDX_SALARY = 15;
+    private static final int IDX_COMM = 16;
+
+    /**
+     * Constructor.
+     */
+    public EmployeeJTable() {
+        super();
+    }
+
+    /**
+     * Search by keywords.
+     * 
+     * @param condition
+     * @return ResultSet
+     * @throws SQLException 
+     */
+    @Override
+    protected ResultSet selectByKey(Object condition) throws SQLException {
+        return EmployeeHelper.selectByKey((Employee) condition);
+    }
+
+    /**
+     * @return table name
+     */
+    @Override
+    protected String getTableName() {
+        return EmployeeHelper.TABLE_NAME;
+    }
+
+    /**
+     * If set a key, it will be displayed as a combo box instead of text field on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, Integer> getComboBoxColMap() {
+        Map<Integer, Integer> keys = new HashMap<>();
+        return keys;
+    }
+
+    /**
+     * If set a key, it won't be displayed on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, Integer> getIgnoreColMap() {
+        Map<Integer, Integer> keys = new HashMap<>();
+        return keys;
+    }
+
+    /**
+     * If set a key, it will be displayed as a readonly text field on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, Integer> getReadOnlyColMap() {
+        Map<Integer, Integer> keys = new HashMap<>();
+        keys.put(0, 0);     // EMPID
+        return keys;
+    }
+
+    @Override
+    protected void displayDetailInformation() {
+        final int SELECTED_ROW = jTable.getSelectedRow();
+        final int LOOP_COUNT = jTable.getColumnCount() - 3;
+
+        for (int i = 0; i < LOOP_COUNT; i++) {
+            JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
+            jTextField.setText(jTable.getValueAt(SELECTED_ROW, i).toString());
+        }
+
+        BigDecimal hourly = null;
+        if (jTable.getValueAt(SELECTED_ROW, IDX_HOURLY) != null) {
+            hourly = new BigDecimal(jTable.getValueAt(SELECTED_ROW, IDX_HOURLY).toString());
+        }
+        BigDecimal salary = null;
+        if (jTable.getValueAt(SELECTED_ROW, IDX_SALARY) != null) {
+            salary = new BigDecimal(jTable.getValueAt(SELECTED_ROW, IDX_SALARY).toString());            
+        }
+        BigDecimal comm = null;
+        if (jTable.getValueAt(SELECTED_ROW, IDX_COMM) != null) {
+            comm = new BigDecimal(jTable.getValueAt(SELECTED_ROW, IDX_COMM).toString());
+        }
+
+        JTextField txtHourly = (JTextField) infoDetailPanel.getComponent((IDX_HOURLY * 2) + 1);
+        JTextField txtSalary = (JTextField) infoDetailPanel.getComponent((IDX_SALARY * 2) + 1);
+        JTextField txtComm = (JTextField) infoDetailPanel.getComponent((IDX_COMM * 2) + 1);
+
+        final int EMPLOYEE_TYPE = EmployeeHelper.getEmployeeType(hourly, salary, comm);
+        switch (EMPLOYEE_TYPE) {
+            case EmployeeHelper.EMP_TYPE_BASE_PLUS_COMMISSION:
+                // base plus commission
+                txtHourly.setEnabled(false);
+                txtSalary.setEnabled(true);
+                txtComm.setEnabled(true);
+                txtHourly.setText("");
+                txtSalary.setText(jTable.getValueAt(SELECTED_ROW, IDX_SALARY).toString());
+                txtComm.setText(jTable.getValueAt(SELECTED_ROW, IDX_COMM).toString());
+                break;
+            case EmployeeHelper.EMP_TYPE_SALARY:
+                // salary
+                txtHourly.setEnabled(false);
+                txtSalary.setEnabled(true);
+                txtComm.setEnabled(false);
+                txtHourly.setText("");
+                txtSalary.setText(jTable.getValueAt(SELECTED_ROW, IDX_SALARY).toString());
+                txtComm.setText("");
+                break;
+            case EmployeeHelper.EMP_TYPE_HOURLY:
+                // hourly
+                txtHourly.setEnabled(true);
+                txtSalary.setEnabled(false);
+                txtComm.setEnabled(false);
+                txtHourly.setText(jTable.getValueAt(SELECTED_ROW, IDX_HOURLY).toString());
+                txtSalary.setText("");
+                txtComm.setText("");
+                break;
+            case EmployeeHelper.EMP_TYPE_COMMISSION:
+                // commission
+                txtHourly.setEnabled(false);
+                txtSalary.setEnabled(false);
+                txtComm.setEnabled(true);
+                txtHourly.setText("");
+                txtSalary.setText("");
+                txtComm.setText(jTable.getValueAt(SELECTED_ROW, IDX_COMM).toString());
+                break;
+            default:
+                // error data
+                txtHourly.setEnabled(false);
+                txtSalary.setEnabled(false);
+                txtComm.setEnabled(false);
+                break;
+        }
+    }
+/* getters for MainGUI */
+    public String getEmpid() {
+        return super.getTextValue(0);
+    }
+
+    public String getFname() {
+        return super.getTextValue(1);
+    }
+
+    public String getLname() {
+        return super.getTextValue(2);
+    }
+
+    public String getGender() {
+        return super.getTextValue(3);
+    }
+
+    public String getAddress() {
+        return super.getTextValue(4);
+    }
+
+    public String getCity() {
+        return super.getTextValue(5);
+    }
+
+    public String getProvince() {
+        return super.getTextValue(6);
+    }
+
+    public String getPhonenum() {
+        return super.getTextValue(7);
+    }
+
+    public String getDept() {
+        return super.getTextValue(8);
+    }
+
+    public String getDeptposition() {
+        return super.getTextValue(9);
+    }
+
+    public String getSsn() {
+        return super.getTextValue(10);
+    }
+
+    public String getYearOfBirthdate() {
+        return super.getTextValue(11);
+    }
+
+    public String getMonthOfBirthdate() {
+        return super.getTextValue(12);
+    }
+
+    public String getDayOfBirthdate() {
+        return super.getTextValue(13);
+    }
+    
+    public String getHourly() {
+        return super.getTextValue(14);
+    }
+
+    public String getSalary() {
+        return super.getTextValue(15);
+    }
+
+    public String getComm() {
+        return super.getTextValue(16);
+    }
+}

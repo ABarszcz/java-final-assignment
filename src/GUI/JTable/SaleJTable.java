@@ -3,23 +3,23 @@
  */
 package GUI.JTable;
 
-import Products.Product;
-import Products.ProductHelper;
+import Sale.Sale;
+import Sale.SaleHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * It provides functions to build JTable for Product tab.
+ * It provides functions to build JTable for Customer tab.
  * 
  * @author Takaaki Goto
  */
-public class ProductJTable extends CommonJTable {
+public class SaleJTable extends CommonJTable {
     /**
      * Constructor.
      */
-    public ProductJTable() {
+    public SaleJTable() {
         super();
     }
 
@@ -32,7 +32,7 @@ public class ProductJTable extends CommonJTable {
      */
     @Override
     protected ResultSet selectByKey(Object condition) throws SQLException {
-        return ProductHelper.selectByKey((Product) condition);
+        return SaleHelper.selectByKey((Sale) condition);
     }
 
     /**
@@ -40,7 +40,7 @@ public class ProductJTable extends CommonJTable {
      */
     @Override
     protected String getTableName() {
-        return ProductHelper.TABLE_NAME;
+        return SaleHelper.TABLE_NAME;
     }
 
     /**
@@ -51,7 +51,6 @@ public class ProductJTable extends CommonJTable {
     @Override
     protected Map<Integer, Integer> getComboBoxColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
-        keys.put(4, 5);     // MANID & MANNAME
         return keys;
     }
 
@@ -74,34 +73,28 @@ public class ProductJTable extends CommonJTable {
     @Override
     protected Map<Integer, Integer> getReadOnlyColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
-        keys.put(0, 0);     // PRODID
-        keys.put(4, 4);     // MANID
-        keys.put(5, 5);     // MANNAME
+        keys.put(0, 0);     // SALEID
         return keys;
     }
 /* getters for MainGUI */
-    public String getProdid() {
+    public String getSaleid() {
         return super.getTextValue(0);
     }
 
-    public String getProductname() {
+    public String getProduct() {
         return super.getTextValue(1);
     }
 
-    public String getPrice() {
+    public String getCustomer() {
         return super.getTextValue(2);
     }
 
-    public String getDiscount() {
+    public String getEmployee() {
         return super.getTextValue(3);
     }
-//
-//    public String getManid() {
-//        return super.getTextValue(4);
-//    }
 
-    public String getManname() {
+    public String getComm() {
         return super.getTextValue(4);
     }
-
+    
 }
