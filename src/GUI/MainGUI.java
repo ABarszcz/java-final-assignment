@@ -379,6 +379,7 @@ public class MainGUI extends JFrame {
 	this.btnEmpSNew = new JButton("Create Salary Employee");
         btnEmpSNew.addActionListener(new CreateSalaryEmployeeButtonHandler());
 	this.btnEmpHNew = new JButton("Create Hourly Employee");
+        btnEmpHNew.addActionListener(new CreateHourlyEmployeeButtonHandler());
 	this.btnEmpCSNew = new JButton("Create Commission-Sales Employee");
 	this.btnEmpBPCNew = new JButton("Create Base Plus Commission Employee");
         this.btnEmployeeEdit = new JButton("Edit");
@@ -1178,11 +1179,11 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
 	}
     }
     
-        private class CreateSalaryEmployeeButtonHandler implements ActionListener {
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	    if(Utils.showConfirmDialog("create a new salary employee")) {
-		String fieldName = "";
+    private class CreateSalaryEmployeeButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(Utils.showConfirmDialog("create a new salary employee")) {
+                    String fieldName = "";
 		
 		//Validate Inputs
 		try{
@@ -1235,16 +1236,81 @@ System.out.println("Selected tab:" + pnlCustomer.getSelectedIndex());
                     ServiceClass.insertSalaryEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getSalaryAmount());
-                    
-                    
-                     
-                     
+                
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
 	    }           
 	}
     }//end employee
+
+
+    private class CreateHourlyEmployeeButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(Utils.showConfirmDialog("create a new salary employee")) {
+                    String fieldName = "";
+		
+                    System.out.println("here");
+		//Validate Inputs
+		try{
+                    fieldName = "First name";
+		    Validation.isValidName(txtEmpHFirstName.getText(), false);
+		    fieldName = "Last name";
+		    Validation.isValidName(txtEmpHLastName.getText(), false);
+		    //TODO get the sex
+		    //fieldName = "Sex";
+		    //Validation.isValid(pnlEmpHSex);
+		    fieldName = "Address";
+		    Validation.isValid(txtEmpHAddress.getText());
+		    fieldName = "City";
+		    Validation.isValid(txtEmpHCity.getText());
+                    fieldName = "Province";
+                    Validation.isValid(txtEmpHProvince.getText());
+                    fieldName = "Phone number";
+		    Validation.isValidPhoneNum(txtEmpHPhoneNum.getText());
+                    fieldName = "Department";
+                    Validation.isValid(txtEmpHDepartment.getText());
+                    fieldName = "Posistion";
+                    Validation.isValid(txtEmpHPosition.getText());
+                    fieldName = "S.I.N.";
+                    Validation.isValid(txtEmpHSocialSecurityNum.getText());
+		    fieldName = "Year of birth";
+		    Validation.isValid(txtEmpHYearOfBirth.getText());
+		    fieldName = "Month of birth";
+		    Validation.isValid(txtEmpHMonthOfBirth.getText());
+		    fieldName = "Day of birth";
+		    Validation.isValid(txtEmpHDayOfBirth.getText());
+                    //fieldName = "Salary Type";
+                    //Validation.isValid(txtEmpSSalaryType.getText());
+                    fieldName = "Wage";
+                    Validation.isValid(txtEmpHWage.getText());
+		    //Select Gender
+                    String gender = "Not Selected";
+                    if(rdoEmpHSexMale.isSelected()){
+                         gender = "Male";
+                    }
+                    if(rdoEmpHSexFemale.isSelected()){
+                         gender = "Female";
+                    }
+                     //Create object
+                    HourlyEmployee e1 = new HourlyEmployee(txtEmpHFirstName.getText(), txtEmpHLastName.getText(), gender, txtEmpHAddress.getText(), 
+                                                           txtEmpHCity.getText(), txtEmpHProvince.getText(), txtEmpHPhoneNum.getText(), txtEmpHDepartment.getText(), 
+                                                           txtEmpHPosition.getText(), txtEmpHSocialSecurityNum.getText(), parseInt(txtEmpHYearOfBirth.getText()),
+                                                           parseInt(txtEmpHMonthOfBirth.getText()), parseInt(txtEmpHDayOfBirth.getText()),parseDecimal(txtEmpHWage.getText())
+                                                                   );
+                    //Add to database
+                    ServiceClass.insertHourlyEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDateOfBirth().getTime().getDate(), e1.getWage());
+                
+		} catch(IllegalArgumentException error){
+                        System.out.print(error);
+		   // JOptionPane.showMessageDialog(null, fieldName + " is invalid");
+		}
+	    }           
+	}
+    }//end employee    
     
     private class CreateMfactButtonHandler implements ActionListener {
 	@Override

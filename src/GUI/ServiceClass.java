@@ -54,6 +54,25 @@ public class ServiceClass {
          }
     }//end insert
     
+    //Create new hourly employee in the database
+    public static void insertHourlyEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal wage){
+        try{
+         conn = DriverManager.getConnection(DB_URL, username, password);
+
+        String sql = "INSERT INTO `EMPLOYEE`(`FNAME`, `LNAME`, `GENDER`, `ADDRESS`, `CITY`, `PROVINCE`, `PHONENUM`, `DEPT`, `DEPTPOSITION`, `SSN`, `BIRTHYEAR`, `BIRTHMONTH`, `BIRTHDATE`, `HOURLY`) VALUES ('"+fName+"','"+lName+"','"+gender+"','"+address+"','"+city+"','"+province+"','"+phoneNum+"', '"+department+"', '"+position+"', '"+sin+"', "+year+", "+month+", "+date+", "+wage+")";
+        stat = conn.createStatement();            
+        stat.executeUpdate(sql);
+                
+        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + wage);
+        JOptionPane.showMessageDialog(null,"Salary Employee was added to database"); 
+
+         }catch(SQLException error){
+          //error   
+          System.out.println(error);
+          //print to file
+         }
+    }//end insert
+    
     //Create manufacture in database
     public static void insertMfact(String name, String address, String city, String province, String phoneNum){
         try{
