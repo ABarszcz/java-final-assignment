@@ -54,7 +54,7 @@ CREATE TABLE MANUFACTURER(
                       
 /*Product Table */
 CREATE TABLE PRODUCT(
-					PRODID VARCHAR(100) NOT NULL,
+					 PRODID VARCHAR(100) NOT NULL,
 					 PRODUCTNAME VARCHAR(100) NOT NULL,
                      PRICE DOUBLE NOT NULL,
                      DISCOUNT DOUBLE NOT NULL,
@@ -66,6 +66,7 @@ CREATE TABLE SALES(SALEID INT NOT NULL auto_increment,
 				   PRODUCT VARCHAR(100) NOT NULL,
                    CUSTOMER VARCHAR(100) NOT NULL,
                    EMPLOYEE VARCHAR(100) NOT NULL,
+                   COMM DECIMAL(10,2) NOT NULL,
                    PRIMARY KEY(SALEID)
 );
                         

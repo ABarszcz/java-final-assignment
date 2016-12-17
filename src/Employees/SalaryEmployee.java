@@ -12,6 +12,9 @@ public class SalaryEmployee extends Employee {
     private BigDecimal salaryAmount;
     //</editor-fold>
     
+    public SalaryEmployee(String firstName){
+        super(firstName);
+    }
     public SalaryEmployee(String firstName, String lastName, String sex,
 	    String province, String city, String address, String phoneNum,
 	    String department, String position, String socialSecurityNum,

@@ -19,6 +19,10 @@ public class Product {
     private static final BigDecimal MAX_DISCOUNT = new BigDecimal("1.00");
     //</editor-fold>
     
+    public Product(String name){
+        this.name = name;
+    }
+    
     public Product(String name, BigDecimal price, BigDecimal discount,
 	    Manufacturer mfact) {
         this.name = name;

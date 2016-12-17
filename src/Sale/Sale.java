@@ -5,6 +5,7 @@ import Customer.Customer;
 import Employees.CommissionSalesEmployee;
 import Employees.Employee;
 import Products.Product;
+import java.math.BigDecimal;
 import java.util.GregorianCalendar;
 
 /**
@@ -17,14 +18,16 @@ public class Sale {
     private Product product;
     private Customer customer;
     private Employee employee;
+    private BigDecimal comm;
     private GregorianCalendar dateOfSale;
     //</editor-fold>
     
-    public Sale(Product product, Customer customer, Employee employee) {
+    public Sale(Product product, Customer customer, Employee employee, BigDecimal comm) {
 	this.salesID = Utils.generateSaleID();
 	this.product = product;
 	this.customer = customer;
 	this.employee = employee;
+        this.comm = comm;
 	this.dateOfSale = new GregorianCalendar(); //initializes to today
 	/*
 	if(employee.getClass().toString().equals("Employees.CommissionSalesEmployee")) {
@@ -41,6 +44,7 @@ public class Sale {
     public Product getProduct() { return product; }
     public Customer getCustomer() { return customer; }
     public Employee getEmployee() { return employee; }
+    public BigDecimal getComm() { return comm; }
     public GregorianCalendar getDateOfSale() { return dateOfSale; }
     @Override public String toString() {
 	return "Product Sold: " + getProduct().toString() + "\n"
