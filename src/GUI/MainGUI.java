@@ -1748,9 +1748,9 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                     //Create customer object
 		    Employee employee;
-                    final int EMPLOYEE_TYPE = EmployeeHelper.getEmployeeType(hourly, salary, comm);
+                    final int EMPLOYEE_TYPE = Utils.judgeEmployeeType(hourly, salary, comm);
                     switch (EMPLOYEE_TYPE) {
-                        case EmployeeHelper.EMP_TYPE_BASE_PLUS_COMMISSION:
+                        case Utils.EMP_TYPE_BASE_PLUS_COMMISSION:
                             fieldName = "Salary Amount";
                             Validation.isValid(salary);
                             fieldName = "Commission";
@@ -1765,7 +1765,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                     Integer.parseInt(employeeJTable.getDayOfBirthdate()),
                                     comm, salary);
                             break;
-                        case EmployeeHelper.EMP_TYPE_COMMISSION:
+                        case Utils.EMP_TYPE_COMMISSION:
                             fieldName = "Commission";
                             Validation.isValid(comm);
 
@@ -1778,7 +1778,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                     Integer.parseInt(employeeJTable.getDayOfBirthdate()),
                                     comm);
                             break;
-                        case EmployeeHelper.EMP_TYPE_HOURLY:
+                        case Utils.EMP_TYPE_HOURLY:
                             fieldName = "Wage";
                             Validation.isValid(hourly);
 
@@ -1791,7 +1791,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                     Integer.parseInt(employeeJTable.getDayOfBirthdate()),
                                     hourly);
                             break;
-                        case EmployeeHelper.EMP_TYPE_SALARY:
+                        case Utils.EMP_TYPE_SALARY:
                             fieldName = "Salary Amount";
                             Validation.isValid(salary);
 
@@ -1825,7 +1825,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    try {
 			System.out.println("debug employee: " + employee);
 			// update
-			EmployeeHelper.update(employee);
+			SQLServiceClass.update(employee);
 			// research
 			// set search keywords
                         Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
@@ -1865,7 +1865,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                 try {
                     // delete
-                    EmployeeHelper.delete(employee);
+                    SQLServiceClass.delete(employee);
                     // re-search
                     // set search keywords
                     Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
@@ -1977,7 +1977,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    try {
 			System.out.println("debug manufacturer: " + sale);
 			// update
-			ManufacturerHelper.update(sale);
+			SQLServiceClass.update(sale);
 			// re-search
                         // set search keywords
                         Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
@@ -2016,7 +2016,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                 try {
                     // delete
-                    ManufacturerHelper.delete(manufacturer);
+                    SQLServiceClass.delete(manufacturer);
                     // re-search
                     // set search keywords
                     Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
@@ -2123,7 +2123,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                 }
                 try {
                     // update
-                    ProductHelper.update(product);
+                    SQLServiceClass.update(product);
                     // re-search
                     // set search keywords
                     Manufacturer conditionMfact = null;
@@ -2163,7 +2163,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                 try {
                     // delete
-                    ProductHelper.delete(product);
+                    SQLServiceClass.delete(product);
                     // re-search
                     // set search keywords
                     Manufacturer conditionMfact = null;
@@ -2267,7 +2267,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     }
 		    try {
 			// update
-			SaleHelper.update(sale);
+			SQLServiceClass.update(sale);
 			// re-search
                         // set search keywords
                         Product product = new Product(txtSalesSearchProductName.getText());
@@ -2307,7 +2307,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                 try {
                     // delete
-                    SaleHelper.delete(sale);
+                    SQLServiceClass.delete(sale);
                     // re-search
                     // set search keywords
                     Product product = new Product(txtSalesSearchProductName.getText());
@@ -2453,7 +2453,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    try {
 			System.out.println("debug customer: " + customer);
 			// update
-			CustomerHelper.update(customer);
+			SQLServiceClass.update(customer);
 			// research
 			// set search keywords
 			Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
@@ -2498,7 +2498,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                 try {
                     // delete
-                    CustomerHelper.delete(customer);
+                    SQLServiceClass.delete(customer);
                     // re-search
                     // set search keywords
                     Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),

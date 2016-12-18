@@ -32,6 +32,17 @@ public class Utils {
     private static int productID = 0;
     private static int customerID = 0;
     private static int saleID = 0;
+    // Employee type
+    /** Employee type: none (illegal data) */
+    public static final int EMP_TYPE_NONE = 0;
+    /** Employee type: hourly */
+    public static final int EMP_TYPE_HOURLY = 3;
+    /** Employee type: base plus commission */
+    public static final int EMP_TYPE_BASE_PLUS_COMMISSION = 1;
+    /** Employee type: commission */
+    public static final int EMP_TYPE_COMMISSION = 2;
+    /** Employee type: salary */
+    public static final int EMP_TYPE_SALARY = 4;
     
     /*
      * Generate Employee ID number
@@ -162,5 +173,46 @@ public class Utils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Escape specific characters for SQL statement.
+     *
+     * @param value
+     * @param escape
+     * @return
+     */
+    public static String escape(String value, String escape) {
+        String result = value.replace("_", "_" + escape);
+        result = result.replace("%", "%" + escape);
+        result = result.replace(escape, escape + escape);
+        return result;
+    }
+
+    /**
+     * It returns the employee type.
+     *
+     * @param hourly
+     * @param salary
+     * @param comm
+     * @return
+     */
+    public static int judgeEmployeeType(BigDecimal hourly, BigDecimal salary, BigDecimal comm) {
+        if (hourly == null && salary != null && comm != null) {
+            // base plus commission
+            return EMP_TYPE_BASE_PLUS_COMMISSION;
+        } else if (hourly == null && salary != null && comm == null) {
+            // salary
+            return EMP_TYPE_SALARY;
+        } else if (hourly != null && salary == null && comm == null) {
+            // hourly
+            return EMP_TYPE_HOURLY;
+        } else if (hourly == null && salary == null && comm != null) {
+            // commission
+            return EMP_TYPE_COMMISSION;
+        } else {
+            // error data
+            return EMP_TYPE_NONE;
+        }
     }
 }

@@ -3,10 +3,9 @@
  */
 package GUI.JTable;
 
+import Common.SQLServiceClass;
 import Common.Utils;
-import Employees.EmployeeHelper;
 import Employees.Employee;
-import Products.ProductHelper;
 import java.awt.Component;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -47,8 +46,8 @@ public class EmployeeJTable extends CommonJTable {
      * @throws SQLException 
      */
     @Override
-    protected ResultSet selectByKey(Object condition) throws SQLException {
-        return EmployeeHelper.selectByKey((Employee) condition);
+    protected DefaultTableModel selectByKey(Object condition) throws SQLException {
+        return SQLServiceClass.selectByKey((Employee) condition);
     }
 
     /**
@@ -56,7 +55,7 @@ public class EmployeeJTable extends CommonJTable {
      */
     @Override
     protected String getTableName() {
-        return EmployeeHelper.TABLE_NAME;
+        return SQLServiceClass.TABLE_NAME_EMPLOYEE;
     }
 
     /**
@@ -145,9 +144,9 @@ public class EmployeeJTable extends CommonJTable {
         JTextField txtSalary = (JTextField) infoDetailPanel.getComponent((IDX_SALARY * 2) + 1);
         JTextField txtComm = (JTextField) infoDetailPanel.getComponent((IDX_COMM * 2) + 1);
 
-        final int EMPLOYEE_TYPE = EmployeeHelper.getEmployeeType(hourly, salary, comm);
+        final int EMPLOYEE_TYPE = Utils.judgeEmployeeType(hourly, salary, comm);
         switch (EMPLOYEE_TYPE) {
-            case EmployeeHelper.EMP_TYPE_BASE_PLUS_COMMISSION:
+            case Utils.EMP_TYPE_BASE_PLUS_COMMISSION:
                 // base plus commission
                 txtHourly.setEnabled(false);
                 txtSalary.setEnabled(true);
@@ -156,7 +155,7 @@ public class EmployeeJTable extends CommonJTable {
                 txtSalary.setText(jTable.getValueAt(SELECTED_ROW, IDX_SALARY).toString());
                 txtComm.setText(jTable.getValueAt(SELECTED_ROW, IDX_COMM).toString());
                 break;
-            case EmployeeHelper.EMP_TYPE_SALARY:
+            case Utils.EMP_TYPE_SALARY:
                 // salary
                 txtHourly.setEnabled(false);
                 txtSalary.setEnabled(true);
@@ -165,7 +164,7 @@ public class EmployeeJTable extends CommonJTable {
                 txtSalary.setText(jTable.getValueAt(SELECTED_ROW, IDX_SALARY).toString());
                 txtComm.setText("");
                 break;
-            case EmployeeHelper.EMP_TYPE_HOURLY:
+            case Utils.EMP_TYPE_HOURLY:
                 // hourly
                 txtHourly.setEnabled(true);
                 txtSalary.setEnabled(false);
@@ -174,7 +173,7 @@ public class EmployeeJTable extends CommonJTable {
                 txtSalary.setText("");
                 txtComm.setText("");
                 break;
-            case EmployeeHelper.EMP_TYPE_COMMISSION:
+            case Utils.EMP_TYPE_COMMISSION:
                 // commission
                 txtHourly.setEnabled(false);
                 txtSalary.setEnabled(false);

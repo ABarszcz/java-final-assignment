@@ -3,12 +3,13 @@
  */
 package GUI.JTable;
 
-import Customer.CustomerHelper;
+import Common.SQLServiceClass;
 import Customer.Customer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * It provides functions to build JTable for Customer tab.
@@ -31,8 +32,8 @@ public class CustomerJTable extends CommonJTable {
      * @throws SQLException 
      */
     @Override
-    protected ResultSet selectByKey(Object condition) throws SQLException {
-        return CustomerHelper.selectByKey((Customer) condition);
+    protected DefaultTableModel selectByKey(Object condition) throws SQLException {
+        return SQLServiceClass.selectByKey((Customer) condition);
     }
 
     /**
@@ -40,7 +41,7 @@ public class CustomerJTable extends CommonJTable {
      */
     @Override
     protected String getTableName() {
-        return CustomerHelper.TABLE_NAME;
+        return SQLServiceClass.TABLE_NAME_CUSTOMER;
     }
 
     /**

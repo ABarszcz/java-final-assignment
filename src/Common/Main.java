@@ -22,9 +22,15 @@ public class Main {
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
+        // initialize connecting information
+//        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
+//        final String DB_USER = "gc200321034";
+//        final String DB_PASS = "KqxeZ*gk";
         // TODO for testing
-        // initialize connection helper
-        new ConnectionHelper(ConnectionHelper.NAME, ConnectionHelper.DEFAULT_USER, ConnectionHelper.DEFAULT_PASS);
+        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200292749";
+        final String DB_USER = "gc200292749";
+        final String DB_PASS = "5KD5F^QT";
+        SQLServiceClass.setConnectingInfo(DB_URL, DB_USER, DB_PASS);
 	//new Login();
       // new LoginK();
         MainGUI gui = new MainGUI();

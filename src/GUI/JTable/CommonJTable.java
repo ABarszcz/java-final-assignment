@@ -3,7 +3,7 @@
  */
 package GUI.JTable;
 
-import Common.ConnectionHelper;
+import Common.SQLServiceClass;
 import Common.Utils;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -88,25 +88,26 @@ public abstract class CommonJTable extends JPanel {
         this.txtSelectedRow = new JTextField(15);
         this.txtSelectedRow.setEditable(false);
 
-        Statement stmt;
+//        Statement stmt;
         ResultSet rs = null;
         DefaultTableModel tbl = null;
         try {
-            // connect to db
-            ConnectionHelper.connect();
-            // create statement
-            stmt = ConnectionHelper.createStatement();
-            rs = this.selectByKey(key);
-            tbl = this.buildTBModel(rs);
+//            // connect to db
+//            SQLServiceClass.connect(false);
+//            // create statement
+//            stmt = SQLServiceClass.createStatement();
+//            rs = this.selectByKey(key);
+//            tbl = this.buildTBModel(rs);
+            tbl = this.selectByKey(key);
 
         } catch (SQLException sqlex) {
             Utils.logError(sqlex);
         } finally {
-            try {
-                ConnectionHelper.disconnect();
-            } catch (SQLException sqlex) {
-                // ignore disconnection error
-            }
+//            try {
+//                SQLServiceClass.disconnect();
+//            } catch (SQLException sqlex) {
+//                // ignore disconnection error
+//            }
         }
 
         // create a JTable
@@ -199,7 +200,7 @@ public abstract class CommonJTable extends JPanel {
         return !Utils.isEmpty(this.txtSelectedRow.getText());
     }
 
-    protected abstract ResultSet selectByKey(Object obj) throws SQLException;
+    protected abstract DefaultTableModel selectByKey(Object condition) throws SQLException;
     protected abstract String getTableName();
     protected abstract Map<Integer, Integer> getComboBoxColMap();
     protected abstract Map<Integer, Integer> getIgnoreColMap();
@@ -264,38 +265,6 @@ public abstract class CommonJTable extends JPanel {
 //            infoDetailPanel.add(jTextField);
 //        }
 //    }
-
-    /**
-     * It builds a table model.
-     * 
-     * @param result Result set
-     * @return table model
-     * @throws SQLException 
-     */
-    public DefaultTableModel buildTBModel(ResultSet result) throws SQLException {
-        ResultSetMetaData metaData = result.getMetaData();
-        
-        Vector<String> colNames = new Vector<String>();
-        
-        for (int column = 1; column <= metaData.getColumnCount(); column++) {
-//            colNames.add(metaData.getColumnName(column));
-            colNames.add(metaData.getColumnLabel(column));
-        }
-        
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        
-        while (result.next()) {
-            
-            Vector<Object> row = new Vector<Object>();
-            for (String colName : colNames) {
-                row.add(result.getObject(colName));
-            }
-            data.add(row);
-        }
-        System.out.println("colNames:[" + colNames + "]");
-        System.out.println("data:[" + data + "]");
-        return new DefaultTableModel(data, colNames);
-    }
 
     /**
      * Listener which is called when the table selection is changed.

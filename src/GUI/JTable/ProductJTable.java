@@ -3,12 +3,13 @@
  */
 package GUI.JTable;
 
+import Common.SQLServiceClass;
 import Products.Product;
-import Products.ProductHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * It provides functions to build JTable for Product tab.
@@ -31,8 +32,8 @@ public class ProductJTable extends CommonJTable {
      * @throws SQLException 
      */
     @Override
-    protected ResultSet selectByKey(Object condition) throws SQLException {
-        return ProductHelper.selectByKey((Product) condition);
+    protected DefaultTableModel selectByKey(Object condition) throws SQLException {
+        return SQLServiceClass.selectByKey((Product) condition);
     }
 
     /**
@@ -40,7 +41,7 @@ public class ProductJTable extends CommonJTable {
      */
     @Override
     protected String getTableName() {
-        return ProductHelper.TABLE_NAME;
+        return SQLServiceClass.TABLE_NAME_PRODUCT;
     }
 
     /**

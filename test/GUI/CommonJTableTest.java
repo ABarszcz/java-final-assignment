@@ -5,6 +5,7 @@ package GUI;
 
 import GUI.JTable.CommonJTable;
 import Common.ConnectionHelper;
+import Common.SQLServiceClass;
 import Customer.Customer;
 import GUI.JTable.CustomerJTable;
 import java.awt.BorderLayout;
@@ -58,12 +59,12 @@ public class CommonJTableTest extends JFrame {
         JLabel lblPassword = new JLabel("Password:");
         JLabel lblDatabaseName = new JLabel("Database Name:");
         JTextField txtUserName = new JTextField(10);
-        txtUserName.setText(ConnectionHelper.DEFAULT_USER);
+//        txtUserName.setText(SQLServiceClass.DEFAULT_USER);
         JPasswordField txtPassword = new JPasswordField(10);
-        txtPassword.setText(ConnectionHelper.DEFAULT_PASS);
+//        txtPassword.setText(SQLServiceClass.DEFAULT_PASS);
         JTextField txtDatabaseName = new JTextField(10);
         // set default values
-        txtDatabaseName.setText(ConnectionHelper.NAME);
+//        txtDatabaseName.setText(SQLServiceClass.DB_NAME);
 
         loginPanel.add(lblDatabaseName);
         loginPanel.add(txtDatabaseName);
@@ -88,12 +89,12 @@ public class CommonJTableTest extends JFrame {
 
             try {
                 String dbName = txtDatabaseName.getText();
-                String url = "jdbc:" +  ConnectionHelper.DBMS + "://" +  ConnectionHelper.HOST + ":" + ConnectionHelper.PORT + "/" + dbName;
+//                String url = "jdbc:" +  SQLServiceClass.DBMS + "://" +  SQLServiceClass.HOST + ":" + SQLServiceClass.PORT + "/" + dbName;
                 String user = txtUserName.getText();
                 String pass = new String(txtPassword.getPassword());
 
                 /** DEBUG */
-                System.out.println("URL:     " + url);
+//                System.out.println("URL:     " + url);
                 System.out.println("DB NAME: " + dbName);
                 System.out.println("USER:    " + user);
                 System.out.println("PASS:    " + pass);
@@ -101,7 +102,7 @@ public class CommonJTableTest extends JFrame {
                 // connect
 //                ConnectionHelper.initialize(dbName, user, pass);
 //                new ConnectionHelper(dbName, user, pass);
-                ConnectionHelper.connect();
+                SQLServiceClass.connect(false);
 
                 dbCredCheck = true;
             } catch(SQLException ex) {
