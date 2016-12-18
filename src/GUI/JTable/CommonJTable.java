@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -134,6 +135,7 @@ public abstract class CommonJTable extends JPanel {
         Map<Integer, Integer> ignores = this.getIgnoreColMap();
         Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
         Map<Integer, String[]> radioBtns = this.getRadioBtnColMap();
+        Map<Integer, Integer> cboBoxes = this.getComboBoxColMap();
         for (int i = 0; i < colcount; i++) {
             if (ignores.get(i) != null) {
                 continue;
@@ -150,6 +152,10 @@ public abstract class CommonJTable extends JPanel {
                     btnGrp.add(rdoBtn);
                 }
                 infoDetailPanel.add(pnlRdoBtn);
+            } else if (cboBoxes.get(i) != null) {
+                // combo box
+                JComboBox cboBox = new JComboBox();
+                infoDetailPanel.add(cboBox);
             } else {
                 // textField
                 JTextField jTextField = new JTextField();
@@ -241,6 +247,41 @@ public abstract class CommonJTable extends JPanel {
         return textValue;
     }
 
+    /**
+     * It returns the combo box.
+     * 
+     * @param index
+     * @return 
+     */
+    public JComboBox getCboBox(int index) {
+        JComboBox comboBox = null;
+        try {
+            comboBox = ((JComboBox) this.infoDetailPanel.getComponent((index * 2) + 1));
+        } catch (Exception e) {
+            comboBox = null;
+        }
+        return comboBox;
+    }
+
+    /**
+     * It returns the text value.
+     * 
+     * @param index
+     * @return 
+     */
+    public String getCboBoxValue(int index) {
+        String textValue = null;
+        try {
+            JComboBox cboBox = getCboBox(index);
+            if (cboBox.getSelectedIndex() != -1) {
+                textValue = cboBox.getSelectedItem().toString();
+            }
+        } catch (Exception e) {
+            textValue = null;
+        }
+        return textValue;
+    }
+
 //    /**
 //     * 
 //     * @param tbl 
@@ -292,6 +333,9 @@ public abstract class CommonJTable extends JPanel {
                     JRadioButton rdoBtn = (JRadioButton) jTextField.getComponent(j);
                     rdoBtn.setSelected(rdoBtn.getText().equals(value));
                 }
+            } else if (this.getComboBoxColMap().get(i) != null) {
+                JComboBox cbo = (JComboBox) infoDetailPanel.getComponent((i * 2) + 1);
+                cbo.setSelectedItem(value);
             } else {
                 JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
                 jTextField.setText(value);

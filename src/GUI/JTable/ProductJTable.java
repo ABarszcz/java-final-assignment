@@ -8,6 +8,7 @@ import Products.Product;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,6 +17,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Takaaki Goto
  */
 public class ProductJTable extends CommonJTable {
+
+    /** index Manufacturer name */
+    public static final int IDX_MAN_NAME = 4;
+
     /**
      * Constructor.
      */
@@ -51,7 +56,7 @@ public class ProductJTable extends CommonJTable {
     @Override
     protected Map<Integer, Integer> getComboBoxColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
-        keys.put(4, 5);     // MANID & MANNAME
+        keys.put(IDX_MAN_NAME, IDX_MAN_NAME);
         return keys;
     }
 
@@ -75,8 +80,8 @@ public class ProductJTable extends CommonJTable {
     protected Map<Integer, Integer> getReadOnlyColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
         keys.put(0, 0);     // PRODID
-        keys.put(4, 4);     // MANID
-        keys.put(5, 5);     // MANNAME
+//        keys.put(4, 4);     // MANID
+//        keys.put(5, 5);     // MANNAME
         return keys;
     }
 
@@ -112,8 +117,8 @@ public class ProductJTable extends CommonJTable {
 //        return super.getTextValue(4);
 //    }
 
-    public String getManname() {
-        return super.getTextValue(4);
+    public JComboBox getManname() {
+        return super.getCboBox(4);
     }
 
 }

@@ -755,7 +755,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                 case TAB_IDX_PRODUCT:
                     if (pnlProduct.getSelectedIndex() == TAB_IDX_PRODUCT_SEARCH) {
                         // search
-                        productJTable.buildTableInfoPanel(null);
+                        buildProductTableInfoPanel(null);
                     }
                     break;
 //add e n d takaaki
@@ -769,7 +769,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                 case TAB_IDX_SALE:
                     if (pnlSales.getSelectedIndex() == TAB_IDX_SALE_SEARCH) {
                         // search
-                        saleJTable.buildTableInfoPanel(null);
+                        buildSalesTableInfoPanel(null);
                     }
                     break;
 //add e n d takaaki
@@ -871,7 +871,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
         public void stateChanged(ChangeEvent e) {
             if (pnlProduct.getSelectedIndex() == 0) {
                 // search
-                productJTable.buildTableInfoPanel(null);
+                buildProductTableInfoPanel(null);
             }
         }
         
@@ -902,7 +902,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
         public void stateChanged(ChangeEvent e) {
             if (pnlSales.getSelectedIndex() == 0) {
                 // search
-                saleJTable.buildTableInfoPanel(null);
+                buildSalesTableInfoPanel(null);
             }
         }
         
@@ -2105,17 +2105,17 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
                     check = false;
                 }
-            //Submit to Database
+                if (check != true) {
+                    return;
+                }
+                //Submit to Database
                 Manufacturer mfact = null;
-                mfact = new Manufacturer(productJTable.getManname(), null, null, null, null);
+                mfact = new Manufacturer(productJTable.getManname().getSelectedItem().toString(), null, null, null, null);
                 Product product = new Product(productJTable.getProductname(),
                         new BigDecimal(productJTable.getPrice()), new BigDecimal(productJTable.getDiscount()), mfact);
 
                 product.setProductID(productJTable.getProdid());
             System.out.println("debug Product: " + product);
-                if (check != true) {
-                    return;
-                }
                 try {
                     // update
                     SQLServiceClass.update(product);
@@ -2128,7 +2128,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
                     System.out.println("debug Product: " + condition);
                     // search
-                    productJTable.buildTableInfoPanel(condition);
+                    buildProductTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
                     // error
                     sqlex.printStackTrace();    // TODO delete
@@ -2168,7 +2168,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
                     System.out.println("debug Product: " + condition);
                     // search
-                    productJTable.buildTableInfoPanel(condition);
+                    buildProductTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
                     // error
                     Utils.logError(sqlex);
@@ -2177,6 +2177,17 @@ System.out.println("Selected tab:" + selectedTabIndex);
             }
 	}
     }//end DeleteProductButtonHandler
+
+    /**
+     * Search product.
+     */
+    private void buildProductTableInfoPanel(Object condition) {
+        productJTable.buildTableInfoPanel(condition);
+        // state manufacturer name combo box
+        JComboBox cboManName = productJTable.getManname();
+        SQLServiceClass.mfactList(cboManName);
+        cboManName.setSelectedIndex(-1);
+    }
 
     /**
      * Handler for search button on Product tab.
@@ -2193,7 +2204,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
             Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
             System.out.println("debug Product: " + condition);
             // search
-            productJTable.buildTableInfoPanel(condition);
+            buildProductTableInfoPanel(condition);
 	}
     }//end SearchProductButtonHandler
 //add e n d takaaki
@@ -2243,23 +2254,25 @@ System.out.println("Selected tab:" + selectedTabIndex);
             if(Utils.showConfirmDialog("edit this sale")) {
 		String fieldName = "";
 		
-                boolean check = true;
                 try{
 		    //Validate Inputs
+                    fieldName = "Product";
+                    Validation.isValid(saleJTable.getProduct());
+                    fieldName = "Customer";
+                    Validation.isValid(saleJTable.getCustomer());
+                    fieldName = "Employee";
+                    Validation.isValid(saleJTable.getEmployee());
                     fieldName = "Commission";
                     BigDecimal comm = new BigDecimal(saleJTable.getComm());
                     Validation.isValid(comm);
-		    
+
 		    //Create sale object
-		    Sale sale = new Sale(new Product(saleJTable.getProduct()),
-                            new Customer(saleJTable.getCustomer()),
-                            new SalaryEmployee(saleJTable.getEmployee()),
+		    Sale sale = new Sale(new Product(saleJTable.getProduct().getSelectedItem().toString()),
+                            new Customer(saleJTable.getCustomer().getSelectedItem().toString()),
+                            new SalaryEmployee(saleJTable.getEmployee().getSelectedItem().toString()),
                             comm);
 		    sale.setSaleID(saleJTable.getSaleid());
 		    
-                    if (check != true) {
-                        return;
-                    }
 		    try {
 			// update
 			SQLServiceClass.update(sale);
@@ -2270,7 +2283,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                         Employee employee = new SalaryEmployee(txtSalesSearchLastName.getText());
                         Sale condition = new Sale(product, customer, employee, null);
                         // search
-                        saleJTable.buildTableInfoPanel(condition);
+                        buildSalesTableInfoPanel(condition);
 		    } catch(SQLException exSql) {
 			Utils.logError(exSql);
 			JOptionPane.showMessageDialog(null, "Update failed!");
@@ -2310,7 +2323,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Employee employee = new SalaryEmployee(txtSalesSearchLastName.getText());
                     Sale condition = new Sale(product, customer, employee, null);
                     // search
-                    saleJTable.buildTableInfoPanel(condition);
+                    buildSalesTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
                     // error
                     Utils.logError(sqlex);
@@ -2319,6 +2332,25 @@ System.out.println("Selected tab:" + selectedTabIndex);
             }
 	}
     }//end DeleteSalesButtonHandler
+
+    /**
+     * Search sales.
+     */
+    private void buildSalesTableInfoPanel(Object condition) {
+        saleJTable.buildTableInfoPanel(condition);
+        // state product combo boxs
+        JComboBox cbo = saleJTable.getProduct();
+        SQLServiceClass.productList(cbo);
+        cbo.setSelectedIndex(-1);
+        // state customer combo box
+        cbo = saleJTable.getCustomer();
+        SQLServiceClass.customerList(cbo);
+        cbo.setSelectedIndex(-1);
+        // state employee combo box
+        cbo = saleJTable.getEmployee();
+        SQLServiceClass.employeeList(cbo);
+        cbo.setSelectedIndex(-1);
+    }
 
     /**
      * Handler for search button on Sales tab.
@@ -2333,7 +2365,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
             Employee employee = new SalaryEmployee(txtSalesSearchLastName.getText());
             Sale condition = new Sale(product, customer, employee, null);
             // search
-            saleJTable.buildTableInfoPanel(condition);
+            buildSalesTableInfoPanel(condition);
 	}
     }//end SearchSalesButtonHandler
 //add e n d takaaki
