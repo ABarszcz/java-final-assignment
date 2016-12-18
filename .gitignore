@@ -48,3 +48,8 @@ Temporary Items
 *.class
 build/built-jar.properties
 dist/Assignment1.jar
+nbproject/private/private.properties
+nbproject/private/private.xml
+/nbproject/private/
+dist/lib/mysql-connector-java-5.1.40-bin.jar
+dist/README.TXT
