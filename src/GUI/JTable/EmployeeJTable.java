@@ -87,7 +87,6 @@ public class EmployeeJTable extends CommonJTable {
         return keys;
     }
 
-
     /**
      * If set a key, it will be displayed as a group of radio buttons on detail information.
      * 

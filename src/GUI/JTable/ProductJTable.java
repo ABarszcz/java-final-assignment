@@ -80,8 +80,6 @@ public class ProductJTable extends CommonJTable {
     protected Map<Integer, Integer> getReadOnlyColMap() {
         Map<Integer, Integer> keys = new HashMap<>();
         keys.put(0, 0);     // PRODID
-//        keys.put(4, 4);     // MANID
-//        keys.put(5, 5);     // MANNAME
         return keys;
     }
 
@@ -112,10 +110,6 @@ public class ProductJTable extends CommonJTable {
     public String getDiscount() {
         return super.getTextValue(3);
     }
-//
-//    public String getManid() {
-//        return super.getTextValue(4);
-//    }
 
     public JComboBox getManname() {
         return super.getCboBox(4);

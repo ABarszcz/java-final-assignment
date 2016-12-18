@@ -45,7 +45,6 @@ import static javax.xml.bind.DatatypeConverter.parseDecimal;
  * @author Noah Michael
  */
 public class MainGUI extends JFrame {
-//add start takaaki
     /* consts */
     private static final int TAB_IDX_EMPLOYEE = 0;
     private static final int TAB_IDX_MANUFACTURER = 1;
@@ -57,7 +56,7 @@ public class MainGUI extends JFrame {
     private static final int TAB_IDX_PRODUCT_SEARCH = 0;
     private static final int TAB_IDX_SALE_SEARCH = 0;
     private static final int TAB_IDX_CUSTOMER_SEARCH = 0;
-//add e n d takaaki
+
     //lists to hold objects
     ArrayList<Employee> empList = new ArrayList<Employee>();
     ArrayList<Manufacturer> mfactList = new ArrayList<Manufacturer>();
@@ -90,11 +89,7 @@ public class MainGUI extends JFrame {
 	    pnlEmpBPCSex, pnlEmpSearch, pnlEmpSearchNorth, pnlEmpSearchCenter, pnlEmpSearchSouth;
     private final JLabel lblEmpSearchLastName, lblEmpSearchDepartment;
     private final JTextField txtEmpSearchLastName, txtEmpSearchDepartment;
-//modify start takaaki
-//    private final JTextArea txaEmpResults;
-//    private final JScrollPane spEmpResults;
     private final EmployeeJTable employeeJTable;
-//modify e n d takaaki
     
     //text fields for Salary employee
     private final JTextField txtEmpSFirstName,
@@ -141,10 +136,7 @@ public class MainGUI extends JFrame {
     ButtonGroup grpEmpBPCSex;
     
     //create "create new" buttons
-//modify start takaaki
-//    private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew,btnEmployeeEdit, btnEmployeeDelete;
     private final JButton btnEmpSNew, btnEmpHNew, btnEmpCSNew, btnEmpBPCNew, btnEmployeeSearch, btnEmployeeEdit, btnEmployeeDelete;
-//modify e n d takaaki
     
     //</editor-fold>
     
@@ -157,16 +149,9 @@ public class MainGUI extends JFrame {
 	    txtMfactPhoneNum;
     private final JButton btnMfactNew;
     private final JLabel lblMfactSearch;
-//modify start takaaki
-//    private final JTextArea txaMfactResults;
-//    private final JScrollPane spMfactResults;
     private final ManufacturerJTable mfactJTable;
-//modify e n d takaaki
     
-//modify start takaaki
-//    private final JButton btnManufacturerEdit, btnManufacturerDelete;
     private final JButton btnManufacturerSearch, btnManufacturerEdit, btnManufacturerDelete;
-//modify e n d takaaki
     
     //</editor-fold>
     
@@ -181,16 +166,9 @@ public class MainGUI extends JFrame {
     private final JComboBox cboProductManufacturer;
     private final JButton btnProductNew;
     private final JLabel lblProductSearch, lblProductManuSearch;
-//modify start takaaki
-//    private final JTextArea txaProductResults;
-//    private final JScrollPane spProductResults;
     private final ProductJTable productJTable;
-//modify e n d takaaki
     
-//modify start takaaki
-//    private final JButton btnProductEdit, btnProductDelete;
     private final JButton btnProductSearch, btnProductEdit, btnProductDelete;
-//modify e n d takaaki
     
     //</editor-fold>
     
@@ -204,16 +182,9 @@ public class MainGUI extends JFrame {
     private final JComboBox cboSalesProductName, cboSalesCustomer, cboSalesEmployee;
     private final JButton btnSalesNew;
     private final JLabel lblSalesSearchLastName, lblSalesSearchProductName;
-//modify start takaaki
-//    private final JTextArea txaSalesResults;
-//    private final JScrollPane spSalesResults;
     private final SaleJTable saleJTable;
-//modify e n d takaaki
     
-//modify start takaaki
-//    private final JButton btnSalesEdit, btnSalesDelete;
     private final JButton btnSalesSearch, btnSalesEdit, btnSalesDelete;
-//modify e n d takaaki
     
     //</editor-fold>
     
@@ -228,8 +199,6 @@ public class MainGUI extends JFrame {
             txtCustomerAddress, txtCustomerYearOfBirth, txtCustomerMonthOfBirth, txtCustomerDayOfBirth;
     private final JButton btnCustomerNew;
     private final JLabel lblCustomerSearchLastName, lblCustomerSearchPhoneNumber;
-//    private final JTextArea txaCustomerResults;
-//    private final JScrollPane spCustomerResults;
     private final CustomerJTable customerJTable;
     
     //radio buttons and the radio button group for Salary employee
@@ -411,15 +380,11 @@ public class MainGUI extends JFrame {
 	this.txtEmpSearchLastName = new JTextField(15);
         this.lblEmpSearchDepartment = new JLabel("Search by Department");
 	this.txtEmpSearchDepartment = new JTextField(15);
-//modify start takaaki
-//	this.txaEmpResults = new JTextArea(15, 30);
-//	this.spEmpResults = new JScrollPane(txaEmpResults);
         this.employeeJTable = new EmployeeJTable();
 
         // add handler
         this.txtEmpSearchLastName.addActionListener(new SearchEmployeeButtonHandler());
         this.txtEmpSearchDepartment.addActionListener(new SearchEmployeeButtonHandler());
-//modify e n d takaaki
         
 	//initialize JButtons
 	this.btnEmpSNew = new JButton("Create Salary Employee");
@@ -431,14 +396,12 @@ public class MainGUI extends JFrame {
         btnEmpBPCNew.addActionListener(new CreateBasePlusCommissionEmployeeButtonHandler());
         this.btnEmployeeEdit = new JButton("Edit");
         this.btnEmployeeDelete = new JButton("Delete");
-//add start takaaki
         this.btnEmployeeSearch = new JButton("Search");
 
         // set handlers
         this.btnEmployeeEdit.addActionListener(new EditEmployeeButtonHandler());
         this.btnEmployeeDelete.addActionListener(new DeleteEmployeeButtonHandler());
         this.btnEmployeeSearch.addActionListener(new SearchEmployeeButtonHandler());
-//add e n d takaaki
 	//</editor-fold>
 	
 	//<editor-fold desc="Initialize Manufacturer Components">
@@ -468,26 +431,20 @@ public class MainGUI extends JFrame {
         this.btnMfactNew.addActionListener(new CreateMfactButtonHandler());
 	this.btnManufacturerEdit = new JButton("Edit");
         this.btnManufacturerDelete = new JButton("Delete");
-//add start takaaki
         this.btnManufacturerSearch = new JButton("Search");
 
         // set handlers
         this.btnManufacturerEdit.addActionListener(new EditManufacturerButtonHandler());
         this.btnManufacturerDelete.addActionListener(new DeleteManufacturerButtonHandler());
         this.btnManufacturerSearch.addActionListener(new SearchManufacturerButtonHandler());
-//add e n d takaaki
         
 	//initialize search components
 	this.lblMfactSearch = new JLabel("Search by Manufacturer's Name");
 	this.txtMfactSearch = new JTextField(15);
-//modify start takaaki
-//	this.txaMfactResults = new JTextArea(15, 30);
-//	this.spMfactResults = new JScrollPane(txaMfactResults);
         this.mfactJTable = new ManufacturerJTable();
 
         // add handler
         this.txtMfactSearch.addActionListener(new SearchManufacturerButtonHandler());
-//modify e n d takaaki
 	//</editor-fold>
 	
 	//<editor-fold desc="Initialize Product Components">
@@ -514,14 +471,12 @@ public class MainGUI extends JFrame {
 	this.btnProductNew = new JButton("Create Product");
 	this.btnProductEdit = new JButton("Edit");
 	this.btnProductDelete = new JButton("Delete");
-//add start takaaki
         this.btnProductSearch = new JButton("Search");
 
         // set handlers
         this.btnProductEdit.addActionListener(new EditProductButtonHandler());
         this.btnProductDelete.addActionListener(new DeleteProductButtonHandler());
         this.btnProductSearch.addActionListener(new SearchProductButtonHandler());
-//add e n d takaaki
 	
 	//initialize JComboBox
 	this.cboProductManufacturer = new JComboBox();
@@ -531,15 +486,11 @@ public class MainGUI extends JFrame {
 	this.txtProductSearch = new JTextField(15);
         this.lblProductManuSearch = new JLabel("Search Product by Manufacturer's Name");
 	this.txtProductManuSearch = new JTextField(15);
-//modify start takaaki
-//        this.txaProductResults = new JTextArea(15, 30);
-//	this.spProductResults = new JScrollPane(txaProductResults);
         this.productJTable = new ProductJTable();
 
         // add handler
         this.txtProductSearch.addActionListener(new SearchProductButtonHandler());
         this.txtProductManuSearch.addActionListener(new SearchProductButtonHandler());
-//modify e n d takaaki
         
         //<editor-fold desc="Initialize Sales Components">
 	
@@ -570,29 +521,23 @@ public class MainGUI extends JFrame {
 	this.btnSalesNew = new JButton("Create Sales");
         this.btnSalesEdit = new JButton("Edit");
         this.btnSalesDelete = new JButton("Delete");
-//add start takaaki
         this.btnSalesSearch = new JButton("Search");
 
         // set handlers
         this.btnSalesEdit.addActionListener(new EditSalesButtonHandler());
         this.btnSalesDelete.addActionListener(new DeleteSalesButtonHandler());
         this.btnSalesSearch.addActionListener(new SearchSalesButtonHandler());
-//add e n d takaaki
 		
 	//initialize Search components
 	this.lblSalesSearchLastName = new JLabel("Search Sales by Employee's Name");
 	this.txtSalesSearchLastName = new JTextField(15);
         this.lblSalesSearchProductName = new JLabel("Search Sales by Product Name");
 	this.txtSalesSearchProductName = new JTextField(15);
-//modify start takaaki
-//	this.txaSalesResults = new JTextArea(15, 30);
-//	this.spSalesResults = new JScrollPane(txaSalesResults);       
         this.saleJTable = new SaleJTable();
 
         // add handler
         this.txtSalesSearchLastName.addActionListener(new SearchSalesButtonHandler());
         this.txtSalesSearchProductName.addActionListener(new SearchSalesButtonHandler());
-//modify e n d takaaki
         //</editor-fold>
         
         //<editor-fold desc="Initialize Customer Components">
@@ -640,15 +585,11 @@ public class MainGUI extends JFrame {
 	this.txtCustomerSearchLastName = new JTextField(15);
         this.lblCustomerSearchPhoneNumber = new JLabel("Search Customer's by Phone Number");
 	this.txtCustomerSearchPhoneNumber = new JTextField(15);
-//	this.txaCustomerResults = new JTextArea(15, 30);
-//	this.spCustomerResults = new JScrollPane(txaCustomerResults);
         this.customerJTable = new CustomerJTable();
         
-// add start takaaki
-        // add handler
         this.txtCustomerSearchLastName.addActionListener(new SearchCustomerButtonHandler());
         this.txtCustomerSearchPhoneNumber.addActionListener(new SearchCustomerButtonHandler());
-// add e n d takaaki
+
         //create radio buttons and the radio button group for Customer
 	this.rdoCustomerSexMale = new JRadioButton("Male");
 	this.rdoCustomerSexFemale = new JRadioButton("Female");
@@ -733,11 +674,10 @@ public class MainGUI extends JFrame {
         @Override
         public void stateChanged(ChangeEvent e) {
             // update manufacturer id combo box
-System.out.println("Tab is changed");
+            Utils.debug("Tab is changed");
             int selectedTabIndex = pnlTabbedPane.getSelectedIndex();
-System.out.println("Selected tab:" + selectedTabIndex);
+            Utils.debug("Selected tab:" + selectedTabIndex);
             switch (selectedTabIndex) {
-//add start takaaki
                 case TAB_IDX_EMPLOYEE:
                     if (pnlEmp.getSelectedIndex() == TAB_IDX_EMPLOYEE_SEARCH) {
                         // search
@@ -750,29 +690,24 @@ System.out.println("Selected tab:" + selectedTabIndex);
                         mfactJTable.buildTableInfoPanel(null);
                     }
                     break;
-//add e n d takaaki
-//add start takaaki
                 case TAB_IDX_PRODUCT:
                     if (pnlProduct.getSelectedIndex() == TAB_IDX_PRODUCT_SEARCH) {
                         // search
                         buildProductTableInfoPanel(null);
                     }
                     break;
-//add e n d takaaki
                 case TAB_IDX_CUSTOMER:
                     if (pnlCustomer.getSelectedIndex() == TAB_IDX_CUSTOMER_SEARCH) {
                         // search
                         customerJTable.buildTableInfoPanel(null);
                     }
                     break;
-//add start takaaki
                 case TAB_IDX_SALE:
                     if (pnlSales.getSelectedIndex() == TAB_IDX_SALE_SEARCH) {
                         // search
                         buildSalesTableInfoPanel(null);
                     }
                     break;
-//add e n d takaaki
                 default:
                     break;
             }
@@ -794,14 +729,11 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlEmp.addTab("New Hourly", pnlEmpH);
 	pnlEmp.addTab("New Commission-Sales", pnlEmpCS);
 	pnlEmp.addTab("New Base Plus Commission", pnlEmpBPC);
-//add start takaaki
 
         // set handler
         pnlEmp.addChangeListener(new EmployeeTabChangeListener());
-//add e n d takaaki
     }
 
-//add start takaaki
     /**
      * That is called when employee tab is clicked.
      */
@@ -816,7 +748,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
         }
         
     }
-//add e n d takaaki
     
     private void createManufacturerTabbedPane() {
 	createManufacturerSearchTab();
@@ -825,13 +756,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	//add the tabs
 	pnlMfact.addTab("Search", pnlMfactSearch);
 	pnlMfact.addTab("New Manufacturer", pnlMfactNew);
-//add start takaaki
 
         // set handler
         pnlMfact.addChangeListener(new ManufacturerTabChangeListener());
-//add e n d takaaki
     }
-//add start takaaki
     /**
      * That is called when manufacturer tab is clicked.
      */
@@ -846,7 +774,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
         }
         
     }
-//add e n d takaaki
     
     private void createProductTabbedPane() {
 	createProductSearchTab();
@@ -855,13 +782,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	//add the tabs
 	pnlProduct.addTab("Search", pnlProductSearch);
 	pnlProduct.addTab("New Product", pnlProductNew);
-//add start takaaki
 
         // set handler
         pnlProduct.addChangeListener(new ProductTabChangeListener());
-//add e n d takaaki
     }
-//add
     /**
      * That is called when product tab is clicked.
      */
@@ -876,7 +800,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
         }
         
     }
-// end
     
     private void createSalesTabbedPane() {
 	createSalesSearchTab();
@@ -885,14 +808,11 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	//add the tabs
 	pnlSales.addTab("Search", pnlSalesSearch);
 	pnlSales.addTab("New Sales", pnlSalesNew);
-//add start takaaki
 
         // set handler
         pnlSales.addChangeListener(new SaleTabChangeListener());
-//add e n d takaaki
     }
 
-//add start takaaki
     /**
      * That is called when sales tab is clicked.
      */
@@ -907,7 +827,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
         }
         
     }
-//add e n d takaaki
     
     private void createCustomerTabbedPane() {
 	createCustomerSearchTab();
@@ -944,17 +863,12 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlEmpSearchNorth.setLayout(new FlowLayout());
 	pnlEmpSearchNorth.add(lblEmpSearchLastName);
 	pnlEmpSearchNorth.add(txtEmpSearchLastName);
-//add start takaaki
         pnlEmpSearchNorth.add(btnEmployeeSearch);
-//add e n d takaaki
         pnlEmpSearchCenter.add(lblEmpSearchDepartment);
      	pnlEmpSearchCenter.add(txtEmpSearchDepartment);
 	
 	//design the center panel
-//modify start takaaki
-//	pnlEmpSearchCenter.add(spEmpResults);
         pnlEmpSearchCenter.add(this.employeeJTable);
-//modify e n d takaaki
         
 	pnlEmpSearch.add(pnlEmpSearchNorth, BorderLayout.NORTH);
 	pnlEmpSearch.add(pnlEmpSearchCenter, BorderLayout.CENTER);  
@@ -1173,15 +1087,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlMfactSearchNorth.setLayout(new FlowLayout());
 	pnlMfactSearchNorth.add(lblMfactSearch);
 	pnlMfactSearchNorth.add(txtMfactSearch);
-//add start takaaki
         pnlMfactSearchNorth.add(btnManufacturerSearch);
-//add e n d takaaki
 	
 	//design the center panel
-//modify start takaaki
-//	pnlMfactSearchCenter.add(spMfactResults);
         pnlMfactSearchCenter.add(this.mfactJTable);
-//modify e n d takaaki
 	
 	pnlMfactSearch.add(pnlMfactSearchNorth, BorderLayout.NORTH);
 	pnlMfactSearch.add(pnlMfactSearchCenter, BorderLayout.CENTER);
@@ -1232,17 +1141,12 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlProductSearchNorth.setLayout(new FlowLayout());
 	pnlProductSearchNorth.add(lblProductSearch);
 	pnlProductSearchNorth.add(txtProductSearch);
-//add start takaaki
         pnlProductSearchNorth.add(btnProductSearch);
-//add e n d takaaki
         pnlProductSearchCenter.add(lblProductManuSearch);
 	pnlProductSearchCenter.add(txtProductManuSearch);
 	
 	//design the center panel
-//modify start takaaki
-//        pnlProductSearchCenter.add(spProductResults);
         pnlProductSearchCenter.add(this.productJTable);
-//modify e n d takaaki
 	
 	pnlProductSearch.add(pnlProductSearchNorth, BorderLayout.NORTH);
 	pnlProductSearch.add(pnlProductSearchCenter, BorderLayout.CENTER);
@@ -1271,7 +1175,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlProductFieldGrid.add(cboProductManufacturer);
         
         //add cbo Items
-       SQLServiceClass.mfactList(cboProductManufacturer);   
+        SQLServiceClass.mfactList(cboProductManufacturer);   
 	
 	//create and add the center panel
 	pnlProductCenter.setLayout(new BorderLayout());
@@ -1293,17 +1197,12 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlSalesSearchNorth.setLayout(new FlowLayout());
 	pnlSalesSearchNorth.add(lblSalesSearchLastName);
 	pnlSalesSearchNorth.add(txtSalesSearchLastName);
-//add start takaaki
         pnlSalesSearchNorth.add(btnSalesSearch);
-//add e n d takaaki
         pnlSalesSearchCenter.add(lblSalesSearchProductName);
 	pnlSalesSearchCenter.add(txtSalesSearchProductName);
         	
 	//design the center panel
-//modify start takaaki
-//	pnlSalesSearchCenter.add(spSalesResults);
         pnlSalesSearchCenter.add(this.saleJTable);
-//modify e n d takaaki
 	
 	pnlSalesSearch.add(pnlSalesSearchNorth, BorderLayout.NORTH);
 	pnlSalesSearch.add(pnlSalesSearchCenter, BorderLayout.CENTER);
@@ -1356,7 +1255,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlCustomerSearchCenter.add(txtCustomerSearchPhoneNumber);
         	
 	//design the center panel
-//	pnlCustomerSearchCenter.add(spCustomerResults);
 	pnlCustomerSearchCenter.add(this.customerJTable);
 	
 	pnlCustomerSearch.add(pnlCustomerSearchNorth, BorderLayout.NORTH);
@@ -1699,7 +1597,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	}
     }//end employee
     
-//add start takaaki
     /**
      * Handler for edit button on Employee tab.
      */
@@ -1942,7 +1839,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	}
     }//end CreateMfactButtonHandler
     
-// add start takaaki
     /**
      * Handler for edit button on Manufacturers tab.
      */
@@ -2053,7 +1949,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
             mfactJTable.buildTableInfoPanel(condition);
 	}
     }//end SearchManufacturerButtonHandler
-//add e n d takaaki
 
     private class CreateProductButtonHandler implements ActionListener {
 	@Override
@@ -2091,7 +1986,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	}
     }//end CreateProductButtonHandler
     
-//add start takaaki
     /**
      * Handler for edit button on Product tab.
      */
@@ -2220,7 +2114,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
             buildProductTableInfoPanel(condition);
 	}
     }//end SearchProductButtonHandler
-//add e n d takaaki
 
     private class CreateSalesButtonHandler implements ActionListener {
 	@Override
@@ -2255,7 +2148,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	}
     }//end CreateSalesButtonHandler    
     
-// add start takaaki
     /**
      * Handler for edit button on Sales tab.
      */
@@ -2383,7 +2275,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
             buildSalesTableInfoPanel(condition);
 	}
     }//end SearchSalesButtonHandler
-//add e n d takaaki
     
     private class CreateCustomerButtonHandler implements ActionListener {
 	@Override
@@ -2449,13 +2340,11 @@ System.out.println("Selected tab:" + selectedTabIndex);
     private class EditCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//add start takaaki
             // if not selected, do nothing
             if (!customerJTable.isSelected()) {
                 return;
             }
 
-//add e n d takaaki
             if(Utils.showConfirmDialog("edit this customer")) {
 		String fieldName = "";
 		
@@ -2525,13 +2414,11 @@ System.out.println("Selected tab:" + selectedTabIndex);
     private class DeleteCustomerButtonHandler implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//add start takaaki
             // if not selected, do nothing
             if (!customerJTable.isSelected()) {
                 return;
             }
 
-//add e n d takaaki
             if(Utils.showConfirmDialog("delete this customer")) {
 		//Submit to Database
             

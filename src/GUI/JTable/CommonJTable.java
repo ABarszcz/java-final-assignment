@@ -80,31 +80,16 @@ public abstract class CommonJTable extends JPanel {
         this.infoDetailPanel = new JPanel();
 
         JLabel lblItemSelected = new JLabel("Selected Item:");
-//        JLabel lblBlank = new JLabel("");
         JLabel lblSelectedRow = new JLabel("Selected Row");
         this.txtSelectedRow = new JTextField(15);
         this.txtSelectedRow.setEditable(false);
 
-//        Statement stmt;
-        ResultSet rs = null;
         DefaultTableModel tbl = null;
         try {
-//            // connect to db
-//            SQLServiceClass.connect(false);
-//            // create statement
-//            stmt = SQLServiceClass.createStatement();
-//            rs = this.selectByKey(key);
-//            tbl = this.buildTBModel(rs);
             tbl = this.selectByKey(key);
 
         } catch (SQLException sqlex) {
             Utils.logError(sqlex);
-        } finally {
-//            try {
-//                SQLServiceClass.disconnect();
-//            } catch (SQLException sqlex) {
-//                // ignore disconnection error
-//            }
         }
 
         // create a JTable
@@ -117,7 +102,6 @@ public abstract class CommonJTable extends JPanel {
         jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         tablePanel.add(jscroll);
         tablePanel.setLayout(new GridLayout(1, 1));
-//        tablePanel.setSize(new Dimension(WIDTH_OF_THIS, 120));
         tablePanel.setBackground(Color.CYAN); // TODO
 
         // remove the old information
@@ -202,11 +186,41 @@ public abstract class CommonJTable extends JPanel {
         return !Utils.isEmpty(this.txtSelectedRow.getText());
     }
 
+    /**
+     * Search by keywords.
+     * 
+     * @param condition
+     * @return ResultSet
+     * @throws SQLException 
+     */
     protected abstract DefaultTableModel selectByKey(Object condition) throws SQLException;
+    /**
+     * @return table name
+     */
     protected abstract String getTableName();
+    /**
+     * If set a key, it will be displayed as a combo box instead of text field on detail information.
+     * 
+     * @return 
+     */
     protected abstract Map<Integer, Integer> getComboBoxColMap();
+    /**
+     * If set a key, it won't be displayed on detail information.
+     * 
+     * @return 
+     */
     protected abstract Map<Integer, Integer> getIgnoreColMap();
+    /**
+     * If set a key, it will be displayed as a readonly text field on detail information.
+     * 
+     * @return 
+     */
     protected abstract Map<Integer, Integer> getReadOnlyColMap();
+    /**
+     * If set a key, it will be displayed as a group of radio buttons on detail information.
+     * 
+     * @return 
+     */
     protected abstract Map<Integer, String[]> getRadioBtnColMap();
 
     /**
@@ -282,27 +296,6 @@ public abstract class CommonJTable extends JPanel {
         return textValue;
     }
 
-//    /**
-//     * 
-//     * @param tbl 
-//     */
-//    protected void setDetailInfo(DefaultTableModel tbl) {
-//        int colcount = tbl.getColumnCount();
-//        Map<Integer, Integer> ignores = this.getIgnoreColMap();
-//        Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
-//        for (int i = 0; i < colcount; i++) {
-//            if (ignores.get(i) != null) {
-//                continue;
-//            }
-//            infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
-//            JTextField jTextField = new JTextField();
-//            if (readOnlys.get(i) != null) {
-//                jTextField.setEditable(false);                
-//            }
-//            infoDetailPanel.add(jTextField);
-//        }
-//    }
-
     /**
      * Listener which is called when the table selection is changed.
      */
@@ -341,5 +334,5 @@ public abstract class CommonJTable extends JPanel {
                 jTextField.setText(value);
             }
         }
-    }
-}
+    } // end displayDetailInformation
+} // end class
