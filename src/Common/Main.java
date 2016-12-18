@@ -22,7 +22,10 @@ public class Main {
 	ArrayList<Employee> empList = new ArrayList<>();
 	ArrayList<Product> productList = new ArrayList<>();
 	
-        // initialize connecting information
+        // initialize
+        // debug on
+        Utils.setDebugMode(true);
+        // connecting information
 //        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
 //        final String DB_USER = "gc200321034";
 //        final String DB_PASS = "KqxeZ*gk";

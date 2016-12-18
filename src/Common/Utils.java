@@ -43,6 +43,18 @@ public class Utils {
     public static final int EMP_TYPE_COMMISSION = 2;
     /** Employee type: salary */
     public static final int EMP_TYPE_SALARY = 4;
+
+    /** debugMode true: debug mode on, false: off */
+    private static boolean _debugMode = false;
+
+    /**
+     * Set debug mode.
+     * 
+     * @param debugMode true: debug mode on, false: off 
+     */    
+    public static void setDebugMode(boolean debugMode) {
+        _debugMode = debugMode;
+    }
     
     /*
      * Generate Employee ID number
@@ -131,6 +143,31 @@ public class Utils {
 	} catch (Exception genEx) {
 	    System.out.println("Error logging exception\n" + genEx.toString());
 	}
+    }
+
+    /**
+     * Out debug message to the console, in stead of System.out.println().
+     * It is not output when debug mode is off.
+     * 
+     * @param message 
+     */
+    public static void debug(String message) {
+        if (_debugMode) {
+            System.out.println("[DEBUG] " + message);
+        }
+    }
+
+    /**
+     * Out debug message to the console.
+     * It is not output when debug mode is off.
+     * 
+     * @param label
+     * @param message 
+     */
+    public static void debug(String label, String message) {
+        if (_debugMode) {
+            debug(String.format("%s:[%s]", label, message));
+        }
     }
     
     //show a confirmation dialog
