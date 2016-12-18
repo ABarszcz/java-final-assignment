@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package Common;
 
 import static java.lang.Integer.parseInt;
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author muyx
  */
-public class ServiceClass {
+public class SQLServiceClass {
    
        
     private static final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
@@ -305,5 +305,5 @@ public class ServiceClass {
 
     }
     
-}//end ServiceClass
+}//end SQLServiceClass
 

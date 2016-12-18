@@ -1,5 +1,6 @@
 package GUI;
 
+import Common.SQLServiceClass;
 import Common.Utils;
 import Common.Validation;
 import Customer.*;
@@ -560,11 +561,11 @@ public class MainGUI extends JFrame {
 	        
 	//initialize        
 	this.cboSalesProductName = new JComboBox();
-        ServiceClass.productList(cboSalesProductName);
+        SQLServiceClass.productList(cboSalesProductName);
         this.cboSalesCustomer = new JComboBox();
-        ServiceClass.customerList(cboSalesCustomer);
+        SQLServiceClass.customerList(cboSalesCustomer);
 	this.cboSalesEmployee = new JComboBox();
-        ServiceClass.employeeList(cboSalesEmployee);
+        SQLServiceClass.employeeList(cboSalesEmployee);
 	this.txtSalesCommission = new JTextField(15);
 
 	
@@ -1273,7 +1274,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlProductFieldGrid.add(cboProductManufacturer);
         
         //add cbo Items
-       ServiceClass.mfactList(cboProductManufacturer);   
+       SQLServiceClass.mfactList(cboProductManufacturer);   
 	
 	//create and add the center panel
 	pnlProductCenter.setLayout(new BorderLayout());
@@ -1480,7 +1481,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                                            parseInt(txtEmpSMonthOfBirth.getText()), parseInt(txtEmpSDayOfBirth.getText()),parseDecimal(txtEmpSSalaryAmount.getText())
                                                                    );
                     //Add to database
-                    ServiceClass.insertSalaryEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                    SQLServiceClass.insertSalaryEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getSalaryAmount());
                 
@@ -1546,7 +1547,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                                            parseInt(txtEmpHMonthOfBirth.getText()), parseInt(txtEmpHDayOfBirth.getText()),parseDecimal(txtEmpHWage.getText())
                                                                    );
                     //Add to database
-                    ServiceClass.insertHourlyEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                    SQLServiceClass.insertHourlyEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getWage());
                 
@@ -1611,7 +1612,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                                            parseInt(txtEmpCSMonthOfBirth.getText()), parseInt(txtEmpCSDayOfBirth.getText()),parseDecimal(txtEmpCSCommissionRates.getText())
                                                                    );
                     //Add to database
-                    ServiceClass.insertCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                    SQLServiceClass.insertCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates());
                 
@@ -1679,7 +1680,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                                                            parseInt(txtEmpBPCMonthOfBirth.getText()), parseInt(txtEmpBPCDayOfBirth.getText()),parseDecimal(txtEmpBPCCommissionRates.getText()), parseDecimal(txtEmpBPCBaseSalary.getText()));
                                                                    
                     //Add to database
-                    ServiceClass.insertBasePlusCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
+                    SQLServiceClass.insertBasePlusCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates(), e1.getBaseSalary());
         
@@ -1924,7 +1925,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    mfactList.add(m1);
 		    
 		    //submit to the database
-		    ServiceClass.insertMfact(m1.getName(), m1.getAddress(), m1.getCity(), m1.getProvince(), m1.getPhoneNum());
+		    SQLServiceClass.insertMfact(m1.getName(), m1.getAddress(), m1.getCity(), m1.getProvince(), m1.getPhoneNum());
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		}
@@ -2067,7 +2068,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Product p1 = new Product(txtProductName.getText(), parseDecimal(txtProductPrice.getText()), parseDecimal(txtProductDiscount.getText()), m1);
 		    
 		    //Submit to Database
-		    ServiceClass.insertProduct(p1.getName(), p1.getPrice(), p1.getDiscount(), p1.getMfact().getName());
+		    SQLServiceClass.insertProduct(p1.getName(), p1.getPrice(), p1.getDiscount(), p1.getMfact().getName());
 		} catch(NumberFormatException exNfe) {
 		    Utils.logError(exNfe);
 		} catch(IllegalArgumentException error){
@@ -2222,7 +2223,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		       
                  
 		    //Submit to Database
-                    ServiceClass.insertSales(s1.getProduct().getName(),s1.getCustomer().getFirstName(),s1.getEmployee().getFirstName(), s1.getComm());
+                    SQLServiceClass.insertSales(s1.getProduct().getName(),s1.getCustomer().getFirstName(),s1.getEmployee().getFirstName(), s1.getComm());
 
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
@@ -2383,7 +2384,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    Customer c1 = new Customer(txtCustomerFirstName.getText(), txtCustomerLastName.getText(), gender, txtCustomerAddress.getText(), txtCustomerCity.getText(), txtCustomerProvince.getText(), txtCustomerPhone.getText(), parseInt(txtCustomerYearOfBirth.getText()), parseInt(txtCustomerMonthOfBirth.getText()), parseInt(txtCustomerDayOfBirth.getText()));
 		    
 		    //Submit to Database
-                    ServiceClass.insertCustomer(c1.getFirstName(), c1.getLastName(), c1.getSex(), c1.getAddress(), c1.getCity(), c1.getProvince(), c1.getPhoneNum(), c1.getYear(), c1.getDateOfBirth().getTime().getMonth(), c1.getDateOfBirth().getTime().getDate());
+                    SQLServiceClass.insertCustomer(c1.getFirstName(), c1.getLastName(), c1.getSex(), c1.getAddress(), c1.getCity(), c1.getProvince(), c1.getPhoneNum(), c1.getYear(), c1.getDateOfBirth().getTime().getMonth(), c1.getDateOfBirth().getTime().getDate());
 		    
 		    
 		    
