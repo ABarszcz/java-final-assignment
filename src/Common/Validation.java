@@ -6,6 +6,7 @@ package Common;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -191,6 +192,18 @@ public class Validation {
             }
         }
         if (!checkOK) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * Validates a combo box.
+     * 
+     * @param comboBox
+     * @exception IllegalArgumentException if there is no selected radio button in the group.
+     */
+    public static void isValid(JComboBox comboBox) {
+        if (comboBox.getSelectedItem() == null) {
             throw new IllegalArgumentException();
         }
     }
