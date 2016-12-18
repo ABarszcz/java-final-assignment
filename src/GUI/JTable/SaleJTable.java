@@ -5,7 +5,6 @@ package GUI.JTable;
 
 import Common.SQLServiceClass;
 import Sale.Sale;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;

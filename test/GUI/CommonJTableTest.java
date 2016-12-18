@@ -4,9 +4,7 @@
 package GUI;
 
 import GUI.JTable.CommonJTable;
-import Common.ConnectionHelper;
 import Common.SQLServiceClass;
-import Customer.Customer;
 import GUI.JTable.CustomerJTable;
 import java.awt.BorderLayout;
 import java.awt.Button;

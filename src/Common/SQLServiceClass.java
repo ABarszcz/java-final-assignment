@@ -12,7 +12,6 @@ import Employees.SalaryEmployee;
 import Manufacturers.Manufacturer;
 import Products.Product;
 import Sale.Sale;
-import static java.lang.Integer.parseInt;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
