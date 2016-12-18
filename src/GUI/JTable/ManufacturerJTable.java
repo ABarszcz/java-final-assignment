@@ -76,6 +76,18 @@ public class ManufacturerJTable extends CommonJTable {
         keys.put(0, 0);     // MFACTID
         return keys;
     }
+
+    /**
+     * If set a key, it will be displayed as a group of radio buttons on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, String[]> getRadioBtnColMap() {
+        Map<Integer, String[]> keys = new HashMap<>();
+        return keys;
+    }
+
 /* getters for MainGUI */
     public String getMfactid() {
         return super.getTextValue(0);

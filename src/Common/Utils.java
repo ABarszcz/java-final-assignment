@@ -146,7 +146,7 @@ public class Utils {
     
     /**
      * It checks the string value is empty or not.
-     * @param string
+     * @param value
      * @return true if it is null or "", false otherwise
      */
     public static boolean isZero(BigDecimal value) {

@@ -3,6 +3,8 @@ package Common;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -170,7 +172,26 @@ public class Validation {
 	if(!str.toLowerCase().equals("male") && !str.toLowerCase().equals("female"))
 	    throw new IllegalArgumentException();
     }
-    
+
+    /**
+     * Validates a group of radio button.
+     * 
+     * @param pnl JPanel which is included a group of radio buttons
+     * @exception IllegalArgumentException if there is no selected radio button in the group.
+     */
+    public static void isValidRdoBtns(JPanel pnl) {
+        boolean checkOK = false;
+        for (int i = 0; i < pnl.getComponentCount(); i++) {
+            if (((JRadioButton) pnl.getComponent(i)).isSelected()) {
+                checkOK = true;
+                break;
+            }
+        }
+        if (!checkOK) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     /*
      * Validates that a string is a phone number.
      * regex pattern acquired from:

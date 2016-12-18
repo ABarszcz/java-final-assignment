@@ -6,6 +6,7 @@ package GUI.JTable;
 import Common.ConnectionHelper;
 import Common.Utils;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.sql.ResultSet;
@@ -14,9 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -42,7 +44,12 @@ public abstract class CommonJTable extends JPanel {
 
     /* consts */
     /** number of columns per a row */
+    private static final int H_GAP_INFO_DETAILS = 3;
+    private static final int MAX_ROW = 9;
     private static final int COLS = 4;
+    private static final int WIDTH_OF_THIS = 600;
+    private static final int HEIGHT_OF_TABLE = 100;
+    private static final int HEIGHT_OF_INFO = 215;
 
     /**
      * Constructor.
@@ -76,7 +83,7 @@ public abstract class CommonJTable extends JPanel {
         this.infoDetailPanel = new JPanel();
 
         JLabel lblItemSelected = new JLabel("Selected Item:");
-        JLabel lblBlank = new JLabel("");
+//        JLabel lblBlank = new JLabel("");
         JLabel lblSelectedRow = new JLabel("Selected Row");
         this.txtSelectedRow = new JTextField(15);
         this.txtSelectedRow.setEditable(false);
@@ -107,10 +114,13 @@ public abstract class CommonJTable extends JPanel {
         this.jTable.getSelectionModel().addListSelectionListener(new TableListSelectionListener());
         this.jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane jscroll = new JScrollPane(this.jTable);
-        jscroll.setPreferredSize(new Dimension(500, 100));
+        jscroll.setPreferredSize(new Dimension(WIDTH_OF_THIS, HEIGHT_OF_TABLE));
         jscroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         jscroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         tablePanel.add(jscroll);
+        tablePanel.setLayout(new GridLayout(1, 1));
+//        tablePanel.setSize(new Dimension(WIDTH_OF_THIS, 120));
+        tablePanel.setBackground(Color.CYAN); // TODO
 
         // remove the old information
         super.removeAll();
@@ -126,16 +136,31 @@ public abstract class CommonJTable extends JPanel {
         int colcount = tbl.getColumnCount();
         Map<Integer, Integer> ignores = this.getIgnoreColMap();
         Map<Integer, Integer> readOnlys = this.getReadOnlyColMap();
+        Map<Integer, String[]> radioBtns = this.getRadioBtnColMap();
         for (int i = 0; i < colcount; i++) {
             if (ignores.get(i) != null) {
                 continue;
             }
             infoDetailPanel.add(new JLabel(tbl.getColumnName(i)));
-            JTextField jTextField = new JTextField();
-            if (readOnlys.get(i) != null) {
-                jTextField.setEditable(false);                
+            // set input field
+            if (radioBtns.get(i) != null) {
+                // radio button
+                JPanel pnlRdoBtn = new JPanel(new GridLayout(0, radioBtns.get(i).length));
+                ButtonGroup btnGrp = new ButtonGroup();
+                for (String value : radioBtns.get(i)) {
+                    JRadioButton rdoBtn = new JRadioButton(value);
+                    pnlRdoBtn.add(rdoBtn);
+                    btnGrp.add(rdoBtn);
+                }
+                infoDetailPanel.add(pnlRdoBtn);
+            } else {
+                // textField
+                JTextField jTextField = new JTextField();
+                if (readOnlys.get(i) != null) {
+                    jTextField.setEditable(false);
+                }
+                infoDetailPanel.add(jTextField);
             }
-            infoDetailPanel.add(jTextField);
         }
 
         int row;
@@ -146,33 +171,27 @@ public abstract class CommonJTable extends JPanel {
         row = row + (remainder == 0? 0 : 1);
         if (remainder != 0) {
             for (int i = remainder; i < COLS; i++) {
-                infoDetailPanel.add(lblBlank);
+                infoDetailPanel.add(new JLabel(""));
+            }
+        }
+        // add blank rows until the max row
+        for (int i = row; i < MAX_ROW; i++) {
+            for (int j = 0; j < COLS; j++) {
+                infoDetailPanel.add(new JLabel(""));
             }
         }
         infoPanel.setLayout(new BorderLayout());
-        infoHead.setLayout(new GridLayout(1, COLS, 3, 0));
-        infoDetailPanel.setLayout(new GridLayout(row, COLS, 3, 0));
+        infoHead.setLayout(new GridLayout(1, COLS, H_GAP_INFO_DETAILS, 0));
+        infoDetailPanel.setLayout(new GridLayout(MAX_ROW, COLS, H_GAP_INFO_DETAILS, 0));
 
         infoPanel.add(infoHead, BorderLayout.NORTH);
         infoPanel.add(infoDetailPanel, BorderLayout.CENTER);
+        infoPanel.setPreferredSize(new Dimension(WIDTH_OF_THIS, HEIGHT_OF_INFO));
 
         super.add(infoPanel, BorderLayout.SOUTH);
         super.validate();
     }
-//    protected ResultSet selectAll() throws SQLException {
-//        // connect to db
-//        ConnectionHelper.connect();
-//        // create statement
-//        Statement stmt = ConnectionHelper.createStatement();
-//        // select all
-//        // create sql
-//        String sql = "SELECT * FROM " + this.getTableName();
-//        System.out.println("TABLE:" + this.getTableName());
-//        // execute
-//        ResultSet rs = stmt.executeQuery(sql);
-//        ConnectionHelper.disconnect();
-//        return rs;
-//    }
+
     /**
      * @return true if a record is selected, false otherwise.
      */
@@ -185,11 +204,40 @@ public abstract class CommonJTable extends JPanel {
     protected abstract Map<Integer, Integer> getComboBoxColMap();
     protected abstract Map<Integer, Integer> getIgnoreColMap();
     protected abstract Map<Integer, Integer> getReadOnlyColMap();
+    protected abstract Map<Integer, String[]> getRadioBtnColMap();
 
+    /**
+     * It returns the text value.
+     * 
+     * @param index
+     * @return 
+     */
     public String getTextValue(int index) {
         String textValue = null;
         try {
             textValue = ((JTextField) this.infoDetailPanel.getComponent((index * 2) + 1)).getText();
+        } catch (Exception e) {
+            textValue = null;
+        }
+        return textValue;
+    }
+
+    /**
+     * It returns the text value.
+     * 
+     * @param index
+     * @return 
+     */
+    public String getRdoBtnValue(int index) {
+        String textValue = null;
+        try {
+            JPanel pnl = ((JPanel) this.infoDetailPanel.getComponent((index * 2) + 1));
+            for (int i = 0; i < pnl.getComponentCount(); i++) {
+                if (((JRadioButton) pnl.getComponent(i)).isSelected()) {
+                    textValue = ((JRadioButton) pnl.getComponent(i)).getText();
+                    break;
+                }
+            }
         } catch (Exception e) {
             textValue = null;
         }
@@ -272,8 +320,17 @@ public abstract class CommonJTable extends JPanel {
         final int SELECTED_ROW = jTable.getSelectedRow();
         final int LOOP_COUNT = jTable.getColumnCount();
         for (int i = 0; i < LOOP_COUNT; i++) {
-            JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
-            jTextField.setText(jTable.getValueAt(SELECTED_ROW, i).toString());
+            String value = jTable.getValueAt(SELECTED_ROW, i).toString();
+            if (this.getRadioBtnColMap().get(i) != null) {
+                JPanel jTextField = (JPanel) infoDetailPanel.getComponent((i * 2) + 1);
+                for (int j = 0; j < jTextField.getComponentCount(); j++) {
+                    JRadioButton rdoBtn = (JRadioButton) jTextField.getComponent(j);
+                    rdoBtn.setSelected(rdoBtn.getText().equals(value));
+                }
+            } else {
+                JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
+                jTextField.setText(value);
+            }
         }
     }
 }

@@ -76,6 +76,18 @@ public class CustomerJTable extends CommonJTable {
         keys.put(0, 0);     // CUSID
         return keys;
     }
+
+    /**
+     * If set a key, it will be displayed as a group of radio buttons on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, String[]> getRadioBtnColMap() {
+        Map<Integer, String[]> keys = new HashMap<>();
+        keys.put(3, new String[] {"Male", "Female"});
+        return keys;
+    }
 /* getters for MainGUI */
     public String getCusid() {
         return super.getTextValue(0);
@@ -90,7 +102,7 @@ public class CustomerJTable extends CommonJTable {
     }
 
     public String getGender() {
-        return super.getTextValue(3);
+        return super.getRdoBtnValue(3);
     }
 
     public String getAddress() {

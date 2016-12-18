@@ -79,6 +79,18 @@ public class ProductJTable extends CommonJTable {
         keys.put(5, 5);     // MANNAME
         return keys;
     }
+
+    /**
+     * If set a key, it will be displayed as a group of radio buttons on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, String[]> getRadioBtnColMap() {
+        Map<Integer, String[]> keys = new HashMap<>();
+        return keys;
+    }
+
 /* getters for MainGUI */
     public String getProdid() {
         return super.getTextValue(0);

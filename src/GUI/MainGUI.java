@@ -1439,8 +1439,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpSLastName.getText(), false);
 		    //TODO get the sex
-		    //fieldName = "Sex";
-		    //Validation.isValid(pnlEmpSSex);
+		    fieldName = "Sex";
+		    Validation.isValidRdoBtns(pnlEmpSSex);
 		    fieldName = "Address";
 		    Validation.isValid(txtEmpSAddress.getText());
 		    fieldName = "City";
@@ -1505,8 +1505,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpHLastName.getText(), false);
 		    //TODO get the sex
-		    //fieldName = "Sex";
-		    //Validation.isValid(pnlEmpHSex);
+		    fieldName = "Sex";
+		    Validation.isValidRdoBtns(pnlEmpHSex);
 		    fieldName = "Address";
 		    Validation.isValid(txtEmpHAddress.getText());
 		    fieldName = "City";
@@ -1572,8 +1572,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpCSLastName.getText(), false);
 		    //TODO get the sex
-		    //fieldName = "Sex";
-		    //Validation.isValid(pnlEmpCSSex);
+		    fieldName = "Sex";
+		    Validation.isValidRdoBtns(pnlEmpCSSex);
 		    fieldName = "Address";
 		    Validation.isValid(txtEmpCSAddress.getText());
 		    fieldName = "City";
@@ -1637,8 +1637,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpBPCLastName.getText(), false);
 		    //TODO get the sex
-		    //fieldName = "Sex";
-		    //Validation.isValid(pnlEmpBPCSex);
+		    fieldName = "Sex";
+		    Validation.isValidRdoBtns(pnlEmpBPCSex);
 		    fieldName = "Address";
 		    Validation.isValid(txtEmpBPCAddress.getText());
 		    fieldName = "City";
@@ -1713,8 +1713,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Validation.isValidName(employeeJTable.getFname(), false);
 		    fieldName = "Last name";
                     Validation.isValidName(employeeJTable.getLname(), false);
-		    //fieldName = "Gender";
-                    //Validation.isValid(employeeJTable.getGender());  // TODO validation for gender
+		    fieldName = "Gender";
+                    Validation.isValid(employeeJTable.getGender());
 		    fieldName = "Address";
                     Validation.isValid(employeeJTable.getAddress());
 		    fieldName = "City";
@@ -2099,7 +2099,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Validation.isValidName(productJTable.getProductname(), true);
 		    fieldName = "Price";
                     Validation.isValid(productJTable.getPrice());
-                    // Validation.isValid(customerJTable.getGender());  // TODO validation for gender
+                     Validation.isValid(customerJTable.getGender());
 		    fieldName = "Discount";
                     Validation.isValid(productJTable.getDiscount());
 //                    Validation.isValid(productJTable.getManid());
@@ -2354,8 +2354,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtCustomerLastName.getText(), false);
 		    //TODO get the sex
-		    //fieldName = "Sex";
-		    //Validation.isValid(pnlCustomerSex);
+		    fieldName = "Sex";
+		    Validation.isValidRdoBtns(pnlCustomerSex);
 		    fieldName = "Address";
 		    Validation.isValid(txtCustomerAddress.getText());
 		    fieldName = "City";
@@ -2419,8 +2419,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Validation.isValidName(customerJTable.getFname(), false);
 		    fieldName = "Last name";
                     Validation.isValidName(customerJTable.getLname(), false);
-		    //fieldName = "Gender";
-                    //Validation.isValid(customerJTable.getGender());  // TODO validation for gender
+		    fieldName = "Gender";
+                    Validation.isValid(customerJTable.getGender());
 		    fieldName = "Address";
                     Validation.isValid(customerJTable.getAddress());
 		    fieldName = "City";

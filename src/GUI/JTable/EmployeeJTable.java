@@ -7,12 +7,15 @@ import Common.Utils;
 import Employees.EmployeeHelper;
 import Employees.Employee;
 import Products.ProductHelper;
+import java.awt.Component;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -90,14 +93,39 @@ public class EmployeeJTable extends CommonJTable {
         return keys;
     }
 
+
+    /**
+     * If set a key, it will be displayed as a group of radio buttons on detail information.
+     * 
+     * @return 
+     */
+    @Override
+    protected Map<Integer, String[]> getRadioBtnColMap() {
+        Map<Integer, String[]> keys = new HashMap<>();
+        keys.put(3, new String[]{"Male", "Female"});
+        return keys;
+    }
+
+    /**
+     * If needed special settings to the detail information, override it. 
+     */
     @Override
     protected void displayDetailInformation() {
         final int SELECTED_ROW = jTable.getSelectedRow();
         final int LOOP_COUNT = jTable.getColumnCount() - 3;
 
         for (int i = 0; i < LOOP_COUNT; i++) {
-            JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
-            jTextField.setText(jTable.getValueAt(SELECTED_ROW, i).toString());
+            String value = jTable.getValueAt(SELECTED_ROW, i).toString();
+            if (this.getRadioBtnColMap().get(i) != null) {
+                JPanel jTextField = (JPanel) infoDetailPanel.getComponent((i * 2) + 1);
+                for (int j = 0; j < jTextField.getComponentCount(); j++) {
+                    JRadioButton rdoBtn = (JRadioButton) jTextField.getComponent(j);
+                    rdoBtn.setSelected(rdoBtn.getText().equals(value));
+                }
+            } else {
+                JTextField jTextField = (JTextField) infoDetailPanel.getComponent((i * 2) + 1);
+                jTextField.setText(value);
+            }
         }
 
         BigDecimal hourly = null;
@@ -177,7 +205,7 @@ public class EmployeeJTable extends CommonJTable {
     }
 
     public String getGender() {
-        return super.getTextValue(3);
+        return super.getRdoBtnValue(3);
     }
 
     public String getAddress() {
