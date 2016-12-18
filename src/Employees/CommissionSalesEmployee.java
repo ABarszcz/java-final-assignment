@@ -1,3 +1,6 @@
+/*
+ * Assignment 2 - Part 2
+ */
 package Employees;
 
 import java.math.BigDecimal;

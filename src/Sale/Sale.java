@@ -1,3 +1,6 @@
+/*
+ * Assignment 2 - Part 2
+ */
 package Sale;
 
 import Common.Utils;

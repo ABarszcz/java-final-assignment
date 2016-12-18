@@ -1,3 +1,6 @@
+/*
+ * Assignment 2 - Part 2
+ */
 package Common;
 
 import java.math.BigDecimal;
