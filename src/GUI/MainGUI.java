@@ -1378,6 +1378,7 @@ public class MainGUI extends JFrame {
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getSalaryAmount());
                 
 		} catch(IllegalArgumentException error){
+                    Utils.logError(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -1446,7 +1447,7 @@ public class MainGUI extends JFrame {
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getWage());
                 
 		} catch(IllegalArgumentException error){
-                        System.out.print(error);
+                    Utils.logError(error);
 		   // JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -1513,7 +1514,7 @@ public class MainGUI extends JFrame {
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates());
                 
 		} catch(IllegalArgumentException error){
-                        System.out.print(error);
+                    Utils.logError(error);
 		   // JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -1583,7 +1584,7 @@ public class MainGUI extends JFrame {
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates(), e1.getBaseSalary());
         
 		} catch(IllegalArgumentException error){
-                        System.out.print(error);
+                    Utils.logError(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -1826,6 +1827,7 @@ public class MainGUI extends JFrame {
 		    //submit to the database
 		    SQLServiceClass.insertMfact(m1.getName(), m1.getAddress(), m1.getCity(), m1.getProvince(), m1.getPhoneNum());
 		} catch(IllegalArgumentException error){
+                    Utils.logError(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -1973,6 +1975,7 @@ public class MainGUI extends JFrame {
 		} catch(NumberFormatException exNfe) {
 		    Utils.logError(exNfe);
 		} catch(IllegalArgumentException error){
+                    Utils.logError(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -2008,6 +2011,7 @@ public class MainGUI extends JFrame {
 		    fieldName = "Manufacturer";
                     Validation.isValid(productJTable.getManname());
 		}catch(IllegalArgumentException error){
+                    Utils.logError(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
                     check = false;
                 }
@@ -2135,6 +2139,7 @@ public class MainGUI extends JFrame {
                     SQLServiceClass.insertSales(s1.getProduct().getName(),s1.getCustomer().getFirstName(),s1.getEmployee().getFirstName(), s1.getComm());
 
                 }catch(IllegalArgumentException  error){
+                    Utils.logError(error);
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
                 } catch (SQLException sqlex) {
                     Utils.logError(sqlex);
@@ -2320,6 +2325,7 @@ public class MainGUI extends JFrame {
 		    //Submit to Database
 		    
 		}catch(IllegalArgumentException exIae){
+                    Utils.logError(exIae);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
 		} catch (SQLException sqlex) {
                     Utils.logError(sqlex);
