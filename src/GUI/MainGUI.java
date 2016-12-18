@@ -1324,7 +1324,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlSalesLabelGrid.add(new JLabel("Product Name"));
         pnlSalesLabelGrid.add(new JLabel("Customer"));
 	pnlSalesLabelGrid.add(new JLabel("Employee"));
-	pnlSalesLabelGrid.add(new JLabel("Commission On Sale"));
 
 	
 	//create the field sub-panel of the center panel
@@ -1332,7 +1331,6 @@ System.out.println("Selected tab:" + selectedTabIndex);
 	pnlSalesFieldGrid.add(cboSalesProductName);
         pnlSalesFieldGrid.add(cboSalesCustomer);
 	pnlSalesFieldGrid.add(cboSalesEmployee);
-	pnlSalesFieldGrid.add(txtSalesCommission);
 
 	
 	//create and add the center panel
