@@ -1332,7 +1332,6 @@ public class MainGUI extends JFrame {
 		    Validation.isValidName(txtEmpSFirstName.getText(), false);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpSLastName.getText(), false);
-		    //TODO get the sex
 		    fieldName = "Sex";
 		    Validation.isValidRdoBtns(pnlEmpSSex);
 		    fieldName = "Address";
@@ -1401,7 +1400,6 @@ public class MainGUI extends JFrame {
 		    Validation.isValidName(txtEmpHFirstName.getText(), false);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpHLastName.getText(), false);
-		    //TODO get the sex
 		    fieldName = "Sex";
 		    Validation.isValidRdoBtns(pnlEmpHSex);
 		    fieldName = "Address";
@@ -1471,7 +1469,6 @@ public class MainGUI extends JFrame {
 		    Validation.isValidName(txtEmpCSFirstName.getText(), false);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpCSLastName.getText(), false);
-		    //TODO get the sex
 		    fieldName = "Sex";
 		    Validation.isValidRdoBtns(pnlEmpCSSex);
 		    fieldName = "Address";
@@ -1539,7 +1536,6 @@ public class MainGUI extends JFrame {
 		    Validation.isValidName(txtEmpBPCFirstName.getText(), false);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtEmpBPCLastName.getText(), false);
-		    //TODO get the sex
 		    fieldName = "Sex";
 		    Validation.isValidRdoBtns(pnlEmpBPCSex);
 		    fieldName = "Address";
@@ -2288,7 +2284,6 @@ public class MainGUI extends JFrame {
 		    Validation.isValidName(txtCustomerFirstName.getText(), false);
 		    fieldName = "Last name";
 		    Validation.isValidName(txtCustomerLastName.getText(), false);
-		    //TODO get the sex
 		    fieldName = "Sex";
 		    Validation.isValidRdoBtns(pnlCustomerSex);
 		    fieldName = "Address";
