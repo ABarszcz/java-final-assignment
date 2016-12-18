@@ -637,6 +637,7 @@ public class MainGUI extends JFrame {
 	} else {
 	    canEdit = canDelete = false;
 	}
+	
 	btnEmployeeEdit.setVisible(canEdit);
 	btnEmployeeDelete.setVisible(canDelete);
 	btnManufacturerEdit.setVisible(canEdit);
@@ -1246,14 +1247,14 @@ public class MainGUI extends JFrame {
 	pnlSalesLabelGrid.add(new JLabel("Product Name"));
         pnlSalesLabelGrid.add(new JLabel("Customer"));
 	pnlSalesLabelGrid.add(new JLabel("Employee"));
-
+	pnlSalesLabelGrid.add(new JLabel("Commission"));
 	
 	//create the field sub-panel of the center panel
 	pnlSalesFieldGrid.setLayout(new GridLayout(13,1));
 	pnlSalesFieldGrid.add(cboSalesProductName);
         pnlSalesFieldGrid.add(cboSalesCustomer);
 	pnlSalesFieldGrid.add(cboSalesEmployee);
-
+	pnlSalesFieldGrid.add(txtSalesCommission);
 	
 	//create and add the center panel
 	pnlSalesCenter.setLayout(new BorderLayout());
