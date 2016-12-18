@@ -133,8 +133,8 @@ public class Utils {
 	    sw.close();
 
 	    //create the directory
-	    File errorDir = new File("C:/Errors/");
-	    File errorFile = new File(errorDir, "errors.txt");
+	    File errorDir = new File("C:/JavaApp/Error/");
+	    File errorFile = new File(errorDir, "errorlog.txt");
 
 	    //if the file doesn't exist
 	    if(!errorFile.exists()) {
@@ -146,7 +146,7 @@ public class Utils {
 	    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(errorFile, true)));
 
 	    //append the info
-	    out.append(new GregorianCalendar().getTime() + "\n"); //current date/time
+	    out.append("Date: " + new GregorianCalendar().getTime() + "\n"); //current date/time
 	    out.append(error + "\n"); //error
 	    out.append("=====================================================================================\n\n"); //bottom separator
 
