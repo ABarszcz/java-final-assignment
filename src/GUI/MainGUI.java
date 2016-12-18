@@ -26,6 +26,7 @@ import static java.lang.Integer.parseInt;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -1372,6 +1373,7 @@ public class MainGUI extends JFrame {
                                                            txtEmpSPosition.getText(), txtEmpSSocialSecurityNum.getText(), parseInt(txtEmpSYearOfBirth.getText()),
                                                            parseInt(txtEmpSMonthOfBirth.getText()), parseInt(txtEmpSDayOfBirth.getText()),parseDecimal(txtEmpSSalaryAmount.getText())
                                                                    );
+		    empList.add(e1);
                     //Add to database
                     SQLServiceClass.insertSalaryEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
@@ -1441,6 +1443,8 @@ public class MainGUI extends JFrame {
                                                            txtEmpHPosition.getText(), txtEmpHSocialSecurityNum.getText(), parseInt(txtEmpHYearOfBirth.getText()),
                                                            parseInt(txtEmpHMonthOfBirth.getText()), parseInt(txtEmpHDayOfBirth.getText()),parseDecimal(txtEmpHWage.getText())
                                                                    );
+		    empList.add(e1);
+		    
                     //Add to database
                     SQLServiceClass.insertHourlyEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
@@ -1508,6 +1512,8 @@ public class MainGUI extends JFrame {
                                                            txtEmpCSPosition.getText(), txtEmpCSSocialSecurityNum.getText(), parseInt(txtEmpCSYearOfBirth.getText()),
                                                            parseInt(txtEmpCSMonthOfBirth.getText()), parseInt(txtEmpCSDayOfBirth.getText()),parseDecimal(txtEmpCSCommissionRates.getText())
                                                                    );
+		    empList.add(e1);
+		    
                     //Add to database
                     SQLServiceClass.insertCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
@@ -1577,7 +1583,9 @@ public class MainGUI extends JFrame {
                                                            txtEmpBPCCity.getText(), txtEmpBPCProvince.getText(), txtEmpBPCPhoneNum.getText(), txtEmpBPCDepartment.getText(), 
                                                            txtEmpBPCPosition.getText(), txtEmpBPCSocialSecurityNum.getText(), parseInt(txtEmpBPCYearOfBirth.getText()),
                                                            parseInt(txtEmpBPCMonthOfBirth.getText()), parseInt(txtEmpBPCDayOfBirth.getText()),parseDecimal(txtEmpBPCCommissionRates.getText()), parseDecimal(txtEmpBPCBaseSalary.getText()));
-                                                                   
+                                                           
+		    empList.add(e1);
+		    
                     //Add to database
                     SQLServiceClass.insertBasePlusCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
                                                       e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
@@ -1726,6 +1734,16 @@ public class MainGUI extends JFrame {
 			Utils.debug("debug employee: " + employee);
 			// update
 			SQLServiceClass.update(employee);
+			
+			//remove the old employee from the list
+			Iterator<Employee> it = empList.iterator();
+			while(it.hasNext()) {
+			    Employee emp = it.next();
+			    if(emp.getEmployeeID().equals(employee.getEmployeeID()))
+				it.remove();
+			}
+			empList.add(employee);
+			
 			// research
 			// set search keywords
                         Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
@@ -1766,6 +1784,15 @@ public class MainGUI extends JFrame {
                 try {
                     // delete
                     SQLServiceClass.delete(employee);
+		    
+		    //remove the old employee from the list
+		    Iterator<Employee> it = empList.iterator();
+		    while(it.hasNext()) {
+			Employee emp = it.next();
+			if(emp.getEmployeeID().equals(employee.getEmployeeID()))
+			    it.remove();
+		    }
+		    
                     // re-search
                     // set search keywords
                     Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
@@ -1818,10 +1845,11 @@ public class MainGUI extends JFrame {
 		    fieldName = "Phone number";
 		    Validation.isValidPhoneNum(txtMfactPhoneNum.getText());
 		    
+		    //create object
                     Manufacturer m1 = new Manufacturer(txtMfactName.getText(),
 			    txtMfactProvince.getText(), txtMfactCity.getText(),
 			    txtMfactAddress.getText(), txtMfactPhoneNum.getText());
-		    //create object
+		    
 		    mfactList.add(m1);
 		    
 		    //submit to the database
@@ -1850,8 +1878,6 @@ public class MainGUI extends JFrame {
 
             if(Utils.showConfirmDialog("edit this manufacturer")) {
 		String fieldName = "";
-		
-                boolean check = true;
                 try{
 		    //Validate Inputs
 		    fieldName = "Name";
@@ -1865,21 +1891,29 @@ public class MainGUI extends JFrame {
 		    fieldName = "Phone Number";
                     Validation.isValidPhoneNum(mfactJTable.getPhonenum());
 		    
-		    //Create sale object
-		    Manufacturer sale = new Manufacturer(mfactJTable.getMfactname(),
+		    //Create manufacturer object
+		    Manufacturer manufacturer = new Manufacturer(mfactJTable.getMfactname(),
                             mfactJTable.getProvince(),
                             mfactJTable.getCity(),
                             mfactJTable.getAddress(),
                             mfactJTable.getPhonenum());
-		    sale.setMfactID(mfactJTable.getMfactid());
+		    manufacturer.setMfactID(mfactJTable.getMfactid());
 		    
-                    if (check != true) {
-                        return;
-                    }
 		    try {
-			Utils.debug("debug manufacturer: " + sale);
+			Utils.debug("debug manufacturer: " + manufacturer);
 			// update
-			SQLServiceClass.update(sale);
+			SQLServiceClass.update(manufacturer);
+			
+			//update the list
+			Iterator<Manufacturer> it = mfactList.iterator();
+			while(it.hasNext()) {
+			    Manufacturer mfact = it.next();
+			    if(mfact.getMfactID().equals(manufacturer.getMfactID()))
+				it.remove();
+			}
+			//add the edited manufacturer back to the list
+			mfactList.add(manufacturer);
+			
 			// re-search
                         // set search keywords
                         Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
@@ -1919,6 +1953,15 @@ public class MainGUI extends JFrame {
                 try {
                     // delete
                     SQLServiceClass.delete(manufacturer);
+		    
+		    //update the list
+		    Iterator<Manufacturer> it = mfactList.iterator();
+		    while(it.hasNext()) {
+			Manufacturer mfact = it.next();
+			if(mfact.getMfactID().equals(manufacturer.getMfactID()))
+			    it.remove();
+		    }
+		    
                     // re-search
                     // set search keywords
                     Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
@@ -1970,6 +2013,8 @@ public class MainGUI extends JFrame {
                     //Create Product
                     Product p1 = new Product(txtProductName.getText(), parseDecimal(txtProductPrice.getText()), parseDecimal(txtProductDiscount.getText()), m1);
 		    
+		    productList.add(p1);
+		    
 		    //Submit to Database
 		    SQLServiceClass.insertProduct(p1.getName(), p1.getPrice(), p1.getDiscount(), p1.getMfact().getName());
 		} catch(NumberFormatException exNfe) {
@@ -1997,7 +2042,6 @@ public class MainGUI extends JFrame {
             }
 
             if(Utils.showConfirmDialog("edit this product")) {
-                boolean check = true;
                 String fieldName = "";
 		
 		//validate inputs
@@ -2013,10 +2057,6 @@ public class MainGUI extends JFrame {
 		}catch(IllegalArgumentException error){
                     Utils.logError(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-                    check = false;
-                }
-                if (check != true) {
-                    return;
                 }
                 //Submit to Database
                 Manufacturer mfact = null;
@@ -2025,10 +2065,20 @@ public class MainGUI extends JFrame {
                         new BigDecimal(productJTable.getPrice()), new BigDecimal(productJTable.getDiscount()), mfact);
 
                 product.setProductID(productJTable.getProdid());
-            Utils.debug("debug Product: " + product);
+		Utils.debug("debug Product: " + product);
                 try {
                     // update
                     SQLServiceClass.update(product);
+		    
+		    //remove from list
+		    Iterator<Product> it = productList.iterator();
+		    while(it.hasNext()) {
+			Product productTemp = it.next();
+			if(productTemp.getProductID().equals(product.getProductID()))
+			    it.remove();
+		    }
+		    productList.add(product);
+		    
                     // re-search
                     // set search keywords
                     Manufacturer conditionMfact = null;
@@ -2067,6 +2117,15 @@ public class MainGUI extends JFrame {
                 try {
                     // delete
                     SQLServiceClass.delete(product);
+		    
+		    //remove from list
+		    Iterator<Product> it = productList.iterator();
+		    while(it.hasNext()) {
+			Product productTemp = it.next();
+			if(productTemp.getProductID().equals(product.getProductID()))
+			    it.remove();
+		    }
+		    
                     // re-search
                     // set search keywords
                     Manufacturer conditionMfact = null;
@@ -2133,7 +2192,8 @@ public class MainGUI extends JFrame {
                     SalaryEmployee e1 = new SalaryEmployee(cboSalesEmployee.getSelectedItem().toString());
                     //Create sale
                     Sale s1 = new Sale(p1, c1, e1, parseDecimal(txtSalesCommission.getText()));
-		       
+		    
+		    saleList.add(s1);  
                  
 		    //Submit to Database
                     SQLServiceClass.insertSales(s1.getProduct().getName(),s1.getCustomer().getFirstName(),s1.getEmployee().getFirstName(), s1.getComm());
@@ -2185,6 +2245,17 @@ public class MainGUI extends JFrame {
 		    try {
 			// update
 			SQLServiceClass.update(sale);
+			
+			//remove from list
+			Iterator<Sale> it = saleList.iterator();
+			while(it.hasNext()) {
+			    Sale saleTemp = it.next();
+			    if(saleTemp.getSalesID().equals(sale.getSalesID()))
+				it.remove();
+			}
+			
+			saleList.add(sale);
+			
 			// re-search
                         // set search keywords
                         Product product = new Product(txtSalesSearchProductName.getText());
@@ -2225,6 +2296,15 @@ public class MainGUI extends JFrame {
                 try {
                     // delete
                     SQLServiceClass.delete(sale);
+		    
+		    //remove from list
+		    Iterator<Sale> it = saleList.iterator();
+		    while(it.hasNext()) {
+			Sale saleTemp = it.next();
+			if(saleTemp.getSalesID().equals(sale.getSalesID()))
+			    it.remove();
+		    }
+		    
                     // re-search
                     // set search keywords
                     Product product = new Product(txtSalesSearchProductName.getText());
@@ -2317,6 +2397,8 @@ public class MainGUI extends JFrame {
                     //create object
 		    Customer c1 = new Customer(txtCustomerFirstName.getText(), txtCustomerLastName.getText(), gender, txtCustomerAddress.getText(), txtCustomerCity.getText(), txtCustomerProvince.getText(), txtCustomerPhone.getText(), parseInt(txtCustomerYearOfBirth.getText()), parseInt(txtCustomerMonthOfBirth.getText()), parseInt(txtCustomerDayOfBirth.getText()));
 		    
+		    custList.add(c1);
+		    
 		    //Submit to Database
                     SQLServiceClass.insertCustomer(c1.getFirstName(), c1.getLastName(), c1.getSex(), c1.getAddress(), c1.getCity(), c1.getProvince(), c1.getPhoneNum(), c1.getYear(), c1.getDateOfBirth().getTime().getMonth(), c1.getDateOfBirth().getTime().getDate());
 		    
@@ -2389,6 +2471,17 @@ public class MainGUI extends JFrame {
 			Utils.debug("debug customer: " + customer);
 			// update
 			SQLServiceClass.update(customer);
+			
+			//remove from list
+			Iterator<Customer> it = custList.iterator();
+			while(it.hasNext()) {
+			    Customer custTemp = it.next();
+			    if(custTemp.getCustomerID().equals(customer.getCustomerID()))
+				it.remove();
+			}
+			
+			custList.add(customer);
+			
 			// research
 			// set search keywords
 			Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
@@ -2432,6 +2525,15 @@ public class MainGUI extends JFrame {
                 try {
                     // delete
                     SQLServiceClass.delete(customer);
+		    
+		    //remove from list
+		    Iterator<Customer> it = custList.iterator();
+		    while(it.hasNext()) {
+			Customer custTemp = it.next();
+			if(custTemp.getCustomerID().equals(customer.getCustomerID()))
+			    it.remove();
+		    }
+		    
                     // re-search
                     // set search keywords
                     Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),

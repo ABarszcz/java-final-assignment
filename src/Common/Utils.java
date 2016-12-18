@@ -19,6 +19,17 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
     
+    //determines if user is an admin
+    private static boolean isAdmin;
+    
+    public static boolean getIsAdmin() {
+	return isAdmin;
+    }
+    
+    public static void setIsAdmin(boolean isAdminNew) {
+	isAdmin = isAdminNew;
+    }
+    
 //add start takaaki
     /** action: edit */
     public static final String ACTION_CREATE = "Create";

@@ -3,46 +3,21 @@
  */
 package Common;
 
-import Employees.CommissionSalesEmployee;
-import Employees.Employee;
 import GUI.*;
-import Products.Product;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 
 /**
- * Driver class for the Lab
+ * Driver class for the assignment
  * @author Anthony
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
-	//initialize arraylists
-	ArrayList<Employee> empList = new ArrayList<>();
-	ArrayList<Product> productList = new ArrayList<>();
-	
-        // initialize
+    public static void main(String[] args) {
+	try {
         // debug on
         Utils.setDebugMode(true);
-        // connecting information
-//        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
-//        final String DB_USER = "gc200321034";
-//        final String DB_PASS = "KqxeZ*gk";
-        // TODO for testing
-        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200292749";
-        final String DB_USER = "gc200292749";
-        final String DB_PASS = "5KD5F^QT";
-        SQLServiceClass.setConnectingInfo(DB_URL, DB_USER, DB_PASS);
-	//new Login();
-      // new LoginK();
-        MainGUI gui = new MainGUI();
-        gui.setVisible(true);
-	
-        //create emp object for testing purposes
-	CommissionSalesEmployee emp = new CommissionSalesEmployee(
-	"name", "name", "male", "ontario", "city", "address", "phoneNum",
-	"department", "position", "ssn", 2000, 11, 25,
-		new BigDecimal("10"));
+	new Login();
+	} catch(Exception ioEx) {
+	    Utils.logError(ioEx);
+	}
     } //end of main
 } //end of class

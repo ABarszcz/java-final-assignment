@@ -3,13 +3,11 @@
  */
 package GUI;
 
+import Common.SQLServiceClass;
 import Common.Utils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
  
 /**
  * Creates the Graphical User Interface for the Login window.
@@ -17,6 +15,14 @@ import java.sql.Statement;
  */
 
 public class Login extends JFrame implements ActionListener {
+    //hard-coded login credentials (Takaaki)
+    final String DB_USER = "gc200292749";
+    final String DB_PASS = "5KD5F^QT";
+    //hard-coded login credentials (Kayla)
+    //final String DB_USER = "gc200321034";
+    //final String DB_PASS = "KqxeZ*gk";
+    
+    final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/" + DB_USER;
     
     // Submit button
     private final JButton btnSubmit;
@@ -28,25 +34,13 @@ public class Login extends JFrame implements ActionListener {
     
     // Constructor
     public Login() {
-        
-        //connection
-        final String DB_URL = "jdbc:mysql://sql.computerstudi.es:3306/gc200321034";
-        final String QRY = "SELECT * FROM gatheringInfo";
-        
-        //connection object
-         Connection conn = null;     
-        //statement object
-        Statement stat = null;     
-        //result set
-         ResultSet rs = null;
-     
         // Initializing the login components
         lblUsername = new JLabel("Username");
         txtUsername = new JTextField(15);
-        txtUsername.setText("gc200321034");
+        txtUsername.setText(DB_USER);
         lblPassword = new JLabel("Password");
         txtPassword = new JPasswordField(15);
-        txtUsername.setText("KqxeZ*gk");
+        txtPassword.setText(DB_PASS);
   
         // Initializing the submit button
         btnSubmit = new JButton("Submit");
@@ -85,12 +79,19 @@ public class Login extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         String value1=txtUsername.getText();
         String value2=txtPassword.getText();
-        if (value1.equals("test") && value2.equals("test")) {
-            MainGUI page = new MainGUI();
-            page.setVisible(true);
-            page.setLocationRelativeTo(null);
+	
+        if (value1.equals(DB_USER) && value2.equals(DB_PASS)) {
+	    //log in to the db
+	    SQLServiceClass.setConnectingInfo(DB_URL, DB_USER, DB_PASS);
+	    //this user is hard-coded as an admin
+	    Utils.setIsAdmin(true);
+	    //or you can test using them as not an admin
+	    //Utils.setIsAdmin(false);
+	    //load the main gui
+            new MainGUI();
+	    //set visible to false
 	    this.setVisible(false);
-        }
+        } //would do an elseif (other user/pass combination) then Utils.setIsAdmin(false)
         else {
             Utils.debug("Enter a valid username and password");
             JOptionPane.showMessageDialog(this,"Incorrect login or password",
@@ -98,7 +99,7 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 }
-
+/*
 class LoginForm {
     public static void main(String arg[])
     {
@@ -116,5 +117,6 @@ class LoginForm {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }       
     }
+
 }
- 
+*/
