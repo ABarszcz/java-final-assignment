@@ -2062,6 +2062,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    Validation.isValid(txtProductPrice.getText());
 		    fieldName = "Discount";
 		    Validation.isValid(txtProductDiscount.getText());
+		    fieldName = "Manufacturer";
+                    Validation.isValid(cboProductManufacturer);
                     
                     //Create manufacturer
                     Manufacturer m1= new Manufacturer(cboProductManufacturer.getSelectedItem().toString());
@@ -2101,10 +2103,9 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     Validation.isValidName(productJTable.getProductname(), true);
 		    fieldName = "Price";
                     Validation.isValid(productJTable.getPrice());
-                     Validation.isValid(customerJTable.getGender());
 		    fieldName = "Discount";
                     Validation.isValid(productJTable.getDiscount());
-//                    Validation.isValid(productJTable.getManid());
+		    fieldName = "Manufacturer";
                     Validation.isValid(productJTable.getManname());
 		}catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
