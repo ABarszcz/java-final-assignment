@@ -179,7 +179,7 @@ public class Utils {
      */
     public static void debug(String label, String message) {
         if (_debugMode) {
-            debug(String.format("%s:[%s]", label, message));
+            debug(String.format("%s: [%s]", label, message));
         }
     }
     

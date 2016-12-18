@@ -16,8 +16,8 @@ public class Main {
         // debug on
         Utils.setDebugMode(true);
 	new Login();
-	} catch(Exception ioEx) {
-	    Utils.logError(ioEx);
+	} catch(Exception ex) {
+	    Utils.logError(ex);
 	}
     } //end of main
 } //end of class

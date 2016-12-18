@@ -99,24 +99,3 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 }
-/*
-class LoginForm {
-    public static void main(String arg[])
-    {
-        try 
-        {
-            Login frame=new Login();
-            frame.setSize(400,100);
-            frame.setResizable(false);
-            frame.setVisible(true);
-            frame.setLocationRelativeTo(null);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }       
-    }
-
-}
-*/

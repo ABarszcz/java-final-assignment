@@ -618,11 +618,35 @@ public class MainGUI extends JFrame {
 	this.setSize(715,565);
         this.setResizable(false);
 	this.setLocationRelativeTo(null);
+	//show/hide elements if the user is/isn't an admin
+	this.configureForAdmins();
 	//create the view
 	this.setContentPane(this.createContentPane());
         // initial search
         this.employeeJTable.buildTableInfoPanel(null);
 	this.setVisible(true);
+    }
+    
+    //show/hide elements if the user is/isn't an admin
+    private void configureForAdmins() {
+	boolean canEdit, canDelete;
+	
+	//if they are an admin
+	if(Utils.getIsAdmin()) {
+	    canEdit = canDelete = true;
+	} else {
+	    canEdit = canDelete = false;
+	}
+	btnEmployeeEdit.setVisible(canEdit);
+	btnEmployeeDelete.setVisible(canDelete);
+	btnManufacturerEdit.setVisible(canEdit);
+	btnManufacturerDelete.setVisible(canDelete);
+	btnProductEdit.setVisible(canEdit);
+	btnProductDelete.setVisible(canDelete);
+	btnSalesEdit.setVisible(canEdit);
+	btnSalesDelete.setVisible(canDelete);
+	btnCustomerEdit.setVisible(canEdit);
+	btnCustomerDelete.setVisible(canDelete);
     }
 
     //creates the content pane of the interface
