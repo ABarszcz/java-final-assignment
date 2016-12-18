@@ -1639,12 +1639,12 @@ public class MainGUI extends JFrame {
                     fieldName = "Month of birth";
                     Validation.isValid(employeeJTable.getMonthOfBirthdate());
                     fieldName = "Day of birth";
-                    System.out.println("Debug:");
+                    Utils.debug("Debug:");
                     Validation.isValid(employeeJTable.getDayOfBirthdate());
-                    System.out.println("Debug day of birth:" + employeeJTable.getDayOfBirthdate());
-                    System.out.println("Debug getHourly:" + employeeJTable.getHourly());
-                    System.out.println("Debug getSalary:" + employeeJTable.getSalary());
-                    System.out.println("Debug getComm:" + employeeJTable.getComm());
+                    Utils.debug("Debug day of birth:" + employeeJTable.getDayOfBirthdate());
+                    Utils.debug("Debug getHourly:" + employeeJTable.getHourly());
+                    Utils.debug("Debug getSalary:" + employeeJTable.getSalary());
+                    Utils.debug("Debug getComm:" + employeeJTable.getComm());
                     BigDecimal hourly = (Utils.isEmpty(employeeJTable.getHourly()) ? null : new BigDecimal(employeeJTable.getHourly()));
                     BigDecimal salary = (Utils.isEmpty(employeeJTable.getSalary()) ? null : new BigDecimal(employeeJTable.getSalary()));
                     BigDecimal comm = (Utils.isEmpty(employeeJTable.getComm()) ? null : new BigDecimal(employeeJTable.getComm()));
@@ -1726,7 +1726,7 @@ public class MainGUI extends JFrame {
                         return;
                     }
 		    try {
-			System.out.println("debug employee: " + employee);
+			Utils.debug("debug employee: " + employee);
 			// update
 			SQLServiceClass.update(employee);
 			// research
@@ -1734,7 +1734,7 @@ public class MainGUI extends JFrame {
                         Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
                             null, null, null, null, null, txtEmpSearchDepartment.getText(),
                             null, null, 0, 0, 0, null);
-			System.out.println("debug employee: " + condition);
+			Utils.debug("debug employee: " + condition);
 			// search
 			employeeJTable.buildTableInfoPanel(condition);
 		    } catch (SQLException sqlex) {
@@ -1774,7 +1774,7 @@ public class MainGUI extends JFrame {
                     Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
                         null, null, null, null, null, txtEmpSearchDepartment.getText(),
                         null, null, 0, 0, 0, null);
-                    System.out.println("debug employee: " + condition);
+                    Utils.debug("debug employee: " + condition);
                     // search
                     employeeJTable.buildTableInfoPanel(null);
                 } catch (SQLException sqlex) {
@@ -1796,7 +1796,7 @@ public class MainGUI extends JFrame {
             Employee condition  = new SalaryEmployee(null, txtEmpSearchLastName.getText(),
                 null, null, null, null, null, txtEmpSearchDepartment.getText(),
                 null, null, 0, 0, 0, null);
-            System.out.println("debug employee: " + condition);
+            Utils.debug("debug employee: " + condition);
             // search
             employeeJTable.buildTableInfoPanel(condition);
 	}
@@ -1879,13 +1879,13 @@ public class MainGUI extends JFrame {
                         return;
                     }
 		    try {
-			System.out.println("debug manufacturer: " + sale);
+			Utils.debug("debug manufacturer: " + sale);
 			// update
 			SQLServiceClass.update(sale);
 			// re-search
                         // set search keywords
                         Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
-                        System.out.println("debug manufacturer: " + condition);
+                        Utils.debug("debug manufacturer: " + condition);
                         // search
                         mfactJTable.buildTableInfoPanel(condition);
 		    } catch (SQLException sqlex) {
@@ -1916,7 +1916,7 @@ public class MainGUI extends JFrame {
             
                 Manufacturer manufacturer = new Manufacturer(null);
                 manufacturer.setMfactID(mfactJTable.getMfactid());
-		System.out.println("debug manufacturer: " + manufacturer);
+		Utils.debug("debug manufacturer: " + manufacturer);
 
                 try {
                     // delete
@@ -1924,7 +1924,7 @@ public class MainGUI extends JFrame {
                     // re-search
                     // set search keywords
                     Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
-                    System.out.println("debug manufacturer: " + condition);
+                    Utils.debug("debug manufacturer: " + condition);
                     // search
                     mfactJTable.buildTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
@@ -1944,7 +1944,7 @@ public class MainGUI extends JFrame {
             
             // set search keywords
             Manufacturer condition = new Manufacturer(txtMfactSearch.getText());
-            System.out.println("debug manufacturer: " + condition);
+            Utils.debug("debug manufacturer: " + condition);
             // search
             mfactJTable.buildTableInfoPanel(condition);
 	}
@@ -2025,7 +2025,7 @@ public class MainGUI extends JFrame {
                         new BigDecimal(productJTable.getPrice()), new BigDecimal(productJTable.getDiscount()), mfact);
 
                 product.setProductID(productJTable.getProdid());
-            System.out.println("debug Product: " + product);
+            Utils.debug("debug Product: " + product);
                 try {
                     // update
                     SQLServiceClass.update(product);
@@ -2036,7 +2036,7 @@ public class MainGUI extends JFrame {
                         conditionMfact = new Manufacturer(txtProductManuSearch.getText(), null, null, null, null);
                     }
                     Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
-                    System.out.println("debug Product: " + condition);
+                    Utils.debug("debug Product: " + condition);
                     // search
                     buildProductTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
@@ -2074,7 +2074,7 @@ public class MainGUI extends JFrame {
                         conditionMfact = new Manufacturer(txtProductManuSearch.getText(), null, null, null, null);
                     }
                     Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
-                    System.out.println("debug Product: " + condition);
+                    Utils.debug("debug Product: " + condition);
                     // search
                     buildProductTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
@@ -2109,7 +2109,7 @@ public class MainGUI extends JFrame {
                 conditionMfact = new Manufacturer(txtProductManuSearch.getText(), null, null, null, null);
             }
             Product condition = new Product(txtProductSearch.getText(), null, null, conditionMfact);
-            System.out.println("debug Product: " + condition);
+            Utils.debug("debug Product: " + condition);
             // search
             buildProductTableInfoPanel(condition);
 	}
@@ -2385,7 +2385,7 @@ public class MainGUI extends JFrame {
                         return;
                     }
 		    try {
-			System.out.println("debug customer: " + customer);
+			Utils.debug("debug customer: " + customer);
 			// update
 			SQLServiceClass.update(customer);
 			// research
@@ -2393,7 +2393,7 @@ public class MainGUI extends JFrame {
 			Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
 				null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
 				0, 0, 0);
-			System.out.println("debug customer: " + condition);
+			Utils.debug("debug customer: " + condition);
 			// search
 			customerJTable.buildTableInfoPanel(condition);
 		    } catch (SQLException sqlex) {
@@ -2426,7 +2426,7 @@ public class MainGUI extends JFrame {
                         null, null, null, null, null,
                         0, 0, 0);
                 customer.setCustomerID(customerJTable.getCusid());
-		System.out.println("debug customer: " + customer);
+		Utils.debug("debug customer: " + customer);
 
                 try {
                     // delete
@@ -2436,7 +2436,7 @@ public class MainGUI extends JFrame {
                     Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
                             null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
                             0, 0, 0);
-                    System.out.println("debug customer: " + condition);
+                    Utils.debug("debug customer: " + condition);
                     // search
                     customerJTable.buildTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
@@ -2458,7 +2458,7 @@ public class MainGUI extends JFrame {
             Customer condition = new Customer(null, txtCustomerSearchLastName.getText(),
                     null, null, null, null, txtCustomerSearchPhoneNumber.getText(),
                     0, 0, 0);
-            System.out.println("debug customer: " + condition);
+            Utils.debug("debug customer: " + condition);
             // search
             customerJTable.buildTableInfoPanel(condition);
 	}

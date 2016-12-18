@@ -141,9 +141,9 @@ public class Utils {
 
 	    out.close();
 	} catch (IOException ioEx) {
-	    System.out.println("Error logging exception\n" + ioEx.toString());
+	    debug("Error logging exception\n" + ioEx.toString());
 	} catch (Exception genEx) {
-	    System.out.println("Error logging exception\n" + genEx.toString());
+	    debug("Error logging exception\n" + genEx.toString());
 	}
     }
 
@@ -215,8 +215,8 @@ public class Utils {
         if (value == null) {
             return true;
         }
-        System.out.println("value:" + value);
-        System.out.println("result of compareTo:" + BigDecimal.ZERO.compareTo(value));
+        debug("value:" + value);
+        debug("result of compareTo:" + BigDecimal.ZERO.compareTo(value));
         if (BigDecimal.ZERO.compareTo(value) == 0) {
             return true;
         }

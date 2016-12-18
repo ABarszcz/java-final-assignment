@@ -177,7 +177,7 @@ public class SQLServiceClass {
         Statement stat = createStatement();            
         stat.executeUpdate(sql);
                 
-        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + salary);
+        Utils.debug("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + salary);
         JOptionPane.showMessageDialog(null,"Salary Employee was added to database"); 
 
          }catch(SQLException error){
@@ -196,7 +196,7 @@ public class SQLServiceClass {
         Statement stat = createStatement();            
         stat.executeUpdate(sql);
                 
-        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + wage);
+        Utils.debug("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + wage);
         JOptionPane.showMessageDialog(null,"Hourly Employee was added to database"); 
 
          }catch(SQLException error){
@@ -218,7 +218,7 @@ public class SQLServiceClass {
         Statement stat = createStatement();            
         stat.executeUpdate(sql);
                 
-        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate);
+        Utils.debug("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate);
         JOptionPane.showMessageDialog(null,"Commission Employee was added to database"); 
 
          }catch(SQLException error){
@@ -235,13 +235,13 @@ public class SQLServiceClass {
     public static void insertBasePlusCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate, BigDecimal salary) throws SQLException {
         try{
         connect();
-        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
+        Utils.debug("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
         
         String sql = "INSERT INTO `EMPLOYEE`(`FNAME`, `LNAME`, `GENDER`, `ADDRESS`, `CITY`, `PROVINCE`, `PHONENUM`, `DEPT`, `DEPTPOSITION`, `SSN`, `BIRTHYEAR`, `BIRTHMONTH`, `BIRTHDATE`, `COMM`, `SALARY`) VALUES ('"+fName+"','"+lName+"','"+gender+"','"+address+"','"+city+"','"+province+"','"+phoneNum+"', '"+department+"', '"+position+"', '"+sin+"', "+year+", "+month+", "+date+", "+rate+", "+salary+")";
         Statement stat = createStatement();            
         stat.executeUpdate(sql);
                 
-        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
+        Utils.debug("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
         JOptionPane.showMessageDialog(null,"Commission Employee was added to database"); 
 
          }catch(SQLException error){
@@ -262,7 +262,7 @@ public class SQLServiceClass {
      * @throws SQLException
      */
     public static DefaultTableModel selectByKey(Employee condition) throws SQLException {
-        System.out.println("debug" + condition);
+        Utils.debug("debug" + condition);
         try {
             // connect to db
             connect(false);
@@ -366,9 +366,9 @@ public class SQLServiceClass {
             stmt.setInt(parameterIndex++, employee.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
             stmt.setInt(parameterIndex++, employee.getDateOfBirth().get(Calendar.MONTH) + 1);
             stmt.setInt(parameterIndex++, employee.getDateOfBirth().get(Calendar.YEAR));
-            System.out.println("day:" + employee.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
-            System.out.println("mon:" + (employee.getDateOfBirth().get(Calendar.MONTH) + 1));
-            System.out.println("yea:" + employee.getDateOfBirth().get(Calendar.YEAR));
+            Utils.debug("day:" + employee.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
+            Utils.debug("mon:" + (employee.getDateOfBirth().get(Calendar.MONTH) + 1));
+            Utils.debug("yea:" + employee.getDateOfBirth().get(Calendar.YEAR));
             if (employee instanceof BasePlusCommissionEmployee) {
                 stmt.setBigDecimal(parameterIndex++, ((BasePlusCommissionEmployee) employee).getBaseSalary());
                 stmt.setBigDecimal(parameterIndex++, ((BasePlusCommissionEmployee) employee).getCommissionRates());
@@ -442,7 +442,7 @@ public class SQLServiceClass {
             Statement stat = createStatement();            
             stat.executeUpdate(sql);
                 
-            System.out.println("Insert: " + name + " " +  address + " " + city + " " + province + " " + phoneNum);
+            Utils.debug("Insert: " + name + " " +  address + " " + city + " " + province + " " + phoneNum);
             JOptionPane.showMessageDialog(null,"Manufacturer was added to database"); 
             
          }catch(SQLException error){
@@ -461,7 +461,7 @@ public class SQLServiceClass {
      * @throws SQLException
      */
     public static DefaultTableModel selectByKey(Manufacturer condition) throws SQLException {
-        System.out.println("debug" + condition);
+        Utils.debug("debug" + condition);
         try {
             // connect to db
             connect();
@@ -589,7 +589,7 @@ public class SQLServiceClass {
             Statement stat = createStatement();            
             stat.executeUpdate(sql);                
            
-            System.out.println("Insert: " + name  + " " + price + " " + discount + " " + mfact);
+            Utils.debug("Insert: " + name  + " " + price + " " + discount + " " + mfact);
             JOptionPane.showMessageDialog(null,"Product was added to database"); 
 
          }catch(SQLException error){
@@ -611,7 +611,7 @@ public class SQLServiceClass {
      * @throws SQLException
      */
     public static DefaultTableModel selectByKey(Product condition) throws SQLException {
-        System.out.println("debug" + condition);
+        Utils.debug("debug" + condition);
         try {
             // connect to db
             connect();
@@ -747,7 +747,7 @@ public class SQLServiceClass {
         Statement stat = createStatement();            
         stat.executeUpdate(sql);
                 
-        System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + year + " " + month + " " + date);
+        Utils.debug("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + year + " " + month + " " + date);
         JOptionPane.showMessageDialog(null,"Customer was added to database"); 
 
          }catch(SQLException error){
@@ -768,7 +768,7 @@ public class SQLServiceClass {
      * @throws SQLException
      */
     public static DefaultTableModel selectByKey(Customer condition) throws SQLException {
-        System.out.println("debug" + condition);
+        Utils.debug("debug" + condition);
         try {
             // connect to db
             connect();
@@ -854,9 +854,9 @@ public class SQLServiceClass {
             stmt.setInt(parameterIndex++, customer.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
             stmt.setInt(parameterIndex++, customer.getDateOfBirth().get(Calendar.MONTH) + 1);
             stmt.setInt(parameterIndex++, customer.getDateOfBirth().get(Calendar.YEAR));
-            System.out.println("day:" + customer.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
-            System.out.println("mon:" + (customer.getDateOfBirth().get(Calendar.MONTH) + 1));
-            System.out.println("yea:" + customer.getDateOfBirth().get(Calendar.YEAR));
+            Utils.debug("day:" + customer.getDateOfBirth().get(Calendar.DAY_OF_MONTH));
+            Utils.debug("mon:" + (customer.getDateOfBirth().get(Calendar.MONTH) + 1));
+            Utils.debug("yea:" + customer.getDateOfBirth().get(Calendar.YEAR));
             // condition
             stmt.setString(parameterIndex++, customer.getCustomerID());
             // execute
@@ -918,7 +918,7 @@ public class SQLServiceClass {
         Statement stat = createStatement();            
         stat.executeUpdate(sql);
                 
-        System.out.println("Insert: " + product + " " + customer + " " + employee + " " + comm);
+        Utils.debug("Insert: " + product + " " + customer + " " + employee + " " + comm);
         JOptionPane.showMessageDialog(null,"Sale was added to database"); 
 
          }catch(SQLException error){
@@ -1019,7 +1019,7 @@ public class SQLServiceClass {
             // commit
             SQLServiceClass.commit();
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            Utils.debug(sqle.toString());
             // rollback
             rollback();
             throw sqle;
@@ -1213,8 +1213,8 @@ public class SQLServiceClass {
             }
             data.add(row);
         }
-        System.out.println("colNames:[" + colNames + "]");
-        System.out.println("data:[" + data + "]");
+        Utils.debug("colNames:[" + colNames + "]");
+        Utils.debug("data:[" + data + "]");
         return new DefaultTableModel(data, colNames);
     }
 

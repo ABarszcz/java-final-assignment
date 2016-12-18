@@ -3,6 +3,7 @@
  */
 package GUI;
 
+import Common.Utils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -91,7 +92,7 @@ public class Login extends JFrame implements ActionListener {
 	    this.setVisible(false);
         }
         else {
-            System.out.println("Enter a valid username and password");
+            Utils.debug("Enter a valid username and password");
             JOptionPane.showMessageDialog(this,"Incorrect login or password",
             "Error",JOptionPane.ERROR_MESSAGE);
         }
