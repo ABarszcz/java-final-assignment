@@ -114,12 +114,15 @@ public class SQLServiceClass {
 
     /**
      * Disconnect from the database.
-     *
-     * @throws SQLException
      */
-    public static void disconnect() throws SQLException {
+    public static void disconnect() {
         if (conn != null) {
-            conn.close();
+            try {
+                conn.close();
+            } catch (SQLException error) {
+                Utils.logError(error);
+                Utils.debug(error.toString());
+            }
             conn = null;
         }
     }
@@ -166,7 +169,7 @@ public class SQLServiceClass {
     }
 
     //Create new salary employee in the database
-    public static void insertSalaryEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal salary){
+    public static void insertSalaryEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal salary) throws SQLException {
         try{
         connect();
 
@@ -179,13 +182,13 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
-          //print to file
+          Utils.debug(error.toString());
+          throw error;
          }
     }//end insert
     
     //Create new hourly employee in the database
-    public static void insertHourlyEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal wage){
+    public static void insertHourlyEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal wage) throws SQLException {
         try{
         connect();
 
@@ -198,13 +201,16 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
-          //print to file
-         }
+          Utils.debug(error.toString());
+          throw error;
+         } finally {
+            // disconnect
+            disconnect();
+        }
     }//end insert
     
         //Create new commission employee in the database
-    public static void insertCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate){
+    public static void insertCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate) throws SQLException {
         try{
         connect();
 
@@ -217,13 +223,16 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
-          //print to file
-         }
+          Utils.debug(error.toString());
+          throw error;
+         } finally {
+            // disconnect
+            disconnect();
+        }
     }//end insert
   
         //Create new base plus commission employee in the database
-    public static void insertBasePlusCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate, BigDecimal salary){
+    public static void insertBasePlusCommissionEmployee(String fName, String lName, String gender, String address, String city, String province, String phoneNum, String department, String position, String sin, int year, int month, int date, BigDecimal rate, BigDecimal salary) throws SQLException {
         try{
         connect();
         System.out.println("Insert: " + fName + " " + lName + " " + gender + " " + address + " " + city + " " + province + " " + phoneNum + " " + department + " " + position + " " + sin + " " + year + " " + month + " " + date + " " + rate + " " + salary);
@@ -237,9 +246,12 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
+          Utils.debug(error.toString());
           //print to file
-         }
+         } finally {
+            // disconnect
+            disconnect();
+        }
     }//end insert
     
     /**
@@ -253,7 +265,7 @@ public class SQLServiceClass {
         System.out.println("debug" + condition);
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * FROM ");
@@ -304,7 +316,7 @@ public class SQLServiceClass {
     public static void update(Employee employee) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE ");
@@ -375,14 +387,14 @@ public class SQLServiceClass {
             // execute
             stmt.executeUpdate();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
 
@@ -395,7 +407,7 @@ public class SQLServiceClass {
     public static void delete(Employee employee) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("DELETE FROM ");
@@ -410,19 +422,19 @@ public class SQLServiceClass {
             // execute
             stmt.execute();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
     
     //Create manufacture in database
-    public static void insertMfact(String name, String address, String city, String province, String phoneNum){
+    public static void insertMfact(String name, String address, String city, String province, String phoneNum) throws SQLException {
         try{
         connect();
 
@@ -434,10 +446,9 @@ public class SQLServiceClass {
             JOptionPane.showMessageDialog(null,"Manufacturer was added to database"); 
             
          }catch(SQLException error){
-          //error   
-          System.out.println(error);
-          //print to file
-          
+          //error
+          Utils.debug(error.toString());
+          throw error;
          }
           
     }//end insert
@@ -495,7 +506,7 @@ public class SQLServiceClass {
     public static void update(Manufacturer manufacturer) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE ");
@@ -522,15 +533,15 @@ public class SQLServiceClass {
             // execute
             stmt.executeUpdate();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            Utils.debug(sqle.toString());
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
 
@@ -543,7 +554,7 @@ public class SQLServiceClass {
     public static void delete(Manufacturer manufacturer) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("DELETE FROM ");
@@ -558,19 +569,19 @@ public class SQLServiceClass {
             // execute
             stmt.execute();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
 
     //Create new product in the database     
-    public static void insertProduct(String name, BigDecimal price, BigDecimal discount, String mfact){    
+    public static void insertProduct(String name, BigDecimal price, BigDecimal discount, String mfact) throws SQLException {    
         try{
         connect();
 
@@ -583,10 +594,12 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
-          //print to file
-
-         }
+          Utils.debug(error.toString());
+          throw error;
+         } finally {
+            // disconnect
+            disconnect();
+        }
           
     }//end insert
     
@@ -654,7 +667,7 @@ public class SQLServiceClass {
     public static void update(Product product) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE ");
@@ -679,14 +692,14 @@ public class SQLServiceClass {
             // execute
             stmt.executeUpdate();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
 
@@ -699,7 +712,7 @@ public class SQLServiceClass {
     public static void delete(Product product) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("DELETE FROM ");
@@ -714,19 +727,19 @@ public class SQLServiceClass {
             // execute
             stmt.execute();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
 
     //Create new customer in the database
-    public static void insertCustomer(String fName, String lName, String gender, String address, String city, String province, String phoneNum, int year, int month, int date){
+    public static void insertCustomer(String fName, String lName, String gender, String address, String city, String province, String phoneNum, int year, int month, int date) throws SQLException {
         try{
         connect();
 
@@ -739,9 +752,12 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
-          //print to file
-         }
+          Utils.debug(error.toString());
+          throw error;
+         } finally {
+            // disconnect
+            disconnect();
+        }
     }//end insert
     
     /**
@@ -806,7 +822,7 @@ public class SQLServiceClass {
     public static void update(Customer customer) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE ");
@@ -848,13 +864,13 @@ public class SQLServiceClass {
             // commit
             SQLServiceClass.commit();
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            Utils.debug(sqle.toString());
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
 
@@ -867,7 +883,7 @@ public class SQLServiceClass {
     public static void delete(Customer customer) throws SQLException {
         try {
             // connect to db
-            SQLServiceClass.connect(false);
+            connect(false);
             // create sql
             StringBuilder sql = new StringBuilder();
             sql.append("DELETE FROM ");
@@ -882,19 +898,19 @@ public class SQLServiceClass {
             // execute
             stmt.execute();
             // commit
-            SQLServiceClass.commit();
+            commit();
         } catch (SQLException sqle) {
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
     
     //Create new customer in the database
-    public static void insertSales(String product, String customer, String employee, BigDecimal comm){
+    public static void insertSales(String product, String customer, String employee, BigDecimal comm) throws SQLException {
         try{
         connect();
 
@@ -907,9 +923,12 @@ public class SQLServiceClass {
 
          }catch(SQLException error){
           //error   
-          System.out.println(error);
-          //print to file
-         }
+          Utils.debug(error.toString());
+          throw error;
+         } finally {
+            // disconnect
+            disconnect();
+        }
     }//end insert
 
     /**
@@ -1002,7 +1021,7 @@ public class SQLServiceClass {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
             // rollback
-            SQLServiceClass.rollback();
+            rollback();
             throw sqle;
         } finally {
             // disconnect
@@ -1041,7 +1060,7 @@ public class SQLServiceClass {
             throw sqle;
         } finally {
             // disconnect
-            SQLServiceClass.disconnect();
+            disconnect();
         }
     }
     
@@ -1064,11 +1083,15 @@ public class SQLServiceClass {
                    //finds types in result set
                    list.addItem(rs.getString("MFACTNAME"));
                }
-        System.out.println("m ok");
+            Utils.debug("m ok");
         }
         catch(SQLException error){
             //error
-            System.out.println(error.toString());
+            Utils.logError(error);
+            Utils.debug(error.toString());
+        } finally {
+            // disconnect
+            disconnect();
         }
 
     }
@@ -1090,11 +1113,15 @@ public class SQLServiceClass {
                    //finds types in result set
                    list.addItem(rs.getString("PRODUCTNAME"));
                }
-        System.out.println("p ok");
+            Utils.debug("p ok");
         }
         catch(SQLException error){
             //error
-            System.out.println(error.toString());
+            Utils.logError(error);
+            Utils.debug(error.toString());
+        } finally {
+            // disconnect
+            disconnect();
         }
 
     }
@@ -1116,11 +1143,15 @@ public class SQLServiceClass {
                    //finds types in result set
                    list.addItem(rs.getString("FNAME") + " " + rs.getString("LNAME"));
                }
-        System.out.println("c ok");
+            Utils.debug("c ok");
         }
         catch(SQLException error){
             //error
-            System.out.println(error.toString());
+            Utils.logError(error);
+            Utils.debug(error.toString());
+        } finally {
+            // disconnect
+            disconnect();
         }
 
     }
@@ -1142,12 +1173,16 @@ public class SQLServiceClass {
                    //finds types in result set
                    list.addItem(rs.getString("FNAME") + " " + rs.getString("LNAME"));
                }
-        System.out.println("e ok");
+            Utils.debug("e ok");
 
         }
         catch(SQLException error){
             //error
-            System.out.println(error.toString());
+            Utils.logError(error);
+            Utils.debug(error.toString());
+        } finally {
+            // disconnect
+            disconnect();
         }
 
     }

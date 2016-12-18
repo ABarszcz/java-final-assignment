@@ -21,9 +21,11 @@ public class Utils {
     
 //add start takaaki
     /** action: edit */
-    public static final String ACTION_EDIT = "edit";
+    public static final String ACTION_CREATE = "Create";
+    /** action: edit */
+    public static final String ACTION_EDIT = "Update";
     /** action: delete */
-    public static final String ACTION_DELETE = "delete";
+    public static final String ACTION_DELETE = "Delete";
 //add e n d takaaki
     //<editor-fold desc="ID Number Generation">
     //create default ID numbers
@@ -176,6 +178,15 @@ public class Utils {
 		JOptionPane.YES_NO_OPTION);
 	
 	return reply == JOptionPane.YES_OPTION;
+    }
+
+    /**
+     * Display error.
+     * 
+     * @param action 
+     */
+    public static void showError(String action) {
+	int reply = JOptionPane.showConfirmDialog(null, action + " failed!");
     }
     
     /**

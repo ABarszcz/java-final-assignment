@@ -1482,7 +1482,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
                 
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
+                }
 	    }           
 	}
     }//end employee
@@ -1549,7 +1552,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		} catch(IllegalArgumentException error){
                         System.out.print(error);
 		   // JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_DELETE);
+                }
 	    }           
 	}
     }//end employee 
@@ -1614,7 +1620,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		} catch(IllegalArgumentException error){
                         System.out.print(error);
 		   // JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
+                }
 	    }           
 	}
     }//end employee
@@ -1682,7 +1691,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		} catch(IllegalArgumentException error){
                         System.out.print(error);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
+                }
 	    }           
 	}
     }//end employee
@@ -1828,10 +1840,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 			System.out.println("debug employee: " + condition);
 			// search
 			employeeJTable.buildTableInfoPanel(condition);
-		    } catch(SQLException exSql) {
-			Utils.logError(exSql);
-			JOptionPane.showMessageDialog(null, "Update failed!");
-		    }
+		    } catch (SQLException sqlex) {
+                        Utils.logError(sqlex);
+                        Utils.showError(Utils.ACTION_EDIT);
+                    }
 		} catch(IllegalArgumentException exIae){
                     Utils.logError(exIae);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
@@ -1869,9 +1881,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     // search
                     employeeJTable.buildTableInfoPanel(null);
                 } catch (SQLException sqlex) {
-                    // error
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                    Utils.showError(Utils.ACTION_DELETE);
                 }
             }
 	}
@@ -1923,7 +1934,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    SQLServiceClass.insertMfact(m1.getName(), m1.getAddress(), m1.getCity(), m1.getProvince(), m1.getPhoneNum());
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
+                }
 	    }           
 	}
     }//end CreateMfactButtonHandler
@@ -1978,10 +1992,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
                         System.out.println("debug manufacturer: " + condition);
                         // search
                         mfactJTable.buildTableInfoPanel(condition);
-		    } catch(SQLException exSql) {
-			Utils.logError(exSql);
-			JOptionPane.showMessageDialog(null, "Update failed!");
-		    }
+		    } catch (SQLException sqlex) {
+                        Utils.logError(sqlex);
+                        Utils.showError(Utils.ACTION_EDIT);
+                    }
 		} catch(IllegalArgumentException exIae){
                     Utils.logError(exIae);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
@@ -2018,9 +2032,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     // search
                     mfactJTable.buildTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
-                    // error
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                    Utils.showError(Utils.ACTION_DELETE);
                 }
             }
 	}
@@ -2070,7 +2083,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    Utils.logError(exNfe);
 		} catch(IllegalArgumentException error){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
+                }
             }
 	}
     }//end CreateProductButtonHandler
@@ -2087,7 +2103,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                 return;
             }
 
-            if(Utils.showConfirmDialog(Utils.ACTION_EDIT)) {
+            if(Utils.showConfirmDialog("edit this product")) {
                 boolean check = true;
                 String fieldName = "";
 		
@@ -2130,10 +2146,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     // search
                     buildProductTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
-                    // error
-                    sqlex.printStackTrace();    // TODO delete
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Update failed!");
+                    Utils.showError(Utils.ACTION_EDIT);
                 }
             }
 	}
@@ -2150,7 +2164,7 @@ System.out.println("Selected tab:" + selectedTabIndex);
                 return;
             }
 
-            if(Utils.showConfirmDialog(Utils.ACTION_DELETE)) {
+            if(Utils.showConfirmDialog("delete this product")) {
             //Submit to Database
             
                 Product product = new Product(null, null, null, null);
@@ -2170,9 +2184,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     // search
                     buildProductTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
-                    // error
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Delete is failed!");
+                    Utils.showError(Utils.ACTION_DELETE);
                 }
             }
 	}
@@ -2234,6 +2247,9 @@ System.out.println("Selected tab:" + selectedTabIndex);
 
                 }catch(IllegalArgumentException  error){
                     JOptionPane.showMessageDialog(null, "All fields must be provided");
+                } catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
                 }
             }
 	}
@@ -2284,10 +2300,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
                         Sale condition = new Sale(product, customer, employee, null);
                         // search
                         buildSalesTableInfoPanel(condition);
-		    } catch(SQLException exSql) {
-			Utils.logError(exSql);
-			JOptionPane.showMessageDialog(null, "Update failed!");
-		    }
+		    } catch (SQLException sqlex) {
+                        Utils.logError(sqlex);
+                        Utils.showError(Utils.ACTION_EDIT);
+                    }
 		} catch(IllegalArgumentException exIae){
                     Utils.logError(exIae);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
@@ -2325,9 +2341,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     // search
                     buildSalesTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
-                    // error
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                    Utils.showError(Utils.ACTION_DELETE);
                 }
             }
 	}
@@ -2420,7 +2435,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 		    
 		}catch(IllegalArgumentException exIae){
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
-		}
+		} catch (SQLException sqlex) {
+                    Utils.logError(sqlex);
+                    Utils.showError(Utils.ACTION_CREATE);
+                }
             }
 	}
     }//end createCustomerButtonHandler
@@ -2489,10 +2507,10 @@ System.out.println("Selected tab:" + selectedTabIndex);
 			System.out.println("debug customer: " + condition);
 			// search
 			customerJTable.buildTableInfoPanel(condition);
-		    } catch(SQLException exSql) {
-			Utils.logError(exSql);
-			JOptionPane.showMessageDialog(null, "Update failed!");
-		    }
+		    } catch (SQLException sqlex) {
+                        Utils.logError(sqlex);
+                        Utils.showError(Utils.ACTION_EDIT);
+                    }
 		} catch(IllegalArgumentException exIae){
                     Utils.logError(exIae);
 		    JOptionPane.showMessageDialog(null, fieldName + " is invalid");
@@ -2535,9 +2553,8 @@ System.out.println("Selected tab:" + selectedTabIndex);
                     // search
                     customerJTable.buildTableInfoPanel(condition);
                 } catch (SQLException sqlex) {
-                    // error
                     Utils.logError(sqlex);
-                    JOptionPane.showMessageDialog(null, "Delete failed!");
+                    Utils.showError(Utils.ACTION_DELETE);
                 }
             }
 	}
