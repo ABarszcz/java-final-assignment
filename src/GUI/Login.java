@@ -68,6 +68,7 @@ public class Login extends JFrame implements ActionListener {
         this.setTitle("Login");
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setSize(300,120);
+	this.setResizable(false);
 	//create the view
 	this.setVisible(true);
     }
