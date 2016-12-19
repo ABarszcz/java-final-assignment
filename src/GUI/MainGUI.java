@@ -1401,7 +1401,7 @@ public class MainGUI extends JFrame {
 		    empList.add(e1);
                     //Add to database
                     SQLServiceClass.insertSalaryEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
-                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth() + 1, 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getSalaryAmount());
                 
 		} catch(IllegalArgumentException error){
@@ -1472,7 +1472,7 @@ public class MainGUI extends JFrame {
 		    
                     //Add to database
                     SQLServiceClass.insertHourlyEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
-                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth() + 1, 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getWage());
                 
 		} catch(IllegalArgumentException error){
@@ -1541,7 +1541,7 @@ public class MainGUI extends JFrame {
 		    
                     //Add to database
                     SQLServiceClass.insertCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
-                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth() + 1, 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates());
                 
 		} catch(IllegalArgumentException error){
@@ -1613,7 +1613,7 @@ public class MainGUI extends JFrame {
 		    
                     //Add to database
                     SQLServiceClass.insertBasePlusCommissionEmployee(e1.getFirstName(), e1.getLastName(), e1.getSex(), e1.getAddress(), e1.getCity(), e1.getProvince(), e1.getPhoneNum(), 
-                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth(), 
+                                                      e1.getDepartment(), e1.getPosition(), e1.getSocialSecurityNum(), e1.getYear(), e1.getDateOfBirth().getTime().getMonth() + 1, 
                                                       e1.getDateOfBirth().getTime().getDate(), e1.getCommissionRates(), e1.getBaseSalary());
         
 		} catch(IllegalArgumentException error){
@@ -2425,7 +2425,7 @@ public class MainGUI extends JFrame {
 		    custList.add(c1);
 		    
 		    //Submit to Database
-                    SQLServiceClass.insertCustomer(c1.getFirstName(), c1.getLastName(), c1.getSex(), c1.getAddress(), c1.getCity(), c1.getProvince(), c1.getPhoneNum(), c1.getYear(), c1.getDateOfBirth().getTime().getMonth(), c1.getDateOfBirth().getTime().getDate());
+                    SQLServiceClass.insertCustomer(c1.getFirstName(), c1.getLastName(), c1.getSex(), c1.getAddress(), c1.getCity(), c1.getProvince(), c1.getPhoneNum(), c1.getYear(), c1.getDateOfBirth().getTime().getMonth() + 1, c1.getDateOfBirth().getTime().getDate());
 		    
 		    
 		    
